@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+    <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link href="css/lista.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      
+    </style>    
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-danger flex-md-nowrap p-0 ">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="index.html">Fatec Monitor</a>
+  <button class="navbar-toggler position-absoluteS d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              Visão Geral
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Exercicios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Usuario
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Sobre
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!--  corpo -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <br>  
+            <div class="container">
+                <h2>Lista De Materia</h2>
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <div class="main-box clearfix">
+                    <div class="table-responsive" id="myInput">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                    <th><span>Materias</span></th>
+                                    <th><span>Autor</span></th>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <trx>
+                                    <td>
+                                        <img src="img/user.png" alt="">
+                                        <p class="h5 mb-3 font-weight-normal">Programação para internet</p>	
+                                    </td>
+                                    <td><p class="h6 mb-3 font-weight-normal">Vasco da gama </p></td>
+                                    <td>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span></a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="img/user.png" alt="">
+                                        <p class="h5 mb-3 font-weight-normal">Gestão Financeira</p>	
+                                    </td>
+                                    <td><p class="h6 mb-3 font-weight-normal">Paula Vieira</p></td>
+                                    <td>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span></a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="img/user.png" alt="">
+                                        <p class="h5 mb-3 font-weight-normal">Programação orientado a Cebola</p>	
+                                    </td>
+                                    <td><p class="h6 mb-3 font-weight-normal">Paula Regina</p></td>
+                                    <td>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span></a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="img/user.png" alt="">
+                                        <p class="h5 mb-3 font-weight-normal">Matematica Financeira</p>	
+                                    </td>
+                                    <td><p class="h6 mb-3 font-weight-normal">Paula Vieira</p></td>
+                                    <td>
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span></a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+    </div>
+        
+    </main>
+    </div>
+    </div>
+</body>
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myList li").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
+  
+</html>
