@@ -28,11 +28,33 @@ CREATE TABLE IF NOT EXISTS `alunos` (
 
 -- Exportação de dados foi desmarcado.
 
+-- Copiando estrutura para tabela softwaredemonitoria.disciplinas
+CREATE TABLE IF NOT EXISTS `disciplinas` (
+  `codigoDisciplina` int(11) NOT NULL,
+  `nomeDisciplina` varchar(50) NOT NULL,
+  `imagemDisciplina` text NOT NULL,
+  `sobreDisciplina` text NOT NULL,
+  PRIMARY KEY (`codigoDisciplina`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Exportação de dados foi desmarcado.
+
 -- Copiando estrutura para tabela softwaredemonitoria.monitores
 CREATE TABLE IF NOT EXISTS `monitores` (
   `raAluno` varchar(20) NOT NULL,
   UNIQUE KEY `raAluno` (`raAluno`),
   CONSTRAINT `FK_monitores_alunos` FOREIGN KEY (`raAluno`) REFERENCES `alunos` (`raAluno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Exportação de dados foi desmarcado.
+
+-- Copiando estrutura para tabela softwaredemonitoria.rascunhos
+CREATE TABLE IF NOT EXISTS `rascunhos` (
+  `codigoRascunho` int(11) NOT NULL,
+  `tituloRascunho` varchar(255) NOT NULL DEFAULT '',
+  `conteudoRascunho` text NOT NULL,
+  `dataCriacaoRascunho` text NOT NULL,
+  PRIMARY KEY (`codigoRascunho`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Exportação de dados foi desmarcado.
