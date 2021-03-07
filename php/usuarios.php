@@ -126,7 +126,8 @@ class usuario extends banco{
   public function editarUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario,$telefoneUsuario){
  
     
-    
+    // Primeira parte da string de comando SQL
+    // Atributos    
     $sql =
 
     "UPDATE `usuarios` SET
@@ -134,30 +135,84 @@ class usuario extends banco{
     `nomeUsuario`='".$nomeUsuario."',
     `sobrenomeUsuario`='".$sobrenomeUsuario."',
     `telefoneUsuario`='".$telefoneUsuario."',
-    `emailUsuario`='".$emailUsuario."',
+    `emailUsuario`='".$emailUsuario."'
     ";
 
     //  Valores onde serão inseridos
     $sql =$sql .
-    " WHERE  `CPFUsuario`='".CPFUsuario."';";
+    " WHERE  `CPFUsuario`='".$CPFUsuario."';";
     $this->ExecultaSQL($sql);
   }
 
 
   
-  /* Excluir um usuario   */
-  public function excluirusuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario,$telefoneUsuario){
+  /* Excluir um usuario*/   
+  public function excluirusuario($CPFUsuario){
     $sql = "
-      DELETE `usuarios` SET
-        `nomeUsuario`='".$CPFUsuario."',
+      DELETE FROM `usuarios` WHERE
+        `CPFUsuario`='".$CPFUsuario."';";
 
-    ";
+        //DELETE FROM `softwaredemonitoria`.`usuarios` WHERE  `CPFUsuario`='1111';
+    echo $sql;
+    $this->ExecultaSQL($sql);
+  }
+  
+
+  public function porCPF($CPFUsuario){
+    $query = "SELECT
+
+    `UserUsuario`,
+    `nomeUsuario`,
+    `sobrenomeUsuario`,
+    `emailUsuario`,
+    `palavraChaveUsuario`,
+    `superUsuario`
+
+    FROM `usuarios` WHERE
+    `UserUsuario` = '".strtoupper ($CPFUsuario)."'"
+    ;
+    return $this->Get($query);
+  }
+
+  public function login($CPFUsuario,$palavraChaveUsuario){
+    $this->CancelaSecao();
+    $CPFUsuario=strtoupper ( $CPFUsuario );
+
+    $this->porCPF($usuario);
+
+    if (strtoupper ($this->$CPFUsuario)==$CPFUsuario && $this->palavraChaveUsuario==MD5($palavraChaveUsuario)){
+      $_SESSION['login'] = strtoupper ($CPFUsuario);
+      $_SESSION['senha'] = MD5($palavraChaveUsuario);
+      return true;
+    }else{
+      return false;
+    }
   }
 
 
+  public function VerificaLogado(){
+    if (isset($_SESSION['login'])&&isset($_SESSION['senha'])){
+      $usuario=$_SESSION['login'];
+      $senha=$_SESSION['senha'];  
+      $this->CancelaSecao();
+      $usuario=strtoupper ( $usuario );
+      $this->porUser($usuario);
+      if (strtoupper ($this->UserUsuario)==$usuario && $this->palavraChaveUsuario==$senha){
+        $_SESSION['login'] = strtoupper ($usuario);
+        $_SESSION['senha'] = $senha; 
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
 
-
-
+  public function Logoff(){
+    unset ($_SESSION['login']);
+    unset ($_SESSION['senha']);
+  }
 
 }
 ?>
