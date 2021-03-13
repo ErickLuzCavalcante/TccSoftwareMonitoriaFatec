@@ -19,32 +19,11 @@ class usuario extends banco{
   private $telefoneUsuario;
   private $palavraChaveUsuario;
 
+  // Variavel que deve ser usada na composição de todas as requisições SQL
+  // Para que possamos manter a organização e a ordem no retorno dos campos
+  // e assim não quebrar o código no metodo atribuir()
+  private $camposSQL = "`CPFUsuario`,  `nomeUsuario`, `sobrenomeUsuario`,`telefoneUsuario`,`emailUsuario`, `palavraChaveUsuario`";
 
-  public function getCPFUsuario()
-  {
-    return $this->CPFUsuario;
-  }
-
-  public function getNomeUsuario()
-  {
-    return $this->nomeUsuario;
-  }
-
-  public function getSobrenomeUsuario()
-  {
-    return $this->sobrenomeUsuario;
-  }
-
-  public function getEmailUsuario()
-  {
-    return $this->emailUsuario;
-  }
-
-
-  public function getPalavraChaveUsuario()
-  {
-    return $this->palavraChaveUsuario;
-  }
 
 
   /*Metodos padrões do banco de dados */
@@ -71,18 +50,27 @@ class usuario extends banco{
   }
 
   /* Altera conforme a tabela*/
+  /*Deve ser padronizado, colocando na ordem que aparece na variavel $camposSQL
+    -- Este metodo coleta o resultados das consultas SQL
+       a classe banco retorna, um array do tipo matriz com sendo o primeiro indice a linha da tabela e o segundo
+       indice a coluna da tabela
+
+       Por isso devemos usar o padrao $this->atributo=$this->Dados[$this->getRegistro()][1];
+
+       Respeitando a ordem da variavel $campoSQL
+
+       att, Erick Cavalcante
+  */
 
   private function atribuir(){
 
-
-    /*
-    $this->UserUsuario=$this->Dados[$this->getRegistro()][1];
+    $this->CPFUsuario=$this->Dados[$this->getRegistro()][1];
     $this->nomeUsuario=$this->Dados[$this->getRegistro()][2];
     $this->sobrenomeUsuario=$this->Dados[$this->getRegistro()][3];
-    $this->emailUsuario=$this->Dados[$this->getRegistro()][4];
-    $this->palavraChaveUsuario=$this->Dados[$this->getRegistro()][5];
-    $this->superUsuario=$this->Dados[$this->getRegistro()][6];
-    */
+    $this->telefoneUsuario=$this->Dados[$this->getRegistro()][4];
+    $this->emailUsuario=$this->Dados[$this->getRegistro()][5];
+    $this->palavraChaveUsuario=$this->Dados[$this->getRegistro()][6];
+
   }
 
   /*Fim dos metodos padrao */
@@ -151,36 +139,28 @@ class usuario extends banco{
     $sql = "
       DELETE FROM `usuarios` WHERE
         `CPFUsuario`='".$CPFUsuario."';";
-
-        //DELETE FROM `softwaredemonitoria`.`usuarios` WHERE  `CPFUsuario`='1111';
-    echo $sql;
     $this->ExecultaSQL($sql);
   }
   
 
   public function porCPF($CPFUsuario){
-    $query = "SELECT
 
-    `UserUsuario`,
-    `nomeUsuario`,
-    `sobrenomeUsuario`,
-    `emailUsuario`,
-    `palavraChaveUsuario`,
-    `superUsuario`
 
+    $query = "SELECT".$this->camposSQL."
+    
     FROM `usuarios` WHERE
-    `UserUsuario` = '".strtoupper ($CPFUsuario)."'"
+    `CPFUsuario` = '".strtoupper ($CPFUsuario)."'"
     ;
     return $this->Get($query);
   }
 
   public function login($CPFUsuario,$palavraChaveUsuario){
-    $this->CancelaSecao();
+    $this->logoff();
     $CPFUsuario=strtoupper ( $CPFUsuario );
 
-    $this->porCPF($usuario);
+    $this->porCPF($CPFUsuario);
 
-    if (strtoupper ($this->$CPFUsuario)==$CPFUsuario && $this->palavraChaveUsuario==MD5($palavraChaveUsuario)){
+    if (strtoupper ($this->CPFUsuario)==$CPFUsuario && $this->palavraChaveUsuario==MD5($palavraChaveUsuario)){
       $_SESSION['login'] = strtoupper ($CPFUsuario);
       $_SESSION['senha'] = MD5($palavraChaveUsuario);
       return true;
@@ -190,16 +170,16 @@ class usuario extends banco{
   }
 
 
-  public function VerificaLogado(){
+  public function verificaLogado(){
     if (isset($_SESSION['login'])&&isset($_SESSION['senha'])){
       $usuario=$_SESSION['login'];
-      $senha=$_SESSION['senha'];  
-      $this->CancelaSecao();
+      $senha=$_SESSION['senha'];
+      $this->logoff();
       $usuario=strtoupper ( $usuario );
-      $this->porUser($usuario);
-      if (strtoupper ($this->UserUsuario)==$usuario && $this->palavraChaveUsuario==$senha){
+      $this->porCPF($usuario);
+      if (strtoupper ($this->CPFUsuario)==$usuario && $this->palavraChaveUsuario==$senha){
         $_SESSION['login'] = strtoupper ($usuario);
-        $_SESSION['senha'] = $senha; 
+        $_SESSION['senha'] = $senha;
         return true;
       }else{
         return false;
@@ -209,7 +189,7 @@ class usuario extends banco{
     }
   }
 
-  public function Logoff(){
+  public function logoff(){
     unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
   }

@@ -1,0 +1,60 @@
+[13-Mar-2021 19:47:43 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:47:43 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:48:47 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:48:48 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:48:49 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:48:49 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:49:27 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:49:39 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:49:50 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
+[13-Mar-2021 19:49:51 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_connect() in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php:66
+Stack trace:
+#0 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\usuarios.php(109): banco->ExecultaSQL('INSERT INTO `us...')
+#1 C:\xampp\htdocs\TccSoftwareMonitoriaFatec\index.php(6): usuario->novoUsuario('1111', 'Erick', 'Cavalcante', 'Email', '123', 'Senha')
+#2 {main}
+  thrown in C:\xampp\htdocs\TccSoftwareMonitoriaFatec\php\cnn.php on line 66
