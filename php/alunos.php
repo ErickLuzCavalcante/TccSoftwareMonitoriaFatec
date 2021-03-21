@@ -1,7 +1,5 @@
 <?php
 
-/*Importações*/
-include ("cnn.php");
 
 
 class alunos extends banco{

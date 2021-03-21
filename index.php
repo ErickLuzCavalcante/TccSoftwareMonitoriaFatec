@@ -1,6 +1,7 @@
 <?php
 
 include ("php\usuarios.php");
+include ("php\alunos.php");
 
 $classeUsuaario =new usuario();
 $classeUsuaario->novoUsuario("1111","Erick","Cavalcante","Email","123","Senha");
@@ -15,6 +16,13 @@ echo ("<br>Verificar se esta logado ".$classeUsuaario->verificaLogado());
 ECHO ("<br>Logar ".$classeUsuaario->login("1111","Senha"));
 echo ("<br>Verificar se esta logado ".$classeUsuaario->verificaLogado());
 
+
+// Teste Classes Alunos
+
+//$classeAluno = new alunos();
+
+//$classeAluno->novoAluno("1111","66698",0);
+//$classeAluno->editarAluno("1111","77777",0);
 
 
 

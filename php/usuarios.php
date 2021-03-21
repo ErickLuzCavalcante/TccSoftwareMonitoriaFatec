@@ -1,7 +1,6 @@
   <?php
 
-  /*Importações*/
-  include ("cnn.php");
+
 
 
   /*Configurações e ajustes de sessão e cookies */
