@@ -1,7 +1,6 @@
 <?php
 
 
-
 class alunos extends banco{
 
     private $CPFUsuario;
@@ -124,9 +123,9 @@ class alunos extends banco{
     public function porCPF($CPFUsuario){
 
 
-        $query = "SELECT".$this->camposSQL."
+        $query = "SELECT ".$this->camposSQL."
       
-      FROM `usuarios` WHERE
+      FROM ".$this->tabela." WHERE
       `CPFUsuario` = '".strtoupper ($CPFUsuario)."'"
         ;
         return $this->Get($query);
