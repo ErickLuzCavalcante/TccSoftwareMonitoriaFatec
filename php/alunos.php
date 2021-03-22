@@ -1,39 +1,45 @@
 <?php
 
 
-class alunos extends banco{
+class alunos extends banco
+{
 
     private $CPFUsuario;
     private $raAluno;
     private $monitorAluno;
 
-    // Variavel que deve ser usada na composição de todas as requisições SQL
-    // Para que possamos manter a organização e a ordem no retorno dos campos
-    // e assim não quebrar o código no metodo atribuir()
+// Variavel que deve ser usada na composição de todas as requisições SQL
+// Para que possamos manter a organização e a ordem no retorno dos campos
+// e assim não quebrar o código no metodo atribuir()
     private $camposSQL = "`CPFUsuario`,  `raAluno`, `monitorAluno` ";
-    private $tabela="`alunos`";
-
+    private $tabela = "`alunos`";
 
 
     /*Metodos padrões do banco de dados */
 
 
     /*Não altera */
-    public function primeiro(){
+    public function primeiro()
+    {
         $this->primeiroDados();
         $this->atribuir();
     }
-    public function proximo(){
+
+    public function proximo()
+    {
         $this->proximoDados();
         $this->atribuir();
     }
-    public function anterior(){
+
+    public function anterior()
+    {
         $this->anteriorDados();
         $this->atribuir();
     }
 
-    private function Get($query){
-        $retorno=$this->Pesquisa($query);
+    private function Get($query)
+    {
+        $retorno = $this->Pesquisa($query);
         $this->primeiro();
         return $retorno;
     }
@@ -51,11 +57,12 @@ class alunos extends banco{
          att, Erick Cavalcante
     */
 
-    private function atribuir(){
+    private function atribuir()
+    {
 
-        $this->CPFUsuario=$this->Dados[$this->getRegistro()][1];
-        $this->raAluno=$this->Dados[$this->getRegistro()][2];
-        $this->monitorAluno=$this->Dados[$this->getRegistro()][3];
+        $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
+        $this->raAluno = $this->Dados[$this->getRegistro()][2];
+        $this->monitorAluno = $this->Dados[$this->getRegistro()][3];
 
     }
 
@@ -63,7 +70,8 @@ class alunos extends banco{
 
 
     /* Cria um novo aluno no banco de dados */
-    public function novoAluno($CPFUsuario, $raAluno, $monitorAluno){
+    public function novoAluno($CPFUsuario, $raAluno, $monitorAluno)
+    {
 
         // Inicio da string de SQL
         // Campos do banco de dados
@@ -71,105 +79,94 @@ class alunos extends banco{
 
         $sql =
 
-            "INSERT INTO ".$this->tabela."
-          (
-          `CPFUsuario`,
-          `raAluno`,
-          `monitorAluno`
-          )
-          ";
+            "INSERT INTO " . $this->tabela . "
+                  (
+                  `CPFUsuario`,
+                  `raAluno`,
+                  `monitorAluno`
+                  )
+                  ";
 
         //  Valores onde serão inseriedos
-        $sql =$sql .
+        $sql = $sql .
             " VALUES ('"
-            . $CPFUsuario."', '"
-            . $raAluno."', '"
-            . $monitorAluno."');";
+            . $CPFUsuario . "', '"
+            . $raAluno . "', '"
+            . $monitorAluno . "');";
 
         $this->ExecultaSQL($sql);
 
     }
 
     /* Edita um aluno */
-    public function editarAluno($CPFUsuario, $raAluno, $monitorAluno){
+    public function editarAluno($CPFUsuario, $raAluno, $monitorAluno)
+    {
 
 
         // Primeira parte da string de comando SQL
         // Atributos
         $sql =
 
-            "UPDATE ".$this->tabela." SET
-      `raAluno`='".$raAluno."',
-      `monitorAluno`='".$monitorAluno."'
-      ";
+            "UPDATE " . $this->tabela . " SET
+              `raAluno`='" . $raAluno . "',
+              `monitorAluno`='" . $monitorAluno . "'
+              ";
 
         //  Valores onde serão inseridos
-        $sql =$sql .
-            " WHERE  `CPFUsuario`='".$CPFUsuario."';";
+        $sql = $sql .
+            " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
         $this->ExecultaSQL($sql);
     }
 
 
-
-    /* Excluir um usuario*/
-    public function excluirusuario($CPFUsuario){
+    /* Excluir um aluno*/
+    public function excluirAluno($CPFUsuario)
+    {
         $sql = "
-        DELETE FROM ".$this->tabela." WHERE
-          `CPFUsuario`='".$CPFUsuario."';";
+                DELETE FROM " . $this->tabela . " WHERE
+                  `CPFUsuario`='" . $CPFUsuario . "';";
         $this->ExecultaSQL($sql);
     }
 
 
-    public function porCPF($CPFUsuario){
+    public function porCPF($CPFUsuario)
+    {
 
 
-        $query = "SELECT ".$this->camposSQL."
-      
-      FROM ".$this->tabela." WHERE
-      `CPFUsuario` = '".strtoupper ($CPFUsuario)."'"
-        ;
+        $query = "SELECT " . $this->camposSQL . "
+              
+              FROM " . $this->tabela . " WHERE
+              `CPFUsuario` = '" . strtoupper($CPFUsuario) . "'";
         return $this->Get($query);
     }
 
-    public function login($CPFUsuario,$palavraChaveUsuario){
-        $this->logoff();
-        $CPFUsuario=strtoupper ( $CPFUsuario );
 
-        $this->porCPF($CPFUsuario);
-
-        if (strtoupper ($this->CPFUsuario)==$CPFUsuario && $this->palavraChaveUsuario==MD5($palavraChaveUsuario)){
-            $_SESSION['login'] = strtoupper ($CPFUsuario);
-            $_SESSION['senha'] = MD5($palavraChaveUsuario);
-            return true;
-        }else{
-            return false;
-        }
+    public function porRa($raAluno)
+    {
+        $query = "SELECT " . $this->camposSQL . "
+              FROM " . $this->tabela . " WHERE
+              `raAluno` = '" . strtoupper($raAluno) . "'";
+        return $this->Get($query);
     }
 
-
-    public function verificaLogado(){
-        if (isset($_SESSION['login'])&&isset($_SESSION['senha'])){
-            $usuario=$_SESSION['login'];
-            $senha=$_SESSION['senha'];
-            $this->logoff();
-            $usuario=strtoupper ( $usuario );
-            $this->porCPF($usuario);
-            if (strtoupper ($this->CPFUsuario)==$usuario && $this->palavraChaveUsuario==$senha){
-                $_SESSION['login'] = strtoupper ($usuario);
-                $_SESSION['senha'] = $senha;
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
+    public function porNome($nomeCompletoUsuario)
+    {
+        $nomeCompletoUsuario = str_replace(" ","%",$nomeCompletoUsuario);
+        $query = "
+            SELECT
+                alunos.CPFUsuario,
+                alunos.raAluno,
+                alunos.monitorAluno
+            FROM
+                alunos
+            JOIN
+                usuarios ON usuarios.CPFUsuario LIKE alunos.CPFUsuario
+            WHERE
+               CONCAT (usuarios.nomeUsuario,' ',usuarios.sobrenomeUsuario) LIKE '%".$nomeCompletoUsuario."%'";
+        return $this->Get($query);
     }
 
-    public function logoff(){
-        unset ($_SESSION['login']);
-        unset ($_SESSION['senha']);
-    }
 
 }
+
 ?>

@@ -27,6 +27,12 @@ $classeAluno->editarAluno("1111","77777",0);
 
 $classeAluno->porCPF("1111");
 
+$classeAluno->porNome("Erick Cavalcante");
+
+$classeAluno->porRa("77777");
+
+//$classeAluno->excluirAluno("1111");
+
 
 
 
