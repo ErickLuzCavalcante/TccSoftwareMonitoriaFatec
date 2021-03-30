@@ -19,43 +19,12 @@ class alunos extends banco
 
 
     /*Não altera */
-    public function primeiro()
-    {
-        $this->primeiroDados();
-        $this->atribuir();
-    }
 
     public function proximo()
     {
         $this->proximoDados();
         $this->atribuir();
     }
-
-    public function anterior()
-    {
-        $this->anteriorDados();
-        $this->atribuir();
-    }
-
-    private function Get($query)
-    {
-        $retorno = $this->Pesquisa($query);
-        $this->primeiro();
-        return $retorno;
-    }
-
-    /* Altera conforme a tabela*/
-    /*Deve ser padronizado, colocando na ordem que aparece na variavel $camposSQL
-      -- Este metodo coleta o resultados das consultas SQL
-         a classe banco retorna, um array do tipo matriz com sendo o primeiro indice a linha da tabela e o segundo
-         indice a coluna da tabela
-
-         Por isso devemos usar o padrao $this->atributo=$this->Dados[$this->getRegistro()][1];
-
-         Respeitando a ordem da variavel $campoSQL
-
-         att, Erick Cavalcante
-    */
 
     private function atribuir()
     {
@@ -66,10 +35,12 @@ class alunos extends banco
 
     }
 
-    /*Fim dos metodos padrao */
+    public function anterior()
+    {
+        $this->anteriorDados();
+        $this->atribuir();
+    }
 
-
-    /* Cria um novo aluno no banco de dados */
     public function novoAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
 
@@ -98,7 +69,19 @@ class alunos extends banco
 
     }
 
-    /* Edita um aluno */
+    /* Altera conforme a tabela*/
+    /*Deve ser padronizado, colocando na ordem que aparece na variavel $camposSQL
+      -- Este metodo coleta o resultados das consultas SQL
+         a classe banco retorna, um array do tipo matriz com sendo o primeiro indice a linha da tabela e o segundo
+         indice a coluna da tabela
+
+         Por isso devemos usar o padrao $this->atributo=$this->Dados[$this->getRegistro()][1];
+
+         Respeitando a ordem da variavel $campoSQL
+
+         att, Erick Cavalcante
+    */
+
     public function editarAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
 
@@ -118,8 +101,11 @@ class alunos extends banco
         $this->ExecultaSQL($sql);
     }
 
+    /*Fim dos metodos padrao */
 
-    /* Excluir um aluno*/
+
+    /* Cria um novo aluno no banco de dados */
+
     public function excluirAluno($CPFUsuario)
     {
         $sql = "
@@ -128,6 +114,7 @@ class alunos extends banco
         $this->ExecultaSQL($sql);
     }
 
+    /* Edita um aluno */
 
     public function porCPF($CPFUsuario)
     {
@@ -141,6 +128,21 @@ class alunos extends banco
     }
 
 
+    /* Excluir um aluno*/
+
+    private function Get($query)
+    {
+        $retorno = $this->Pesquisa($query);
+        $this->primeiro();
+        return $retorno;
+    }
+
+    public function primeiro()
+    {
+        $this->primeiroDados();
+        $this->atribuir();
+    }
+
     public function porRa($raAluno)
     {
         $query = "SELECT " . $this->camposSQL . "
@@ -151,7 +153,7 @@ class alunos extends banco
 
     public function porNome($nomeCompletoUsuario)
     {
-        $nomeCompletoUsuario = str_replace(" ","%",$nomeCompletoUsuario);
+        $nomeCompletoUsuario = str_replace(" ", "%", $nomeCompletoUsuario);
         $query = "
             SELECT
                 alunos.CPFUsuario,
@@ -162,11 +164,9 @@ class alunos extends banco
             JOIN
                 usuarios ON usuarios.CPFUsuario LIKE alunos.CPFUsuario
             WHERE
-               CONCAT (usuarios.nomeUsuario,' ',usuarios.sobrenomeUsuario) LIKE '%".$nomeCompletoUsuario."%'";
+               CONCAT (usuarios.nomeUsuario,' ',usuarios.sobrenomeUsuario) LIKE '%" . $nomeCompletoUsuario . "%'";
         return $this->Get($query);
     }
-
-
 }
 
 ?>
