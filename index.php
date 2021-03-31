@@ -2,6 +2,7 @@
 include 'php\cnn.php';
 include 'php\usuarios.php';
 include 'php\alunos.php';
+include 'php\disciplinas.php';
 
 $classeUsuaario = new usuario();
 $classeUsuaario->novoUsuario(
@@ -37,4 +38,8 @@ $classeAluno->porNome('Erick Cavalcante');
 $classeAluno->porRa('77777');
 
 $classeAluno->excluirAluno('77777');
-?>
+
+
+$ClasseDisciplina = new disciplinas();
+
+$ClasseDisciplina->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");

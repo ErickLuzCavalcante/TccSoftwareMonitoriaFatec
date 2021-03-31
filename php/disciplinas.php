@@ -101,6 +101,8 @@ class disciplinas extends banco
             . $sobreDisciplina . "', '"
             . $professorDisciplina . "');";
 
+        echo $sql;
+
         $this->ExecultaSQL($sql);
     }
 
@@ -138,6 +140,15 @@ class disciplinas extends banco
         $query = "SELECT " . $this->camposSQL . "
               FROM " . $this->tabela . " WHERE
               `codigoDisciplina` = '" . $codigoDisciplina . "'";
+
+        return $this->Get($query);
+    }
+
+    public function porNome($nomeDisciplina)
+    {
+        $query = "SELECT " . $this->camposSQL . "
+              FROM " . $this->tabela . " WHERE
+              `nomeDisciplina` LIKE '%" . $nomeDisciplina . "%'";
 
         return $this->Get($query);
     }
