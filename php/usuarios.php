@@ -1,7 +1,6 @@
 <?php
 
-
-/*Configurações e ajustes de sessão e cookies */
+//Configurações e ajustes de sessão e cookies
 @ini_set('session.gc_maxlifetime', 604800);
 @session_set_cookie_params(604800);
 @session_start();
@@ -10,7 +9,6 @@
 
 class usuario extends banco
 {
-
     private $CPFUsuario;
     private $nomeUsuario;
     private $sobrenomeUsuario;
@@ -21,7 +19,7 @@ class usuario extends banco
     // Variavel que deve ser usada na composição de todas as requisições SQL
     // Para que possamos manter a organização e a ordem no retorno dos campos
     // e assim não quebrar o código no metodo atribuir()
-    private $camposSQL = "`CPFUsuario`,  `nomeUsuario`, `sobrenomeUsuario`,`telefoneUsuario`,`emailUsuario`, `palavraChaveUsuario`";
+    private $camposSQL = '`CPFUsuario`,  `nomeUsuario`, `sobrenomeUsuario`,`telefoneUsuario`,`emailUsuario`, `palavraChaveUsuario`';
 
     /**
      * Gets
@@ -51,10 +49,7 @@ class usuario extends banco
         return $this->telefoneUsuario;
     }
 
-
-
     /*Metodos padrões do banco de dados */
-
 
     /*Não altera */
 
@@ -66,14 +61,12 @@ class usuario extends banco
 
     private function atribuir()
     {
-
         $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
         $this->nomeUsuario = $this->Dados[$this->getRegistro()][2];
         $this->sobrenomeUsuario = $this->Dados[$this->getRegistro()][3];
         $this->telefoneUsuario = $this->Dados[$this->getRegistro()][4];
         $this->emailUsuario = $this->Dados[$this->getRegistro()][5];
         $this->palavraChaveUsuario = $this->Dados[$this->getRegistro()][6];
-
     }
 
     public function anterior()
@@ -82,16 +75,18 @@ class usuario extends banco
         $this->atribuir();
     }
 
-    public function novoUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario, $palavraChaveUsuario)
-    {
-
+    public function novoUsuario(
+        $CPFUsuario,
+        $nomeUsuario,
+        $sobrenomeUsuario,
+        $emailUsuario,
+        $telefoneUsuario,
+        $palavraChaveUsuario
+    ) {
         // Inicio da string de SQL
         // Campos do banco de dados
 
-
-        $sql =
-
-            "INSERT INTO `usuarios`
+        $sql = "INSERT INTO `usuarios`
           (
           `CPFUsuario`,
           `nomeUsuario`,
@@ -103,17 +98,23 @@ class usuario extends banco
           ";
 
         //  Valores onde serão inseriedos
-        $sql = $sql .
-            " VALUES ('"
-            . $CPFUsuario . "', '"
-            . $nomeUsuario . "', '"
-            . $sobrenomeUsuario . "', '"
-            . $telefoneUsuario . "', '"
-            . $emailUsuario . "', '"
-            . MD5($palavraChaveUsuario) . "');";
+        $sql =
+            $sql .
+            " VALUES ('" .
+            $CPFUsuario .
+            "', '" .
+            $nomeUsuario .
+            "', '" .
+            $sobrenomeUsuario .
+            "', '" .
+            $telefoneUsuario .
+            "', '" .
+            $emailUsuario .
+            "', '" .
+            MD5($palavraChaveUsuario) .
+            "');";
 
         $this->ExecultaSQL($sql);
-
     }
 
     /* Altera conforme a tabela*/
@@ -129,38 +130,49 @@ class usuario extends banco
          att, Erick Cavalcante
     */
 
-    public function editarUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario)
-    {
-
-
+    public function editarUsuario(
+        $CPFUsuario,
+        $nomeUsuario,
+        $sobrenomeUsuario,
+        $emailUsuario,
+        $telefoneUsuario
+    ) {
         // Primeira parte da string de comando SQL
         // Atributos
         $sql =
-
             "UPDATE `usuarios` SET
   
-      `nomeUsuario`='" . $nomeUsuario . "',
-      `sobrenomeUsuario`='" . $sobrenomeUsuario . "',
-      `telefoneUsuario`='" . $telefoneUsuario . "',
-      `emailUsuario`='" . $emailUsuario . "'
+      `nomeUsuario`='" .
+            $nomeUsuario .
+            "',
+      `sobrenomeUsuario`='" .
+            $sobrenomeUsuario .
+            "',
+      `telefoneUsuario`='" .
+            $telefoneUsuario .
+            "',
+      `emailUsuario`='" .
+            $emailUsuario .
+            "'
       ";
 
         //  Valores onde serão inseridos
-        $sql = $sql .
-            " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
+        $sql = $sql . " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
         $this->ExecultaSQL($sql);
     }
 
     /*Fim dos metodos padrao */
 
-
     /* Cria um novo usuário no banco de dados */
 
     public function excluirusuario($CPFUsuario)
     {
-        $sql = "
+        $sql =
+            "
         DELETE FROM `usuarios` WHERE
-          `CPFUsuario`='" . $CPFUsuario . "';";
+          `CPFUsuario`='" .
+            $CPFUsuario .
+            "';";
         $this->ExecultaSQL($sql);
     }
 
@@ -173,7 +185,10 @@ class usuario extends banco
 
         $this->porCPF($CPFUsuario);
 
-        if (strtoupper($this->CPFUsuario) == $CPFUsuario && $this->palavraChaveUsuario == MD5($palavraChaveUsuario)) {
+        if (
+            strtoupper($this->CPFUsuario) == $CPFUsuario &&
+            $this->palavraChaveUsuario == MD5($palavraChaveUsuario)
+        ) {
             $_SESSION['login'] = strtoupper($CPFUsuario);
             $_SESSION['senha'] = MD5($palavraChaveUsuario);
             return true;
@@ -182,23 +197,25 @@ class usuario extends banco
         }
     }
 
-
     /* Excluir um usuario*/
 
     public function logoff()
     {
-        unset ($_SESSION['login']);
-        unset ($_SESSION['senha']);
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
     }
 
     public function porCPF($CPFUsuario)
     {
-
-
-        $query = "SELECT" . $this->camposSQL . "
+        $query =
+            'SELECT' .
+            $this->camposSQL .
+            "
       
       FROM `usuarios` WHERE
-      `CPFUsuario` = '" . strtoupper($CPFUsuario) . "'";
+      `CPFUsuario` = '" .
+            strtoupper($CPFUsuario) .
+            "'";
         return $this->Get($query);
     }
 
@@ -223,7 +240,10 @@ class usuario extends banco
             $this->logoff();
             $usuario = strtoupper($usuario);
             $this->porCPF($usuario);
-            if (strtoupper($this->CPFUsuario) == $usuario && $this->palavraChaveUsuario == $senha) {
+            if (
+                strtoupper($this->CPFUsuario) == $usuario &&
+                $this->palavraChaveUsuario == $senha
+            ) {
                 $_SESSION['login'] = strtoupper($usuario);
                 $_SESSION['senha'] = $senha;
                 return true;
@@ -234,7 +254,6 @@ class usuario extends banco
             return false;
         }
     }
-
 }
 
 ?>
