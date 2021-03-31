@@ -14,7 +14,7 @@ class disciplinas extends banco
     private $tabela = "`disciplinas`";
 
     /**
-     * Gets 
+     * Gets
      */
     public function getProfessorDisciplina()
     {

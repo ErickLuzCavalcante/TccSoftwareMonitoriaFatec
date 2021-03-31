@@ -255,5 +255,3 @@ class usuario extends banco
         }
     }
 }
-
-?>

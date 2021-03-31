@@ -33,8 +33,4 @@ class interfaces
     {
         echo '</body></html>';
     }
-
-
 }
-
-?>

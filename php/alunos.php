@@ -3,14 +3,13 @@
 
 class alunos extends banco
 {
-
     private $CPFUsuario;
     private $raAluno;
     private $monitorAluno;
 
-// Variavel que deve ser usada na composição de todas as requisições SQL
-// Para que possamos manter a organização e a ordem no retorno dos campos
-// e assim não quebrar o código no metodo atribuir()
+    // Variavel que deve ser usada na composição de todas as requisições SQL
+    // Para que possamos manter a organização e a ordem no retorno dos campos
+    // e assim não quebrar o código no metodo atribuir()
     private $camposSQL = "`CPFUsuario`,  `raAluno`, `monitorAluno` ";
     private $tabela = "`alunos`";
 
@@ -28,11 +27,9 @@ class alunos extends banco
 
     private function atribuir()
     {
-
         $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
         $this->raAluno = $this->Dados[$this->getRegistro()][2];
         $this->monitorAluno = $this->Dados[$this->getRegistro()][3];
-
     }
 
     public function anterior()
@@ -66,7 +63,6 @@ class alunos extends banco
             . $monitorAluno . "');";
 
         $this->ExecultaSQL($sql);
-
     }
 
     /* Altera conforme a tabela*/
@@ -118,8 +114,6 @@ class alunos extends banco
 
     public function porCPF($CPFUsuario)
     {
-
-
         $query = "SELECT " . $this->camposSQL . "
               
               FROM " . $this->tabela . " WHERE
@@ -168,5 +162,3 @@ class alunos extends banco
         return $this->Get($query);
     }
 }
-
-?>

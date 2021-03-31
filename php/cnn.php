@@ -25,7 +25,6 @@ class banco
     public function ponteiro($indice)
     {
         if ($indice < $this->tamanho) {
-
             return true;
         } else {
             return false;
@@ -122,6 +121,3 @@ class banco
         return $localizou;
     }
 }
-
-
-?>
