@@ -15,9 +15,9 @@ class banco
     private $servername = "localhost";
     private $database = "SoftwareDeMonitoria";
     private $username = "root";
-
-    // Atributos de controle não mexer
     private $password = "";
+    // Atributos de controle não mexer
+
     private $registro = 1;
     private $tamanho = 0;
 

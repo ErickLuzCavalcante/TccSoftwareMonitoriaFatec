@@ -1,12 +1,31 @@
 <?php
+include 'php\usuarios.php';
+include 'php\alunos.php';
 
 class interfaces
 {
+
     /**
      * interfaces constructor.
      */
-    public function __construct($titulo)
+
+    /* Nivel de acesso:
+    0 - nao necessita de autenticacao para acessar a pagina 
+    1 - Só precisa estar logado (Aluno)
+    2 - Precisa ser administrador
+    */
+
+
+    public function __construct($titulo, $nivelDeAcesso)
     {
+        // Instancia o objeto com a classe usuario
+        $usuario = new usuario();
+
+        if ($usuario->verificaLogado() && $nivelDeAcesso == 1) {
+        }
+
+
+
         echo '
                         <!doctype html>
                             <html lang="pt-br">

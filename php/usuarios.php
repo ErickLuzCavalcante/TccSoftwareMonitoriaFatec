@@ -254,4 +254,26 @@ class usuario extends banco
             return false;
         }
     }
+    public function verificaAdministrador()
+    {
+        if (isset($_SESSION['login']) && isset($_SESSION['senha'])) {
+            $usuario = $_SESSION['login'];
+            $senha = $_SESSION['senha'];
+            $this->logoff();
+            $usuario = strtoupper($usuario);
+            $this->porCPF($usuario);
+            if (
+                strtoupper($this->CPFUsuario) == $usuario &&
+                $this->palavraChaveUsuario == $senha
+            ) {
+                $_SESSION['login'] = strtoupper($usuario);
+                $_SESSION['senha'] = $senha;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

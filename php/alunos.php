@@ -38,6 +38,25 @@ class alunos extends banco
         $this->atribuir();
     }
 
+
+    private function Get($query)
+    {
+        $retorno = $this->Pesquisa($query);
+        $this->primeiro();
+        return $retorno;
+    }
+
+    public function primeiro()
+    {
+        $this->primeiroDados();
+        $this->atribuir();
+    }
+
+    /*
+        Metodos de inserção de alteracao de dados
+     */
+
+
     public function novoAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
 
@@ -65,18 +84,6 @@ class alunos extends banco
         $this->ExecultaSQL($sql);
     }
 
-    /* Altera conforme a tabela*/
-    /*Deve ser padronizado, colocando na ordem que aparece na variavel $camposSQL
-      -- Este metodo coleta o resultados das consultas SQL
-         a classe banco retorna, um array do tipo matriz com sendo o primeiro indice a linha da tabela e o segundo
-         indice a coluna da tabela
-
-         Por isso devemos usar o padrao $this->atributo=$this->Dados[$this->getRegistro()][1];
-
-         Respeitando a ordem da variavel $campoSQL
-
-         att, Erick Cavalcante
-    */
 
     public function editarAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
@@ -97,11 +104,6 @@ class alunos extends banco
         $this->ExecultaSQL($sql);
     }
 
-    /*Fim dos metodos padrao */
-
-
-    /* Cria um novo aluno no banco de dados */
-
     public function excluirAluno($CPFUsuario)
     {
         $sql = "
@@ -110,7 +112,22 @@ class alunos extends banco
         $this->ExecultaSQL($sql);
     }
 
-    /* Edita um aluno */
+
+
+    /* 
+    Metodos de pesquisa
+     */
+
+
+
+    public function porRa($raAluno)
+    {
+        $query = "SELECT " . $this->camposSQL . "
+              FROM " . $this->tabela . " WHERE
+              `raAluno` = '" . strtoupper($raAluno) . "'";
+        return $this->Get($query);
+    }
+
 
     public function porCPF($CPFUsuario)
     {
@@ -121,29 +138,6 @@ class alunos extends banco
         return $this->Get($query);
     }
 
-
-    /* Excluir um aluno*/
-
-    private function Get($query)
-    {
-        $retorno = $this->Pesquisa($query);
-        $this->primeiro();
-        return $retorno;
-    }
-
-    public function primeiro()
-    {
-        $this->primeiroDados();
-        $this->atribuir();
-    }
-
-    public function porRa($raAluno)
-    {
-        $query = "SELECT " . $this->camposSQL . "
-              FROM " . $this->tabela . " WHERE
-              `raAluno` = '" . strtoupper($raAluno) . "'";
-        return $this->Get($query);
-    }
 
     public function porNome($nomeCompletoUsuario)
     {
