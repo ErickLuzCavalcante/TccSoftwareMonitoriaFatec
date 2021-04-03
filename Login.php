@@ -1,30 +1,26 @@
 <?php
-include 'php\usuarios.php';
-$login = $_POST['login'];
-$entrar = $_POST['entrar'];
-$senha = md5($_POST['senha']);
-$connect = mysql_connect('nome_do_servidor', 'nome_de_usuario', 'senha');
-$db = mysql_select_db('nome_do_banco_de_dados');
-if (isset($entrar)) {
-
-  $verifica = mysql_query("SELECT * FROM usuarios WHERE login =
-    '$login' AND senha = '$senha'") or die("erro ao selecionar");
-  if (mysql_num_rows($verifica) <= 0) {
-    echo "<script language='javascript' type='text/javascript'>
-        alert('Login e/ou senha incorretos');window.location
-        .href='login.html';</script>";
-    die();
+include 'php\interfaces.php';
+// Variaveis que seram usadas para mostrar alguma falha
+// se houver
+$falha = false;
+$textofalha = "Falha:";
+// carrega dados do usuario atualmente logado
+$usr = new usuario();
+if (isset($_POST["Login_CPF"])) {
+  $usuario = $_POST["Login_CPF"];
+  $senha = $_POST["Login_Senha"];;
+  $usr->login($usuario, $senha);
+  $secao = $usr->verificaLogado();
+  if ($secao) {
+    header('Location: index.html');
   } else {
-    setcookie("login", $login);
-    header("Location:index.php");
+    $falha = true;
+    $textofalha = "Usuário ou senha invalidos";
   }
+} else {
+  $secao = $usr->logoff();
 }
-?>
-
-?>
-
-<!doctype html>
-<html lang="pt-br">
+?><html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
@@ -42,14 +38,23 @@ if (isset($entrar)) {
 </head>
 
 <body class="text-center">
-  <form class="form-signin">
+
+  <form class="form-signin" method="POST" action="Login.php">
     <img class="mb-4" src="img/logofatec.png" alt="">
     <h1 class="h3 mb-3 font-weight-normal">Login </h1>
     <label class="sr-only">CPF:</label>
-    <input type="text" id="Login_CPF" class="form-control" placeholder="CPF" required autofocus><br>
+    <input type="text" name="Login_CPF" class="form-control" placeholder="CPF" required autofocus><br>
     <label for="inputPassword" class="sr-only">Senha:</label>
-    <input type="password" id="Login_Senha" class="form-control" placeholder="Senha" required>
+    <input type="password" name="Login_Senha" class="form-control" placeholder="Senha" required>
     <div class="checkbox mb-3">
+      <?php
+      if ($falha) {
+        echo '<div class="alert  alert-danger" role="alert">
+    <center>' . $textofalha . '</center>
+    </div>';
+      }
+      ?>
+
       <label>
         <input type="checkbox" value="remember-me"> Lembrar Senha
       </label>

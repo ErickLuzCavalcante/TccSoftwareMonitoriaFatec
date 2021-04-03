@@ -61,12 +61,14 @@ class usuario extends banco
 
     private function atribuir()
     {
-        $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
-        $this->nomeUsuario = $this->Dados[$this->getRegistro()][2];
-        $this->sobrenomeUsuario = $this->Dados[$this->getRegistro()][3];
-        $this->telefoneUsuario = $this->Dados[$this->getRegistro()][4];
-        $this->emailUsuario = $this->Dados[$this->getRegistro()][5];
-        $this->palavraChaveUsuario = $this->Dados[$this->getRegistro()][6];
+        if (isset($this->Dados[$this->getRegistro()][1])) {
+            $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
+            $this->nomeUsuario = $this->Dados[$this->getRegistro()][2];
+            $this->sobrenomeUsuario = $this->Dados[$this->getRegistro()][3];
+            $this->telefoneUsuario = $this->Dados[$this->getRegistro()][4];
+            $this->emailUsuario = $this->Dados[$this->getRegistro()][5];
+            $this->palavraChaveUsuario = $this->Dados[$this->getRegistro()][6];
+        }
     }
 
     public function anterior()
@@ -262,9 +264,16 @@ class usuario extends banco
             $this->logoff();
             $usuario = strtoupper($usuario);
             $this->porCPF($usuario);
+
+            // Valida se há cadastro na tabela alunos
+            $classeAluno = new alunos();
+            $confirmaAluno = $classeAluno->porCPF($usuario);
+
+
             if (
                 strtoupper($this->CPFUsuario) == $usuario &&
-                $this->palavraChaveUsuario == $senha
+                $this->palavraChaveUsuario == $senha &&
+                $confirmaAluno != false
             ) {
                 $_SESSION['login'] = strtoupper($usuario);
                 $_SESSION['senha'] = $senha;

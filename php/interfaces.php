@@ -1,6 +1,8 @@
 <?php
+include 'php\cnn.php';
 include 'php\usuarios.php';
 include 'php\alunos.php';
+
 
 class interfaces
 {
@@ -20,8 +22,16 @@ class interfaces
     {
         // Instancia o objeto com a classe usuario
         $usuario = new usuario();
-
+        $MensagemNivelTeste = "";
         if ($usuario->verificaLogado() && $nivelDeAcesso == 1) {
+            // Precisa estar logado para acessar
+
+        } else if ($usuario->verificaAdministrador() && $nivelDeAcesso == 2) {
+            // Precisa estar logado para acessar e tem que ser adm
+        } else if ($nivelDeAcesso) {
+            //nao possui restricao
+        } else {
+            // Tentativa de acesso sem permissao
         }
 
 
