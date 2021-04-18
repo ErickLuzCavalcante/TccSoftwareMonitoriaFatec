@@ -77,14 +77,22 @@ if (isset($_POST["CPFUsuario"])) {
                 <br><input type="text" class="form-control" name="CPFUsuario" placeholder="CPF" required>
             </div>
 
-            <div class="col-6, centralizado">
+            <div class="col-4, centralizado">
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_1" class="form-control"
                     placeholder="Senha" required>
             </div>
 
-            <div class="col-6, centralizado">
+            <div class="col-4, centralizado">
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_2" class="form-control"
                     placeholder="Confirme senha" required>
+            </div>
+            <div class="col-4, centralizado">
+              <br>
+              <select class="form-control">
+                    <option selected>Nivel De Usuario</option>
+                    <option value="1">Monitor</option>
+                    <option value="2">Aluno</option>
+              </select>
             </div>
         </div>
         <br>
