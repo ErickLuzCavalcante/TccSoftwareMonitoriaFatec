@@ -106,8 +106,8 @@
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span></a>
-                                        <a href="#" class="table-link danger">
-                                            <span class="fa-stack">
+                                            <a href="" data-toggle="modal" data-target="#excluir_usuario" class="table-link danger">
+                                              <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                             </span>
@@ -128,8 +128,8 @@
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span></a>
-                                        <a href="#" class="table-link danger">
-                                            <span class="fa-stack">
+                                            <a href="" data-toggle="modal" data-target="#excluir_usuario" class="table-link danger">
+                                              <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                             </span>
@@ -150,7 +150,7 @@
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span></a>
-                                        <a href="#" class="table-link danger">
+                                        <a href="" data-toggle="modal" data-target="#excluir_usuario" class="table-link danger">
                                             <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -172,8 +172,8 @@
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                             </span></a>
-                                        <a href="#" class="table-link danger">
-                                            <span class="fa-stack">
+                                            <a href="" data-toggle="modal" data-target="#excluir_usuario" class="table-link danger">
+                                              <span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                             </span>
@@ -186,7 +186,27 @@
                     </div>
             </div>
     </div>
-        
+    <!--------------------------------------Modal excluir usuario ------------------------------------------------>   
+      <div class="modal fade" id="excluir_usuario"  tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Atenção</h5>
+                <button type="text" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Voce gostaria de realmente excluir esse Usuario?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger">Sim Salvar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!---------------------------------------------------------------------------------------------->
     </main>
     </div>
     </div>
@@ -195,15 +215,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
 
-<script>
-    $(document).ready(function(){
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#myList li").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
-    </script>
+   <!-- Modal JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
 </html>
