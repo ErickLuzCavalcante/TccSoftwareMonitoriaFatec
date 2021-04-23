@@ -1,9 +1,24 @@
 <?php
 include("php/interfaces.php");
-
+// Tratativa de erros e falhas
+// Variaveis de controle
 $SenhasIguais = true;
 $CadastradoComSucesso = false;
-$objeto_interface = new interfaces("Cadastro", 0);
+$esqueceTipoAlunos = false;
+
+// Cria as variaveis de forma limpa
+$CPFUsuario = "";
+$nomeUsuario = "";
+$sobrenomeUsuario = "";
+$emailUsuario = "";
+$telefoneUsuario = "";
+$TipoUsuario = "";
+$raAluno = "2";
+
+
+
+
+// Se ele receber algum valor para gravar no banco de dados
 if (isset($_POST["CPFUsuario"])) {
     $classeUsuario = new usuario();
     $CPFUsuario = $_POST["CPFUsuario"];
@@ -12,17 +27,38 @@ if (isset($_POST["CPFUsuario"])) {
     $emailUsuario = $_POST["emailUsuario"];
     $telefoneUsuario = $_POST["telefoneUsuario"];
     $palavraChaveUsuario = $_POST["palavraChaveUsuario_1"];
+    if (isset($_POST["TipoUsuario"])) {
+        $TipoUsuario = $_POST["TipoUsuario"];
+    }
     if ($_POST["palavraChaveUsuario_1"] == $_POST["palavraChaveUsuario_2"]) {
         $CadastradoComSucesso = true;
 
-        $classeUsuario->novoUsuario(
+        switch ($TipoUsuario) {
+            case '2':
+                // Aluno
+                break;
+            case '1':
+                // Monitor
+                break;
+
+            case '3':
+                // Professor
+                break;
+
+            default:
+                // Esqueceu de selcionar o tipo de usuário
+                $esqueceTipoAlunos = false;
+        }
+
+
+        /* $classeUsuario->novoUsuario(
             $CPFUsuario,
             $nomeUsuario,
             $sobrenomeUsuario,
             $emailUsuario,
             $telefoneUsuario,
             $palavraChaveUsuario
-        );
+        );*/
     } else {
         $SenhasIguais = false;
     }
@@ -70,7 +106,7 @@ if (isset($_POST["CPFUsuario"])) {
             </div>
 
             <div class="col-4, centralizado">
-                <br><input type="text" class="form-control" name="raAluno" placeholder="R.A" required>
+                <br><input type="text" class="form-control" name="raAluno" placeholder="R.A">
             </div>
 
             <div class="col-4, centralizado">
@@ -87,12 +123,13 @@ if (isset($_POST["CPFUsuario"])) {
                     placeholder="Confirme senha" required>
             </div>
             <div class="col-4, centralizado">
-              <br>
-              <select class="form-control">
-                    <option selected>Nivel De Usuario</option>
-                    <option value="1">Monitor</option>
+                <br>
+                <select class="form-control" name="TipoUsuario" required>
+                    <option value="0" selected disabled>Tipo De Usuario</option>
                     <option value="2">Aluno</option>
-              </select>
+                    <option value="1">Monitor</option>
+                    <option value="3">Professor</option>
+                </select>
             </div>
         </div>
         <br>
