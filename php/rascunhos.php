@@ -101,7 +101,31 @@ class rascunhos extends banco
         Metodos de alteração
     */
 
-    public function novo(){
-        ;, b¶€;/;'''''m-0i ({/i9,6';9
+    public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    {
+
+        $dataCriacaoRascunho = "";
+
+        $sql =
+
+            "INSERT INTO " . $this->tabela . "
+                  (
+                  `tituloRascunho`,
+                  `conteudoRascunho`,
+                  `codigoDisciplina`,
+                  `CPFUsuario`
+                  )
+                  ";
+
+        $sql = $sql .
+            " VALUES ('"
+            . $tituloRascunho . "', '"
+            . $conteudoRascunho . "', '"
+            . $codigoDisciplina . "', '"
+            . $CPFUsuario . "');";
+
+        echo $sql;
+
+        $this->ExecultaSQL($sql);
     }
 }
