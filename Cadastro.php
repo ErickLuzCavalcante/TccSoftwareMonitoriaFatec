@@ -98,7 +98,7 @@ if (isset($_POST["CPFUsuario"])) {
         <br>
         <div class="botao1">
             <button class="btn btn-lg btn-danger btn-block" type="submit">Cadastrar</button>
-            <a href="Login.html" class="btn btn-lg btn-danger btn-block" type="button">Logar</button></a>
+            <a href="Login.php" class="btn btn-lg btn-danger btn-block" type="button">Logar</button></a>
         </div>
 </div>
 </form>
