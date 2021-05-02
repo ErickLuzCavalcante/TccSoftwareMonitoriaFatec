@@ -79,8 +79,8 @@ class Alunos extends banco
         $sql = $sql .
             " VALUES ('"
             . $CPFUsuario . "', '"
-            . $raAluno . "', '"
-            . $monitorAluno . "');";
+            . $raAluno . "', "
+            . $monitorAluno . ");";
 
         $this->ExecultaSQL($sql);
     }
@@ -101,7 +101,7 @@ class Alunos extends banco
 
         //  Valores onde serão inseridos
         $sql = $sql .
-            " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
+            " WHERE  `CPFUsuario`=" . $CPFUsuario . ";";
         $this->ExecultaSQL($sql);
     }
 
@@ -109,7 +109,8 @@ class Alunos extends banco
     {
         $sql = "
                 DELETE FROM " . $this->tabela . " WHERE
-                  `CPFUsuario`='" . $CPFUsuario . "';";
+                  `CPFUsuario`=" . $CPFUsuario . ";";
+                  echo $sql;
         $this->ExecultaSQL($sql);
     }
 
@@ -125,7 +126,7 @@ class Alunos extends banco
     {
         $query = "SELECT " . $this->camposSQL . "
               FROM " . $this->tabela . " WHERE
-              `raAluno` = '" . strtoupper($raAluno) . "'";
+              `raAluno` = " . strtoupper($raAluno) . "";
         return $this->Get($query);
     }
 
@@ -135,7 +136,7 @@ class Alunos extends banco
         $query = "SELECT " . $this->camposSQL . "
               
               FROM " . $this->tabela . " WHERE
-              `CPFUsuario` = '" . strtoupper($CPFUsuario) . "'";
+              `CPFUsuario` = " . strtoupper($CPFUsuario) ;
         return $this->Get($query);
     }
 
@@ -155,5 +156,24 @@ class Alunos extends banco
             WHERE
                CONCAT (usuarios.nomeUsuario,' ',usuarios.sobrenomeUsuario) LIKE '%" . $nomeCompletoUsuario . "%'";
         return $this->Get($query);
+    }
+
+    /**
+     * Get dos atributos
+     */ 
+
+    public function getCPFUsuario()
+    {
+        return $this->CPFUsuario;
+    }
+ 
+    public function getRaAluno()
+    {
+        return $this->raAluno;
+    }
+ 
+    public function getMonitorAluno()
+    {
+        return $this->monitorAluno;
     }
 }

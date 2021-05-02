@@ -19,7 +19,7 @@ $classeUsuaario->novoUsuario(
 
 $classeUsuaario->editarUsuario("1111","Paula","Rodriguez","emaildapaula","123");
 
-$classeUsuaario->excluirusuario("1111");
+
 $classeUsuaario->login('1111', 'Senha');
 
 echo 'Desconectar ' . $classeUsuaario->logoff();
@@ -32,17 +32,29 @@ echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
 $classeAluno = new alunos();
 
 $classeAluno->novoAluno('1111', '66698', 0);
-$classeAluno->editarAluno('1111', '77777', 0);
+$classeAluno->editarAluno('1111', '77777', 1);
 
 $classeAluno->porCPF('1111');
-
 $classeAluno->porNome('Erick Cavalcante');
 
 $classeAluno->porRa('77777');
+echo "<br><br>";
+echo "CPF ALUNO";
+echo $classeAluno->getCPFUsuario();
+echo "<br><br>";
+echo "CPF RA";
+echo $classeAluno->getRaAluno();
+echo "<br><br>";
+echo "CPF MONITOR";
+echo $classeAluno->getMonitorAluno();
+echo "<br><br>";
+$classeUsuaario->excluirusuario("1111");
+$classeAluno->excluirAluno('1111');
 
-$classeAluno->excluirAluno('77777');
 
 
 $ClasseDisciplina = new disciplinas();
 
 $ClasseDisciplina->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");
+/*
+*/

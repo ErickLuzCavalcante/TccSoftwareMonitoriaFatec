@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Servidmysqlor:                     127.0.0.1
+-- Servidor:                     127.0.0.1
 -- Versão do servidor:           10.4.17-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              11.2.0.6213
@@ -14,10 +14,12 @@
 
 
 -- Copiando estrutura do banco de dados para softwaredemonitoria
+DROP DATABASE IF EXISTS `softwaredemonitoria`;
 CREATE DATABASE IF NOT EXISTS `softwaredemonitoria` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `softwaredemonitoria`;
 
 -- Copiando estrutura para tabela softwaredemonitoria.alunos
+DROP TABLE IF EXISTS `alunos`;
 CREATE TABLE IF NOT EXISTS `alunos` (
   `raAluno` varchar(20) NOT NULL DEFAULT '',
   `CPFUsuario` varchar(11) DEFAULT NULL,
@@ -30,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `alunos` (
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela softwaredemonitoria.atualizacoes
+DROP TABLE IF EXISTS `atualizacoes`;
 CREATE TABLE IF NOT EXISTS `atualizacoes` (
   `codigoRascunho` int(11) DEFAULT NULL,
   `codigoMaterial` int(11) DEFAULT NULL,
@@ -45,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `atualizacoes` (
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela softwaredemonitoria.disciplinas
+DROP TABLE IF EXISTS `disciplinas`;
 CREATE TABLE IF NOT EXISTS `disciplinas` (
   `codigoDisciplina` int(11) NOT NULL AUTO_INCREMENT,
   `nomeDisciplina` varchar(50) NOT NULL,
@@ -52,11 +56,12 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
   `sobreDisciplina` text NOT NULL,
   `professorDisciplina` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigoDisciplina`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela softwaredemonitoria.materiais
+DROP TABLE IF EXISTS `materiais`;
 CREATE TABLE IF NOT EXISTS `materiais` (
   `codigoMaterial` int(11) NOT NULL,
   `tituloMaterial` varchar(255) NOT NULL DEFAULT '',
@@ -68,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `materiais` (
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela softwaredemonitoria.rascunhos
+DROP TABLE IF EXISTS `rascunhos`;
 CREATE TABLE IF NOT EXISTS `rascunhos` (
   `codigoRascunho` int(11) NOT NULL,
   `tituloRascunho` varchar(255) NOT NULL DEFAULT '',
@@ -85,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `rascunhos` (
 -- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela softwaredemonitoria.usuarios
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `CPFUsuario` varchar(50) NOT NULL,
   `nomeUsuario` varchar(50) NOT NULL,
