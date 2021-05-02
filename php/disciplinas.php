@@ -1,5 +1,8 @@
 <?php
-class disciplinas extends banco
+
+namespace tcc\monitoria;
+
+class Disciplinas extends banco
 {
     private $codigoDisciplina;
     private $nomeDisciplina;
@@ -67,7 +70,7 @@ class disciplinas extends banco
         $this->atribuir();
     }
 
-    private function Get($query)
+    private function get($query)
     {
         $retorno = $this->Pesquisa($query);
         $this->primeiro();

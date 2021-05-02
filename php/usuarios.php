@@ -1,5 +1,8 @@
 <?php
 
+namespace tcc\monitoria;
+
+
 //Configurações e ajustes de sessão e cookies
 @ini_set('session.gc_maxlifetime', 604800);
 @session_set_cookie_params(604800);
@@ -7,7 +10,7 @@
 
 /*--------------------------------------------*/
 
-class usuario extends banco
+class Usuario extends banco
 {
     private $CPFUsuario;
     private $nomeUsuario;
@@ -221,7 +224,7 @@ class usuario extends banco
         return $this->Get($query);
     }
 
-    private function Get($query)
+    private function get($query)
     {
         $retorno = $this->Pesquisa($query);
         $this->primeiro();
@@ -286,3 +289,4 @@ class usuario extends banco
         }
     }
 }
+?>

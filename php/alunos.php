@@ -1,7 +1,8 @@
 <?php
 
+namespace tcc\monitoria;
 
-class alunos extends banco
+class Alunos extends banco
 {
     private $CPFUsuario;
     private $raAluno;
@@ -39,7 +40,7 @@ class alunos extends banco
     }
 
 
-    private function Get($query)
+    private function get($query)
     {
         $retorno = $this->Pesquisa($query);
         $this->primeiro();
@@ -114,7 +115,7 @@ class alunos extends banco
 
 
 
-    /* 
+    /*
     Metodos de pesquisa
      */
 

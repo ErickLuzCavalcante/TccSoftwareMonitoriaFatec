@@ -1,4 +1,7 @@
 <?php
+
+namespace tcc\monitoria;
+
 include("php/interfaces.php");
 // Tratativa de erros e falhas
 // Variaveis de controle

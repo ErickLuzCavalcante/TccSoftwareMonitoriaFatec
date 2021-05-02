@@ -1,13 +1,16 @@
 <?php
 
+namespace tcc\monitoria;
+
 /**
  * Classe controladora de banco de dados
  * Desenvolvido por: Erick Luz Cavalcante
  * Versão 1.2
  *
- *
+ *s
  */
-class banco
+
+class Banco
 {
 
     // Dados de conexão
@@ -70,7 +73,7 @@ class banco
     }
 
     // Realiza comandos de insersão no banco de dados
-    protected function ExecultaSQL($sql)
+    protected function execultaSQL($sql)
     {
         $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
         if (!$conn) {
@@ -95,7 +98,7 @@ class banco
 
 
     // Realiza comandos de pesquisa no banco de dados
-    protected function Pesquisa($query)
+    protected function pesquisa($query)
     {
         $localizou = false;
         $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
@@ -121,3 +124,4 @@ class banco
         return $localizou;
     }
 }
+?>

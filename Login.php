@@ -1,4 +1,7 @@
 <?php
+
+namespace tcc\monitoria;
+
 include 'php\interfaces.php';
 // Variaveis que seram usadas para mostrar alguma falha
 // se houver

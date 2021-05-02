@@ -1,4 +1,7 @@
 <?php
+
+namespace tcc\monitoria;
+
 include 'php\cnn.php';
 include 'php\usuarios.php';
 include 'php\alunos.php';
@@ -14,9 +17,9 @@ $classeUsuaario->novoUsuario(
     'Senha'
 );
 
-//$classeUsuaario->editarUsuario("1111","Paula","Rodriguez","emaildapaula","123");
+$classeUsuaario->editarUsuario("1111","Paula","Rodriguez","emaildapaula","123");
 
-//$classeUsuaario->excluirusuario("1111");
+$classeUsuaario->excluirusuario("1111");
 $classeUsuaario->login('1111', 'Senha');
 
 echo 'Desconectar ' . $classeUsuaario->logoff();

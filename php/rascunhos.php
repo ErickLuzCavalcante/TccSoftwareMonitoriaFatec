@@ -1,7 +1,8 @@
 <?php
 
+namespace tcc\monitoria;
 
-class rascunhos extends banco
+class Rascunhos extends banco
 {
 
     /*
@@ -13,9 +14,8 @@ class rascunhos extends banco
     private $codigoDisciplina;
     private $CPFUsuario;
 
-    /* 
-        Atributos de configuração com a tabela
-    */
+    // Atributos de configuração com a tabela
+
     private $camposSQL = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`,`CPFUsuario';
     private $tabela = "`rascunhos`";
 
@@ -63,7 +63,7 @@ class rascunhos extends banco
     }
 
 
-    /* 
+    /*
         Classes padrao de conexao com o banco de dados
     */
 
@@ -83,7 +83,7 @@ class rascunhos extends banco
         $this->atribuir();
     }
 
-    private function Get($query)
+    private function get($query)
     {
         $retorno = $this->Pesquisa($query);
         $this->primeiro();
