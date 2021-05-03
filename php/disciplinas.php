@@ -104,9 +104,7 @@ class Disciplinas extends banco
             . $sobreDisciplina . "', '"
             . $professorDisciplina . "');";
 
-        echo $sql;
-
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
 

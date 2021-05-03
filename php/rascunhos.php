@@ -124,8 +124,6 @@ class Rascunhos extends banco
             . $codigoDisciplina . "', '"
             . $CPFUsuario . "');";
 
-        echo $sql;
-
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 }

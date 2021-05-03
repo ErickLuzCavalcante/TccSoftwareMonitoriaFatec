@@ -119,7 +119,7 @@ class Usuario extends banco
             MD5($palavraChaveUsuario) .
             "');";
 
-        $this->ExecultaSQL($sql);
+         return $this->ExecultaSQL($sql);
     }
 
     /* Altera conforme a tabela*/
@@ -163,7 +163,7 @@ class Usuario extends banco
 
         //  Valores onde serão inseridos
         $sql = $sql . " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
     /*Fim dos metodos padrao */
@@ -178,7 +178,7 @@ class Usuario extends banco
           `CPFUsuario`='" .
             $CPFUsuario .
             "';";
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
     /* Edita um usuario */

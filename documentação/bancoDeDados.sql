@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
   `sobreDisciplina` text NOT NULL,
   `professorDisciplina` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigoDisciplina`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
 -- Exportação de dados foi desmarcado.
 

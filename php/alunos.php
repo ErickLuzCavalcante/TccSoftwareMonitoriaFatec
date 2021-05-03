@@ -82,7 +82,7 @@ class Alunos extends banco
             . $raAluno . "', "
             . $monitorAluno . ");";
 
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
 
@@ -102,7 +102,7 @@ class Alunos extends banco
         //  Valores onde serão inseridos
         $sql = $sql .
             " WHERE  `CPFUsuario`=" . $CPFUsuario . ";";
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
     public function excluirAluno($CPFUsuario)
@@ -111,7 +111,7 @@ class Alunos extends banco
                 DELETE FROM " . $this->tabela . " WHERE
                   `CPFUsuario`=" . $CPFUsuario . ";";
                   echo $sql;
-        $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
 

@@ -6,6 +6,7 @@ include 'php\cnn.php';
 include 'php\usuarios.php';
 include 'php\alunos.php';
 include 'php\disciplinas.php';
+include 'php\rascunhos.php';
 
 $classeUsuaario = new usuario();
 $classeUsuaario->novoUsuario(
@@ -48,13 +49,25 @@ echo "<br><br>";
 echo "CPF MONITOR";
 echo $classeAluno->getMonitorAluno();
 echo "<br><br>";
+
+$ClasseDisciplina = new disciplinas();
+$codigoDisciplina=$ClasseDisciplina->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");
+echo "<br>Codigo ".$codigoDisciplina;
+
+$classeRascunho = new Rascunhos();
+$classeRascunho->novo("Titulo","conteudo",$codigoDisciplina,"1111");
+
+
 $classeUsuaario->excluirusuario("1111");
 $classeAluno->excluirAluno('1111');
 
 
 
-$ClasseDisciplina = new disciplinas();
 
-$ClasseDisciplina->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");
+
+
+
+
+
 /*
 */
