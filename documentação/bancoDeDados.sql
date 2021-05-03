@@ -1,10 +1,3 @@
--- --------------------------------------------------------
--- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.17-MariaDB - mariadb.org binary distribution
--- OS do Servidor:               Win64
--- HeidiSQL Versão:              11.2.0.6213
--- --------------------------------------------------------
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
@@ -12,14 +5,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Copiando estrutura do banco de dados para softwaredemonitoria
-DROP DATABASE IF EXISTS `softwaredemonitoria`;
 CREATE DATABASE IF NOT EXISTS `softwaredemonitoria` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `softwaredemonitoria`;
 
--- Copiando estrutura para tabela softwaredemonitoria.alunos
-DROP TABLE IF EXISTS `alunos`;
 CREATE TABLE IF NOT EXISTS `alunos` (
   `raAluno` varchar(20) NOT NULL DEFAULT '',
   `CPFUsuario` varchar(11) DEFAULT NULL,
@@ -29,10 +17,6 @@ CREATE TABLE IF NOT EXISTS `alunos` (
   CONSTRAINT `FK_alunos_usuarios` FOREIGN KEY (`CPFUsuario`) REFERENCES `usuarios` (`CPFUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela softwaredemonitoria.atualizacoes
-DROP TABLE IF EXISTS `atualizacoes`;
 CREATE TABLE IF NOT EXISTS `atualizacoes` (
   `codigoRascunho` int(11) DEFAULT NULL,
   `codigoMaterial` int(11) DEFAULT NULL,
@@ -45,10 +29,6 @@ CREATE TABLE IF NOT EXISTS `atualizacoes` (
   CONSTRAINT `FK_updates_rascunhos` FOREIGN KEY (`codigoRascunho`) REFERENCES `rascunhos` (`codigoRascunho`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela softwaredemonitoria.disciplinas
-DROP TABLE IF EXISTS `disciplinas`;
 CREATE TABLE IF NOT EXISTS `disciplinas` (
   `codigoDisciplina` int(11) NOT NULL AUTO_INCREMENT,
   `nomeDisciplina` varchar(50) NOT NULL,
@@ -56,12 +36,8 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
   `sobreDisciplina` text NOT NULL,
   `professorDisciplina` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigoDisciplina`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela softwaredemonitoria.materiais
-DROP TABLE IF EXISTS `materiais`;
 CREATE TABLE IF NOT EXISTS `materiais` (
   `codigoMaterial` int(11) NOT NULL,
   `tituloMaterial` varchar(255) NOT NULL DEFAULT '',
@@ -70,28 +46,17 @@ CREATE TABLE IF NOT EXISTS `materiais` (
   PRIMARY KEY (`codigoMaterial`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela softwaredemonitoria.rascunhos
-DROP TABLE IF EXISTS `rascunhos`;
 CREATE TABLE IF NOT EXISTS `rascunhos` (
   `codigoRascunho` int(11) NOT NULL AUTO_INCREMENT,
   `tituloRascunho` varchar(255) NOT NULL DEFAULT '',
   `conteudoRascunho` text NOT NULL,
   `dataCriacaoRascunho` text NOT NULL,
   `codigoDisciplina` int(11) DEFAULT NULL,
-  `CPFUsuario` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`codigoRascunho`),
   KEY `FK_rascunhos_disciplinas` (`codigoDisciplina`),
-  KEY `FK_rascunhos_usuarios` (`CPFUsuario`),
-  CONSTRAINT `FK_rascunhos_disciplinas` FOREIGN KEY (`codigoDisciplina`) REFERENCES `disciplinas` (`codigoDisciplina`),
-  CONSTRAINT `FK_rascunhos_usuarios` FOREIGN KEY (`CPFUsuario`) REFERENCES `usuarios` (`CPFUsuario`)
+  CONSTRAINT `FK_rascunhos_disciplinas` FOREIGN KEY (`codigoDisciplina`) REFERENCES `disciplinas` (`codigoDisciplina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Exportação de dados foi desmarcado.
-
--- Copiando estrutura para tabela softwaredemonitoria.usuarios
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `CPFUsuario` varchar(50) NOT NULL,
   `nomeUsuario` varchar(50) NOT NULL,
@@ -101,8 +66,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `palavraChaveUsuario` text DEFAULT NULL,
   PRIMARY KEY (`CPFUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Exportação de dados foi desmarcado.
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

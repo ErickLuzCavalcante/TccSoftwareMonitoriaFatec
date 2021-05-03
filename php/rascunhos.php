@@ -104,7 +104,10 @@ class Rascunhos extends banco
     public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
     {
 
-       $dataCriacaoRascunho = date('d-m-Y');
+       $classeUsuario = new usuario();
+       $classeUsuario->porCPF($CPFUsuario);
+
+       $dataCriacaoRascunho = date('Y-m-d');
 
         $sql =
 
@@ -113,22 +116,41 @@ class Rascunhos extends banco
                   `tituloRascunho`,
                   `conteudoRascunho`,
                   `dataCriacaoRascunho`,
-                  `codigoDisciplina`,
-                  `CPFUsuario`
+                  `codigoDisciplina`
                   )
-                  ";
+            "
+        ;
 
         $sql = $sql .
             " VALUES ('"
             . $tituloRascunho . "', '"
             . $conteudoRascunho . "', '"
             . $dataCriacaoRascunho . "', '"
-            . $codigoDisciplina . "', '"
-            . $CPFUsuario . "');";
+            . $codigoDisciplina . "');"
+        ;
 
-        return $this->ExecultaSQL($sql);
+        // Cria o rascunho    
+        $codigo = $this->ExecultaSQL($sql);
 
+        $sql = 
+             "INSERT INTO 
+                `atualizacoes` (
+                    `codigoRascunho`,
+                    `descricaoUpdate`,
+                    `personaUpdate`,
+                    `dataUpdate`
+                ) VALUES (
+                    '".$codigo."',
+                    'Criado rascunho',
+                    '".$classeUsuario->getNomeUsuario()." ".$classeUsuario->getSobrenomeUsuario()."',
+                    '".$dataCriacaoRascunho."'
+                    );
+        ";
         
+        $this->ExecultaSQL($sql);
+
+        return $codigo;
+
     }
 
     public function editar($codigoRascunho,$tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
