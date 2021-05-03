@@ -55,7 +55,8 @@ $codigoDisciplina=$ClasseDisciplina->novaDisciplina("Gestao de pastel", "imagem"
 echo "<br>Codigo ".$codigoDisciplina;
 
 $classeRascunho = new Rascunhos();
-$classeRascunho->novo("Titulo","conteudo",$codigoDisciplina,"1111");
+$codigoRascunho=$classeRascunho->novo("Titulo".$codigoDisciplina,"conteudo".$codigoDisciplina,$codigoDisciplina,"1111");
+$classeRascunho->editar($codigoRascunho,"Titulo","conteudo",$codigoDisciplina,"1111");
 
 
 $classeUsuaario->excluirusuario("1111");

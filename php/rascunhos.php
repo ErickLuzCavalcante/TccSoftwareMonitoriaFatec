@@ -104,7 +104,7 @@ class Rascunhos extends banco
     public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
     {
 
-        $dataCriacaoRascunho = "";
+       $dataCriacaoRascunho = date('d-m-Y');
 
         $sql =
 
@@ -112,6 +112,7 @@ class Rascunhos extends banco
                   (
                   `tituloRascunho`,
                   `conteudoRascunho`,
+                  `dataCriacaoRascunho`,
                   `codigoDisciplina`,
                   `CPFUsuario`
                   )
@@ -121,9 +122,29 @@ class Rascunhos extends banco
             " VALUES ('"
             . $tituloRascunho . "', '"
             . $conteudoRascunho . "', '"
+            . $dataCriacaoRascunho . "', '"
             . $codigoDisciplina . "', '"
             . $CPFUsuario . "');";
 
         return $this->ExecultaSQL($sql);
+
+        
     }
+
+    public function editar($codigoRascunho,$tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    {
+
+        $sql ="
+            UPDATE `rascunhos` 
+            SET                  
+                `tituloRascunho` ='" . $tituloRascunho . "', 
+                `conteudoRascunho`='" . $conteudoRascunho . "', 
+                `codigoDisciplina`=" . $codigoDisciplina . ", 
+                `CPFUsuario`=" . $CPFUsuario . "            
+            WHERE  `codigoRascunho`=".$codigoRascunho.";";
+
+        return $this->ExecultaSQL($sql);
+    }
+
+
 }

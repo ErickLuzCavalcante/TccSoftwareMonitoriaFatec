@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `materiais` (
 -- Copiando estrutura para tabela softwaredemonitoria.rascunhos
 DROP TABLE IF EXISTS `rascunhos`;
 CREATE TABLE IF NOT EXISTS `rascunhos` (
-  `codigoRascunho` int(11) NOT NULL,
+  `codigoRascunho` int(11) NOT NULL AUTO_INCREMENT,
   `tituloRascunho` varchar(255) NOT NULL DEFAULT '',
   `conteudoRascunho` text NOT NULL,
   `dataCriacaoRascunho` text NOT NULL,

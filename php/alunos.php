@@ -110,7 +110,6 @@ class Alunos extends banco
         $sql = "
                 DELETE FROM " . $this->tabela . " WHERE
                   `CPFUsuario`=" . $CPFUsuario . ";";
-                  echo $sql;
         return $this->ExecultaSQL($sql);
     }
 
