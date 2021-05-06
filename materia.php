@@ -35,46 +35,10 @@
   </head>
   <body>
     
-<header class="navbar navbar-dark sticky-top bg-danger flex-md-nowrap p-0 ">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="index.html">Fatec Monitor</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
-</header>
+  <?php include "cabecalho.php"?>   
 
-<div class="container-fluid">
-  <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
-              Visão Geral
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Exercicios
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Usuario
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Sobre
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+<?php include "menu_lateral.php"?> 
+
     <!-- corpo -->
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="p-3 mb-2 bg-light text-dark"><h1>Gestao Financeira</h1>
@@ -95,11 +59,11 @@
                       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <ul class="list-group">
-                                <a href="ww.google.com" class="list-group-item btn-outline-danger">O que é Gestão Financeira</a>
-                                <a href="ww.google.com" class="list-group-item btn-outline-danger">Juros Simples e Composto</a>
-                                <a href="ww.google.com" class="list-group-item btn-outline-danger"> Tabela Price </a>
-                                <a href="ww.google.com" class="list-group-item btn-outline-danger">Tabela SAC</a>
-                                <a href="ww.google.com" class="list-group-item btn-outline-danger">Tabela AME</a>
+                                <a href="conteudo.php" class="list-group-item btn-outline-danger">O que é Gestão Financeira</a>
+                                <a href="conteudo.php" class="list-group-item btn-outline-danger">Juros Simples e Composto</a>
+                                <a href="conteudo.php" class="list-group-item btn-outline-danger"> Tabela Price </a>
+                                <a href="conteudo.php" class="list-group-item btn-outline-danger">Tabela SAC</a>
+                                <a href="conteudo.php" class="list-group-item btn-outline-danger">Tabela AME</a>
                               </ul>
                         </div>
                       </div>

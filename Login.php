@@ -15,7 +15,7 @@ if (isset($_POST["Login_CPF"])) {
   $usr->login($usuario, $senha);
   $secao = $usr->verificaLogado();
   if ($secao) {
-    header('Location: index.html');
+    header('Location: home.php');
   } else {
     $falha = true;
     $textofalha = "Usuário ou senha invalidos";

@@ -92,40 +92,40 @@ if (isset($_POST["CPFUsuario"])) {
     <form method="POST" action="Cadastro.php">
 
         <div class="row">
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="text" class="form-control" name="nomeUsuario" placeholder="Nome" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="text" class="form-control" name="sobrenomeUsuario" placeholder="Sobrenome" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="email" class="form-control" name="emailUsuario" placeholder="E-mail" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="tel" class="form-control" name="telefoneUsuario" placeholder="Telefone" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="text" class="form-control" name="raAluno" placeholder="R.A">
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="text" class="form-control" name="CPFUsuario" placeholder="CPF" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_1" class="form-control"
                     placeholder="Senha" required>
             </div>
 
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_2" class="form-control"
                     placeholder="Confirme senha" required>
             </div>
-            <div class="col-4, centralizado">
+            <div class="col-4">
                 <br>
                 <select class="form-control" name="TipoUsuario" required>
                     <option value="0" selected disabled>Tipo De Usuario</option>
