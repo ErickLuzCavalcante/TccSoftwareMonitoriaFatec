@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `materiais` (
-  `codigoMaterial` int(11) NOT NULL,
+  `codigoMaterial` int(11) NOT NULL AUTO_INCREMENT,
   `tituloMaterial` varchar(255) NOT NULL DEFAULT '',
   `conteudoMaterial` text NOT NULL,
   `dataCriacaoMaterial` text NOT NULL,

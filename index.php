@@ -56,7 +56,7 @@ echo "<br>Codigo ".$codigoDisciplina;
 
 $classeRascunho = new Rascunhos();
 $codigoRascunho=$classeRascunho->novo("Titulo".$codigoDisciplina,"conteudo".$codigoDisciplina,$codigoDisciplina,"1111");
-$classeRascunho->editar($codigoRascunho,"Titulo","conteudo",$codigoDisciplina,"1111");
+$classeRascunho->editar($codigoRascunho,"Titulo","conteudo",$codigoDisciplina,"1111","Teste de rascunho");
 
 
 $classeUsuaario->excluirusuario("1111");

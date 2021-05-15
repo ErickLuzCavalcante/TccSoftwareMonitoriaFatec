@@ -2,7 +2,9 @@
 
 namespace tcc\monitoria;
 
-class Rascunhos extends banco
+include 'publicacoes.php';
+
+class Rascunhos extends Publicacoes
 {
 
     /*
@@ -12,11 +14,10 @@ class Rascunhos extends banco
     private $tituloRascunho;
     private $conteudoRascunho;
     private $codigoDisciplina;
-    private $CPFUsuario;
 
     // Atributos de configuração com a tabela
 
-    private $camposSQL = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`,`CPFUsuario';
+    private $camposSQL = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`';
     private $tabela = "`rascunhos`";
 
     /*
@@ -30,7 +31,6 @@ class Rascunhos extends banco
         $this->conteudoRascunho = $this->Dados[$this->getRegistro()][3];
         $this->dataCriacaoRascunho = $this->Dados[$this->getRegistro()][4];
         $this->codigoDisciplina = $this->Dados[$this->getRegistro()][5];
-        $this->CPFUsuario = $this->Dados[$this->getRegistro()][6];
     }
 
     /*
@@ -57,10 +57,6 @@ class Rascunhos extends banco
         return $this->codigoDisciplina;
     }
 
-    public function getCPFUsuario()
-    {
-        return $this->CPFUsuario;
-    }
 
 
     /*
@@ -153,20 +149,56 @@ class Rascunhos extends banco
 
     }
 
-    public function editar($codigoRascunho,$tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    public function editar($codigoRascunho,$tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario,$descricaoAlteracao)
     {
+
+
+        $classeUsuario = new usuario();
+        $classeUsuario->porCPF($CPFUsuario);
+ 
+        $dataDeHoje = date('Y-m-d');
 
         $sql ="
             UPDATE `rascunhos` 
             SET                  
                 `tituloRascunho` ='" . $tituloRascunho . "', 
                 `conteudoRascunho`='" . $conteudoRascunho . "', 
-                `codigoDisciplina`=" . $codigoDisciplina . ", 
-                `CPFUsuario`=" . $CPFUsuario . "            
+                `codigoDisciplina`=" . $codigoDisciplina . "             
             WHERE  `codigoRascunho`=".$codigoRascunho.";";
 
-        return $this->ExecultaSQL($sql);
+        $this->ExecultaSQL($sql);
+
+        $sql = 
+        "INSERT INTO 
+           `atualizacoes` (
+               `codigoRascunho`,
+               `descricaoUpdate`,
+               `personaUpdate`,
+               `dataUpdate`
+           ) VALUES (
+               '".$codigoRascunho."',
+               'Rascunho editado: ".$descricaoAlteracao."',
+               '".$classeUsuario->getNomeUsuario()." ".$classeUsuario->getSobrenomeUsuario()."',
+               '".$dataDeHoje."'
+               );
+        ";
+        $this->ExecultaSQL($sql);
+        return $codigoRascunho;
+        
     }
 
+    /*
+    Metodos de pesquisa
+    */
 
+
+    public function rascunhoPorCodigo($raAluno)
+    {
+        $query = "SELECT " . $this->camposSQL . "
+              FROM " . $this->tabela . " WHERE
+              `raAluno` = " . strtoupper($raAluno) . "";
+        return $this->Get($query);
+    }
 }
+
+?>
