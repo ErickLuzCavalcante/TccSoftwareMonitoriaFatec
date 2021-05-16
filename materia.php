@@ -42,14 +42,13 @@
     <!-- corpo -->
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="p-3 mb-2 bg-light text-dark"><h1>Gestao Financeira</h1>
-            <h5>40 horas</h5> 
+          
             <button type="button" class="btn btn-outline-danger">Aulas</button>
-            <button type="button" class="btn btn-outline-danger">Sobre  </button>
+             <!--<button type="button" class="btn btn-outline-danger">Sobre  </button>-->
             <!-- Campo do monitor de edição do conteudo  -->
             <button type="button" class="btn btn-outline-danger">Rascunhos    </button>
-            <button type="button" class="btn btn-outline-danger">Novo  </button>
+            <a href="editor.php" class="btn btn-outline-danger">Novo  </a>
             <!---------------------------------------------->
-
 
         </div>
         <!--   conteudo -->
