@@ -2,9 +2,7 @@
 
 namespace tcc\monitoria;
 
-include 'publicacoes.php';
-
-class Rascunhos extends Publicacoes
+class Rascunhos extends Banco
 {
 
     /*
@@ -24,23 +22,14 @@ class Rascunhos extends Publicacoes
         Classe de atribuição da recepção dos dados do banco
     */
 
-    private function atribuir()
+    public function getCodigoRascunho()
     {
-        $this->codigoRascunho = $this->Dados[$this->getRegistro()][1];
-        $this->tituloRascunho = $this->Dados[$this->getRegistro()][2];
-        $this->conteudoRascunho = $this->Dados[$this->getRegistro()][3];
-        $this->dataCriacaoRascunho = $this->Dados[$this->getRegistro()][4];
-        $this->codigoDisciplina = $this->Dados[$this->getRegistro()][5];
+        return $this->codigoRascunho;
     }
 
     /*
         Getters
      */
-
-    public function getCodigoRascunho()
-    {
-        return $this->codigoRascunho;
-    }
 
     public function getTituloRascunho()
     {
@@ -57,6 +46,12 @@ class Rascunhos extends Publicacoes
         return $this->codigoDisciplina;
     }
 
+    public function proximo()
+    {
+        $this->proximoDados();
+        $this->atribuir();
+    }
+
 
 
     /*
@@ -67,10 +62,13 @@ class Rascunhos extends Publicacoes
 
     /*Não altera */
 
-    public function proximo()
+    private function atribuir()
     {
-        $this->proximoDados();
-        $this->atribuir();
+        $this->codigoRascunho = $this->Dados[$this->getRegistro()][1];
+        $this->tituloRascunho = $this->Dados[$this->getRegistro()][2];
+        $this->conteudoRascunho = $this->Dados[$this->getRegistro()][3];
+        $this->dataCriacaoRascunho = $this->Dados[$this->getRegistro()][4];
+        $this->codigoDisciplina = $this->Dados[$this->getRegistro()][5];
     }
 
     public function anterior()
@@ -79,31 +77,13 @@ class Rascunhos extends Publicacoes
         $this->atribuir();
     }
 
-    private function get($query)
-    {
-        $retorno = $this->Pesquisa($query);
-        $this->primeiro();
-        return $retorno;
-    }
-
-    public function primeiro()
-    {
-        $this->primeiroDados();
-        $this->atribuir();
-    }
-
-
-    /*
-        Metodos de alteração
-    */
-
     public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
     {
 
-       $classeUsuario = new usuario();
-       $classeUsuario->porCPF($CPFUsuario);
+        $classeUsuario = new usuario();
+        $classeUsuario->porCPF($CPFUsuario);
 
-       $dataCriacaoRascunho = date('Y-m-d');
+        $dataCriacaoRascunho = date('Y-m-d');
 
         $sql =
 
@@ -114,83 +94,81 @@ class Rascunhos extends Publicacoes
                   `dataCriacaoRascunho`,
                   `codigoDisciplina`
                   )
-            "
-        ;
+            ";
 
         $sql = $sql .
             " VALUES ('"
             . $tituloRascunho . "', '"
             . $conteudoRascunho . "', '"
             . $dataCriacaoRascunho . "', '"
-            . $codigoDisciplina . "');"
-        ;
+            . $codigoDisciplina . "');";
 
-        // Cria o rascunho    
+        // Cria o rascunho
         $codigo = $this->ExecultaSQL($sql);
 
-        $sql = 
-             "INSERT INTO 
+        $sql =
+            "INSERT INTO 
                 `atualizacoes` (
                     `codigoRascunho`,
                     `descricaoUpdate`,
                     `personaUpdate`,
                     `dataUpdate`
                 ) VALUES (
-                    '".$codigo."',
+                    '" . $codigo . "',
                     'Criado rascunho',
-                    '".$classeUsuario->getNomeUsuario()." ".$classeUsuario->getSobrenomeUsuario()."',
-                    '".$dataCriacaoRascunho."'
+                    '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
+                    '" . $dataCriacaoRascunho . "'
                     );
         ";
-        
+
         $this->ExecultaSQL($sql);
 
         return $codigo;
 
     }
 
-    public function editar($codigoRascunho,$tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario,$descricaoAlteracao)
+    public function editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario, $descricaoAlteracao)
     {
 
 
         $classeUsuario = new usuario();
         $classeUsuario->porCPF($CPFUsuario);
- 
+
         $dataDeHoje = date('Y-m-d');
 
-        $sql ="
+        $sql = "
             UPDATE `rascunhos` 
             SET                  
                 `tituloRascunho` ='" . $tituloRascunho . "', 
                 `conteudoRascunho`='" . $conteudoRascunho . "', 
                 `codigoDisciplina`=" . $codigoDisciplina . "             
-            WHERE  `codigoRascunho`=".$codigoRascunho.";";
+            WHERE  `codigoRascunho`=" . $codigoRascunho . ";";
 
         $this->ExecultaSQL($sql);
 
-        $sql = 
-        "INSERT INTO 
+        $sql =
+            "INSERT INTO 
            `atualizacoes` (
                `codigoRascunho`,
-               `descricaoUpdate`,
-               `personaUpdate`,
-               `dataUpdate`
+               `descricaoAtualizacoes`,
+               `personaAtualizacoes`,
+               `dataAtualizacoes`
            ) VALUES (
-               '".$codigoRascunho."',
-               'Rascunho editado: ".$descricaoAlteracao."',
-               '".$classeUsuario->getNomeUsuario()." ".$classeUsuario->getSobrenomeUsuario()."',
-               '".$dataDeHoje."'
+               '" . $codigoRascunho . "',
+               '" . $descricaoAlteracao . "',
+               '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
+               '" . $dataDeHoje . "'
                );
         ";
         $this->ExecultaSQL($sql);
         return $codigoRascunho;
-        
+
     }
 
-    /*
-    Metodos de pesquisa
-    */
 
+    /*
+        Metodos de alteração
+    */
 
     public function rascunhoPorCodigo($raAluno)
     {
@@ -198,6 +176,23 @@ class Rascunhos extends Publicacoes
               FROM " . $this->tabela . " WHERE
               `raAluno` = " . strtoupper($raAluno) . "";
         return $this->Get($query);
+    }
+
+    private function get($query)
+    {
+        $retorno = $this->Pesquisa($query);
+        $this->primeiro();
+        return $retorno;
+    }
+
+    /*
+    Metodos de pesquisa
+    */
+
+    public function primeiro()
+    {
+        $this->primeiroDados();
+        $this->atribuir();
     }
 }
 

@@ -25,7 +25,7 @@ class Interfaces
     public function __construct($titulo, $nivelDeAcesso)
     {
         // Instancia o objeto com a classe usuario
-        $usuario            = new Usuario();
+        $usuario = new Usuario();
         $MensagemNivelTeste = '';
         if ($usuario->verificaLogado() && $nivelDeAcesso == 1) {
             // Precisa estar logado para acessar
@@ -46,7 +46,7 @@ class Interfaces
                                 <meta name="description" content="">
                                 <meta name="author" content="Erick Luz Cavalcante, Samuel Sales, Paula Vieira, Darlyne">
                                 <meta name="generator" content="">
-                                <title>'.$titulo.' - Software Monitoria</title>
+                                <title>' . $titulo . ' - Software Monitoria</title>
                                 <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
                                 <!-- Bootstrap core CSS -->
                                 <link href="assets/css/bootstrap.min.css" rel="stylesheet">

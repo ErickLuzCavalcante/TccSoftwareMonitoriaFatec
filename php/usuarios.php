@@ -87,7 +87,8 @@ class Usuario extends banco
         $emailUsuario,
         $telefoneUsuario,
         $palavraChaveUsuario
-    ) {
+    )
+    {
         // Inicio da string de SQL
         // Campos do banco de dados
 
@@ -119,7 +120,7 @@ class Usuario extends banco
             MD5($palavraChaveUsuario) .
             "');";
 
-         return $this->ExecultaSQL($sql);
+        return $this->ExecultaSQL($sql);
     }
 
     /* Altera conforme a tabela*/
@@ -141,7 +142,8 @@ class Usuario extends banco
         $sobrenomeUsuario,
         $emailUsuario,
         $telefoneUsuario
-    ) {
+    )
+    {
         // Primeira parte da string de comando SQL
         // Atributos
         $sql =
@@ -259,6 +261,7 @@ class Usuario extends banco
             return false;
         }
     }
+
     public function verificaAdministrador()
     {
         if (isset($_SESSION['login']) && isset($_SESSION['senha'])) {
@@ -289,4 +292,5 @@ class Usuario extends banco
         }
     }
 }
+
 ?>

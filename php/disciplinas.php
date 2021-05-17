@@ -70,19 +70,6 @@ class Disciplinas extends banco
         $this->atribuir();
     }
 
-    private function get($query)
-    {
-        $retorno = $this->Pesquisa($query);
-        $this->primeiro();
-        return $retorno;
-    }
-
-    public function primeiro()
-    {
-        $this->primeiroDados();
-        $this->atribuir();
-    }
-
     public function novaDisciplina($nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina)
     {
         // Inicio da string de SQL
@@ -107,7 +94,6 @@ class Disciplinas extends banco
         return $this->ExecultaSQL($sql);
     }
 
-
     public function editarDisciplina($codigoDisciplina, $nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina)
     {
         // Primeira parte da string de comando SQL
@@ -127,7 +113,6 @@ class Disciplinas extends banco
         $this->ExecultaSQL($sql);
     }
 
-
     public function excluirDisciplina($codigoDisciplina)
     {
         $sql = "
@@ -143,6 +128,19 @@ class Disciplinas extends banco
               `codigoDisciplina` = '" . $codigoDisciplina . "'";
 
         return $this->Get($query);
+    }
+
+    private function get($query)
+    {
+        $retorno = $this->Pesquisa($query);
+        $this->primeiro();
+        return $retorno;
+    }
+
+    public function primeiro()
+    {
+        $this->primeiroDados();
+        $this->atribuir();
     }
 
     public function porNome($nomeDisciplina)

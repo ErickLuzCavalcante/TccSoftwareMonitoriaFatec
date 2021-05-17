@@ -114,11 +114,9 @@ class Alunos extends banco
     }
 
 
-
     /*
     Metodos de pesquisa
     */
-
 
 
     public function porRa($raAluno)
@@ -135,7 +133,7 @@ class Alunos extends banco
         $query = "SELECT " . $this->camposSQL . "
               
               FROM " . $this->tabela . " WHERE
-              `CPFUsuario` = " . strtoupper($CPFUsuario) ;
+              `CPFUsuario` = " . strtoupper($CPFUsuario);
         return $this->Get($query);
     }
 
@@ -159,18 +157,18 @@ class Alunos extends banco
 
     /**
      * Get dos atributos
-     */ 
+     */
 
     public function getCPFUsuario()
     {
         return $this->CPFUsuario;
     }
- 
+
     public function getRaAluno()
     {
         return $this->raAluno;
     }
- 
+
     public function getMonitorAluno()
     {
         return $this->monitorAluno;

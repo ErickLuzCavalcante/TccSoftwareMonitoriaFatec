@@ -2,7 +2,9 @@
 
 namespace tcc\monitoria;
 
-class Publicacoes extends banco
+include "rascunhos.php";
+
+class Publicacoes extends Rascunhos
 {
 
     /*
@@ -15,10 +17,14 @@ class Publicacoes extends banco
 
     // Atributos de configuração com a tabela
 
-    private $camposSQL = '`codigoMaterial`,  `tituloMaterial`, `conteudoRascunho`,`dataCriacaoMaterial`';
+    private $camposSQL = '`codigoMaterial`, 
+                         `tituloMaterial`, 
+                         `conteudoMaterial`,
+                         `dataCriacaoMaterial`';
+
     private $tabela = "`materiais`";
 
-    
+
     /*
         Getters
     */
@@ -42,13 +48,10 @@ class Publicacoes extends banco
         return $this->dataCriacaoMaterial;
     }
 
-
-    private function atribuir()
+    public function proximo()
     {
-        $this->codigoMaterial = $this->Dados[$this->getRegistro()][1];
-        $this->tituloMaterial = $this->Dados[$this->getRegistro()][2];
-        $this->conteudoMaterial = $this->Dados[$this->getRegistro()][3];
-        $this->dataCriacaoMaterial = $this->Dados[$this->getRegistro()][4];
+        $this->proximoDados();
+        $this->atribuir();
     }
 
 
@@ -60,16 +63,52 @@ class Publicacoes extends banco
 
     /*Não altera */
 
-    public function proximo()
+    private function atribuir()
     {
-        $this->proximoDados();
-        $this->atribuir();
+        $this->codigoMaterial = $this->Dados[$this->getRegistro()][1];
+        $this->tituloMaterial = $this->Dados[$this->getRegistro()][2];
+        $this->conteudoMaterial = $this->Dados[$this->getRegistro()][3];
+        $this->dataCriacaoMaterial = $this->Dados[$this->getRegistro()][4];
     }
 
     public function anterior()
     {
         $this->anteriorDados();
         $this->atribuir();
+    }
+
+    public function publicar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    {
+
+        $this->editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario, "Material Disponibilizado");
+
+
+        $dataCriacaoMaterial = date('Y-m-d');
+
+        $sql =
+
+            "INSERT INTO " . $this->tabela . "
+                  (
+                  `codigoMaterial`,
+                  `tituloMaterial`,
+                  `conteudoMaterial`,
+                  `dataCriacaoMaterial`
+                  )
+            ";
+
+        $sql = $sql .
+            " VALUES ("
+            . $codigoRascunho . ", '"
+            . $tituloRascunho . "', '"
+            . $conteudoRascunho . "', '"
+            . $dataCriacaoMaterial . "');";
+
+        $sqlAtualizcao = "UPDATE `atualizacoes` SET `codigoMaterial` = '" . $codigoRascunho . "' WHERE  `codigoRascunho` = " . $codigoRascunho;
+
+        $this->ExecultaSQL($sql);
+        $this->ExecultaSQL($sqlAtualizcao);
+
+
     }
 
     private function get($query)
@@ -88,7 +127,6 @@ class Publicacoes extends banco
     /*
         Metodos de alteração
     */
-
 
 
 }

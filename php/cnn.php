@@ -7,9 +7,7 @@ namespace tcc\monitoria;
  * Desenvolvido por: Erick Luz Cavalcante
  * Versão 1.2
  *
- *s
  */
-
 class Banco
 {
 
@@ -75,6 +73,8 @@ class Banco
     // Realiza comandos de insersão no banco de dados
     protected function execultaSQL($sql)
     {
+        echo "<BR> executando: ";
+        echo $sql;
         $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
@@ -124,4 +124,5 @@ class Banco
         return $localizou;
     }
 }
+
 ?>
