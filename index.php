@@ -2,12 +2,15 @@
 
 namespace tcc\monitoria;
 
+
+// Area de teste
+
 include 'php\cnn.php';
 include 'php\usuarios.php';
 include 'php\alunos.php';
 include 'php\disciplinas.php';
 include "php\publicacoes.php";
-
+/*
 
 $classeUsuaario = new usuario();
 $classeUsuaario->novoUsuario(
@@ -66,11 +69,28 @@ $classeAluno->excluirAluno('1111');
 
 
 
-
-
-
-
-
-
-/*
 */
+
+
+$classeUsuaario = new usuario();
+$classeUsuaario->novoUsuario(
+    '1111',
+    'Erick',
+    'Cavalcante',
+    'Email',
+    '123',
+    'Senha'
+);
+
+$classeAluno = new alunos();
+
+$classeAluno->novoAluno('1111', '66698', 0);
+
+
+?>
+
+
+
+
+
+<a href="Login.php">Entrar</a>
