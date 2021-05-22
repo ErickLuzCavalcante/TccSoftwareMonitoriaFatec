@@ -35,12 +35,10 @@
   <body>
     
     <?php include "cabecalho.php"?>   
-
-    <?php include "menu_lateral.php"?>   
     
 
     <!--  corpo -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
         <br>  
             <div class="container">
                 <h2>Lista De Materia</h2>
