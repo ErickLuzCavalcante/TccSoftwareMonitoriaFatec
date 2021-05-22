@@ -40,7 +40,6 @@ include ("php\")
 
    <!-- corpo pagina-->
    <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <div class="album py-5 bg-light">
             <div class="container">
                <div class="row row-cols-1 row-cols-md-3 g-4">
