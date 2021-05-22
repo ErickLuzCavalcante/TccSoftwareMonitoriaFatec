@@ -17,6 +17,9 @@
     <div class="col-lg-10">
       <div class="page-header">
         <h2>Edite Seu Material </h2>
+        <a href="#"type="button" class="btn btn-sm btn-danger">Salvar</a>
+        <a href="#"type="button" class="btn btn-sm btn-danger">Publicar</a>
+
       </div>
     </div>
   </div>
