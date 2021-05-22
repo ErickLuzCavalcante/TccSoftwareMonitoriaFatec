@@ -32,18 +32,19 @@
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <input class="form-control form-control-light w-50 shadow " type="text" placeholder="Search" aria-label="Search">
-  
+    <input class="form-control form-control-light w-50 shadow " type="text" placeholder="Search" aria-label="Search">
   <button class="perfi-principal btn btn-danger nav-item dropdown">
             <img class="perfil" src="img/logo.png" width="60px" height="35px" id="navbardrop" data-toggle="dropdown">
             <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">Nome_Perfil</a>
+              <a class="dropdown-item" href="perfil.php">Nome_Perfil</a>
               <a class="dropdown-item" href="trocasenha.html">Trocar Senha</a>
+              <a class="dropdown-item" href="sobre.php">Sobre</a>
               <a class="dropdown-item" href="login.php">Sair</a>
 
             </div>
-            <a >
+            <a>
   </button>
+  </a>
 </header>
 
 

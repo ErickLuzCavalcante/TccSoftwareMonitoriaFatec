@@ -37,10 +37,9 @@
     
   <?php include "cabecalho.php"?>   
 
-<?php include "menu_lateral.php"?> 
 
     <!-- corpo -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
         <div class="p-3 mb-2 bg-light text-dark"><h1>Gestao Financeira</h1>
           
             <button type="button" class="btn btn-outline-danger">Aulas</button>

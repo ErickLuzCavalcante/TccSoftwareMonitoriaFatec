@@ -1,10 +1,10 @@
 
 <?php include "cabecalho.php"?>   
 
-<?php include "menu_lateral.php"?> 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="album py-4 bg-light">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
+          <div class="album py-5 bg-light">
             <div class="container">
                 <div class="page-header">
                     <h4>Juros Compostos </h4>

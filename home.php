@@ -37,15 +37,14 @@ include ("php\")
 
 <?php include "cabecalho.php"?>   
 
-<?php include "menu_lateral.php"?>   
-
 
 <?php include "cursos.php"?>   
 
- 
- 
-  </div>
 </div>
+
+</div>
+ 
+ 
 
 
     <script src="js/bootstrap.bundle.min.js"></script>
