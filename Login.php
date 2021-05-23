@@ -9,6 +9,7 @@ $falha = false;
 $textofalha = "Falha:";
 // carrega dados do usuario atualmente logado
 $usr = new usuario();
+$usr -> novoUsuario("Adm","Administrador","do Sistema","adm","adm",1);
 if (isset($_POST["Login_CPF"])) {
   $usuario = $_POST["Login_CPF"];
   $senha = $_POST["Login_Senha"];;
