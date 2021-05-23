@@ -5,10 +5,16 @@ namespace tcc\monitoria;
 require 'php\cnn.php';
 require 'php\usuarios.php';
 require 'php\alunos.php';
+require 'php\disciplinas.php';
 
 
 class Interfaces
 {
+
+    public $pesquisa;
+    public $pagina;
+    public $filtro=[];
+    public $filtroPadrao;
 
     /**
      * interfaces constructor.
@@ -24,6 +30,22 @@ class Interfaces
 
     public function __construct($titulo, $nivelDeAcesso)
     {
+
+        if (isset($_GET['pesquisa'])){
+            $this->pesquisa=$_GET['pesquisa'];
+        }else{
+            $this->pesquisa="";
+        }
+        if (isset($_GET['pagina'])){
+            $this->pagina=$_GET['pagina'];
+        }else{
+            $this->pagina=1;
+        }
+
+        if (isset($_GET['filtro'])){
+            header('Location: '.$_GET['filtro'].'?pesquisa='.$this->pesquisa.'&pagina='.$this->pagina);
+        }
+
         // Instancia o objeto com a classe usuario
         $usuario = new Usuario();
         $MensagemNivelTeste = '';
@@ -37,102 +59,100 @@ class Interfaces
             header('Location: Login.php');
         }
 
-        echo '
-                        <!doctype html>
-                            <html lang="pt-br">
-                              <head>
-                                <meta charset="utf-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1">
-                                <meta name="description" content="">
-                                <meta name="author" content="Erick Luz Cavalcante, Samuel Sales, Paula Vieira, Darlyne">
-                                <meta name="generator" content="">
-                                <title>' . $titulo . ' - Software Monitoria</title>
-                                <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
-                                <!-- Bootstrap core CSS -->
-                                <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-                                </head>
-                               <body>
-                    ';
+        echo "
+               <!doctype html>
+                <html lang='en' class='no-js'>
+                
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1'>
+                
+                    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+                    <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+                    <link rel = 'stylesheet' href = 'css/reset.css' > <!--CSS reset-->
+                    <link rel = 'stylesheet' href = 'css/style.css' > <!--Estilos do pagina-->
+                    <script src = 'js/modernizr.js' ></script > <!--Modernizr -->
+                
+                    <title > Home | Fatec monitor </title >
+                </head >
+                
+                <body >
+                    <header class='cd-main-header animate-search' >
+                        <div class='cd-logo' ><a href = '#0' ><img src = 'img/cd-logo.svg' alt = 'Logo' ></a ></div >
+                
+                        <nav class='cd-main-nav-wrapper' >
+                            <a href = '#search' class='cd-search-trigger cd-text-replace' > Pesquisa</a >
+                
+                            <ul class='cd-main-nav' >
+                                <li ><a href = '#0' > Inicio</a ></li >
+                                <li ><a href = '#0' > Perfil</a ></li >
+                                <li ><a href = '#0' > Trocar senha </a ></li >
+                                <li ><a href = 'login.php' > Sair</a ></li >
+                            </ul > <!-- .cd - main - nav-->
+                        </nav > <!-- .cd - main - nav - wrapper-->
+                
+                        <a href = '#0' class='cd-nav-trigger cd-text-replace' > Menu<span ></span ></a >
+                    </header >
+                
+                    <main class='cd-main-content' >
+                        <div class='content-center' >
+    ";
 
     }//end __construct()
 
 
-    /**
-     * interfaces constructor.
-     */
+    public function filtroDePesquisa($descricao,$link,$selecionado){
 
-    public function cabecalho($pesquisa)
-    {
-
-        echo " 
-        <script>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-         }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-              font-size: 3.5rem;
-            }
+        $linha='<option value="'.$link.'"';
+        
+        if ($selecionado){
+            $linha= $linha . " selected";
+            $this->filtroPadrao=$descricao;
         }
-        .perfil {
-            border-radius: 50%;
-        }
-        </script>
-        
-        <link href='assets/css/dashboard.css' rel='stylesheet'>
-        <link href='/css/bootstrap.min.css' rel='stylesheet'>
-        
- 
+        $linha =$linha.'>'.$descricao.'</option>';
 
-
-
-    
-<header class='navbar navbar-dark sticky-top bg-danger flex-md-nowrap p-0 '>
-  <a class='navbar-brand col-md-3 col-lg-2 me-0 px-3' href='home.php'>Fatec Monitor</a>
-
-  <input class='form-control form-control-light w-50 shadow ' type='text' placeholder='Search' aria-label='Search' value='".$pesquisa."'>
-  
-  <button class='perfi-principal btn btn-danger nav-item dropdown'>
-            <img class='perfil' src='img/logo.png' width='60px' height='35px' id='navbardrop' data-toggle='dropdown'>
-            <div class='dropdown-menu sm-menu'>
-              <a class='dropdown-item' href='#'>Nome_Perfil</a>
-              <a class='dropdown-item' href='trocasenha.html'>Trocar Senha</a>
-              <a class='dropdown-item' href='login.php'>Sair</a>
-
-            </div>
-            <a >
-  </button>
-</header>
-
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
-<script type='text/javascript'>
-$(document).ready(function () {
-$('.perfil-principal .navbar-light .dmenu').hover(function () {
-        $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
-    }, function () {
-        $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
-    });
-});
-</script>
-        
-        
-        ";
-
+        $this->filtro[] = $linha;
     }
 
     // Destrutor
     public function __destruct()
     {
-        echo '</body></html>';
+        if (!isset($this->filtroPadrao)){
+            $this->filtroDePesquisa("Disciplinas","index.php",true);
+        }
+
+        echo '
+                        </div>
+                    </main>
+                
+                    <div id="search" class="cd-main-search">
+                        <form>
+                            <input type="search" name="pesquisa" placeholder="Pesquisa..." value="'.$this->pesquisa.'">
+                
+                            <div class="cd-select">
+                                <span>em</span>
+                                <select name="filtro">';
+        foreach ($this->filtro as $i => $value) {
+            echo($this->filtro[$i]);
+        }
+    echo '
+                                </select>
+                                <span class="selected-value">'.$this->filtroPadrao.'</span>
+                            </div>
+                        </form>
+                
+                
+                
+                        <a href="#0" class="close cd-text-replace">Close Form</a>
+                    </div> <!-- .cd-main-search -->
+                
+                    <div class="cd-cover-layer"></div>
+                    <!-- cobrir o conteúdo principal quando o formulário de pesquisa estiver aberto -->
+                    <script src="js/jquery-2.1.4.js"></script>
+                    <script src="js/main.js"></script> <!-- Resource jQuery -->
+                </body>
+                
+                </html>';
 
     }
 

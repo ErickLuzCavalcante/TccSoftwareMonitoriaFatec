@@ -2,95 +2,52 @@
 
 namespace tcc\monitoria;
 
-
-// Area de teste
-
-include 'php\cnn.php';
-include 'php\usuarios.php';
-include 'php\alunos.php';
-include 'php\disciplinas.php';
-include "php\publicacoes.php";
-/*
-
-$classeUsuaario = new usuario();
-$classeUsuaario->novoUsuario(
-    '1111',
-    'Erick',
-    'Cavalcante',
-    'Email',
-    '123',
-    'Senha'
-);
-
-$classeUsuaario->editarUsuario("1111", "Paula", "Rodriguez", "emaildapaula", "123");
-
-
-$classeUsuaario->login('1111', 'Senha');
-
-echo 'Desconectar ' . $classeUsuaario->logoff();
-echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
-echo '<br>Logar ' . $classeUsuaario->login('1111', 'Senha');
-echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
-
-// Teste Classes Alunos
-
-$classeAluno = new alunos();
-
-$classeAluno->novoAluno('1111', '66698', 0);
-$classeAluno->editarAluno('1111', '77777', 1);
-
-$classeAluno->porCPF('1111');
-$classeAluno->porNome('Erick Cavalcante');
-
-$classeAluno->porRa('77777');
-echo "<br><br>";
-echo "CPF ALUNO";
-echo $classeAluno->getCPFUsuario();
-echo "<br><br>";
-echo "CPF RA";
-echo $classeAluno->getRaAluno();
-echo "<br><br>";
-echo "CPF MONITOR";
-echo $classeAluno->getMonitorAluno();
-echo "<br><br>";
-
-$ClasseDisciplinas = new Disciplinas();
-$codigoDisciplina = $ClasseDisciplinas->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");
-echo "<br>Codigo " . $codigoDisciplina;
-
-$classePostagens = new Publicacoes();
-$codigoPostagem = $classePostagens->novo("Titulo" . $codigoDisciplina, "conteudo" . $codigoDisciplina, $codigoDisciplina, "1111");
-$classePostagens->editar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
-$classePostagens->publicar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
-
-
-$classeUsuaario->excluirusuario("1111");
-$classeAluno->excluirAluno('1111');
+include "php/interfaces.php";
+include "php/grid.php";
 
 
 
-*/
+$uiux = new Interfaces("Materias", 1);
+
+$uiux->filtroDePesquisa("Disciplinas","index.php",true);
 
 
-$classeUsuaario = new usuario();
-$classeUsuaario->novoUsuario(
-    '1111',
-    'Erick',
-    'Cavalcante',
-    'Email',
-    '123',
-    'Senha'
-);
-
-$classeAluno = new alunos();
-
-$classeAluno->novoAluno('1111', '66698', 0);
+$grid=new grid("grid");
 
 
+
+$disciplinas=new Disciplinas();
+
+$disciplinas->porDescricao($uiux->pagina,6,$uiux->pesquisa);
+if ($disciplinas->getTamanho()>0){
+    for ($i=0; $disciplinas->ponteiro($i); $i++) {
+        $grid->add("publicacao.php?codigo=".$disciplinas->getCodigoDisciplina(),$disciplinas->getImagemDisciplina());
+        $disciplinas->proximo();
+    }
+    $grid->home="index.php?pesquisa=$uiux->pesquisa";
+    $proximaPagina=$uiux->pagina+1;
+    if ($uiux->pagina<=1){
+        $grid->prev=false;
+    }else{
+        $anteriorPagina=$uiux->pagina-1;
+        $grid->prev="index.php?pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
+    }
+    $grid->next="index.php?pesquisa=$uiux->pesquisa&pagina=$proximaPagina";
+}else{
+    echo "<h2> <i class='material-icons'>find_in_page</i>Não encontramos nada </h2>";
+    $grid->home="index.php?pesquisa=$uiux->pesquisa";
+    if ($uiux->pagina<=1){
+        $grid->prev=false;
+    }else{
+        $anteriorPagina=$uiux->pagina-1;
+        $grid->prev="index.php?pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
+    }
+    $grid->next=false;
+}
+
+//$grid->add("login.php","<img src='img/banco-dados.png'>");
+
+
+unset($grid);
+unset($uiux)
 ?>
-
-
-
-
-
-<a href="Login.php">Entrar</a>

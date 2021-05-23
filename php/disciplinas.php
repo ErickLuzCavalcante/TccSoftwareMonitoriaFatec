@@ -57,11 +57,20 @@ class Disciplinas extends banco
 
     private function atribuir()
     {
-        $this->codigoDisciplina = $this->Dados[$this->getRegistro()][1];
-        $this->nomeDisciplina = $this->Dados[$this->getRegistro()][2];
-        $this->imagemDisciplina = $this->Dados[$this->getRegistro()][3];
-        $this->sobreDisciplina = $this->Dados[$this->getRegistro()][4];
-        $this->professorDisciplina = $this->Dados[$this->getRegistro()][5];
+        if (isset($this->Dados[$this->getRegistro()][1])){
+            $this->codigoDisciplina = $this->Dados[$this->getRegistro()][1];
+            $this->nomeDisciplina = $this->Dados[$this->getRegistro()][2];
+            $this->imagemDisciplina = $this->Dados[$this->getRegistro()][3];
+            $this->sobreDisciplina = $this->Dados[$this->getRegistro()][4];
+            $this->professorDisciplina = $this->Dados[$this->getRegistro()][5];
+        }else{
+            $this->codigoDisciplina = "";
+            $this->nomeDisciplina = "";
+            $this->imagemDisciplina = "";
+            $this->sobreDisciplina = "";
+            $this->professorDisciplina = "";
+        }
+
     }
 
     public function anterior()
@@ -127,6 +136,20 @@ class Disciplinas extends banco
               FROM " . $this->tabela . " WHERE
               `codigoDisciplina` = '" . $codigoDisciplina . "'";
 
+        return $this->Get($query);
+    }
+
+    public function porDescricao($pagina,$quantidade,$descricao)
+    {
+        $pagina=$pagina-1;
+        $pagina=$pagina*$quantidade;
+
+        $query = "SELECT " . $this->camposSQL . "
+             FROM " . $this->tabela . " WHERE
+             `nomeDisciplina` LIKE '%" . $descricao . "%'
+              ORDER BY `nomeDisciplina`  
+              LIMIT ".$pagina.",".$quantidade
+              ;
         return $this->Get($query);
     }
 
