@@ -7,7 +7,7 @@ include "php/grid.php";
 
 
 
-$uiux = new Interfaces("Materias", 1);
+$uiux = new Interfaces("Inicio", 1,true);
 // Filtros da barra de pesquisa
 $uiux->filtroDePesquisa("Disciplinas","index.php",true);
 
@@ -15,12 +15,12 @@ $uiux->filtroDePesquisa("Disciplinas","index.php",true);
 // Itens do menu
 $uiux->addItemMenu("index.php","Inicio",false);
 // Se o usuario for administrador
-$uiux->addItemMenu("index.php","Criar Matéria",true);
-$uiux->addItemMenu("index.php","Editar Usuários",true);
+$uiux->addItemMenu("editorMateria.php' target='_blank'","Criar Matéria",true);
+$uiux->addItemMenu('index.php',"Editar Usuários",true);
 
 $uiux->addItemMenu("index.php","Meu Perfil",false);
 $uiux->addItemMenu("index.php","Trocar Senha",false);
-$uiux->addItemMenu("Login.php","Sair",false);
+$uiux->addItemMenu("Login.php","Logoff",false);
 $uiux->fecharmenu();
 
 

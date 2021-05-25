@@ -680,12 +680,10 @@ Conteúdo principal da página
 }
 .cd-main-content .content-center {
   display: table-cell;
-  text-align: center;
-  padding-top: 50px;
 }
-.cd-main-content .content-center h1 {
+.cd-main-content .content-center h2 {
   color: black;
-  font-size: 2.4rem;
+  font-size: 1.5em;
   margin-bottom: .6em;
 }
 

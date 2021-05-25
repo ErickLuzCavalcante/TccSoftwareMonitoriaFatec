@@ -13,10 +13,10 @@ class Interfaces
 
     public $pesquisa;
     public $pagina;
+    public $Barrapesquisa = true;
     private $filtro = [];
     private $filtroPadrao;
     private $nivelUsuarioLogado = 0;
-    private $itensMenu = [];
 
 
     /*
@@ -31,8 +31,9 @@ class Interfaces
      */
 
 
-    public function __construct($titulo, $nivelDeAcesso)
+    public function __construct($titulo, $nivelDeAcesso, $Barrapesquisa)
     {
+        $this->Barrapesquisa = $Barrapesquisa;
 
         if (isset($_GET['pesquisa'])) {
             $this->pesquisa = $_GET['pesquisa'];
@@ -84,37 +85,48 @@ class Interfaces
                 </head >
                 
                 <body >
+    ";
+
+            echo "
                     <header class='cd-main-header animate-search' >
                         <div class='cd-logo' ><a href = '#0' ><img src = 'img/cd-logo.svg' alt = 'Logo' ></a ></div >
-                
                         <nav class='cd-main-nav-wrapper' >
+                  ";
+        if ($this->Barrapesquisa) {
+            echo "
                             <a href = '#search' class='cd-search-trigger cd-text-replace' > Pesquisa</a >
                 
-                            <ul class='cd-main-nav' >
-    ";
+        ";
+        }
+
+        echo "                            <ul class='cd-main-nav' >";
+
 
     }    //end __construct()
 
-    public function addItemMenu($link, $Texto,$administrador){
+    public function addItemMenu($link, $Texto, $administrador)
+    {
         $usuario = new Usuario();
-        if ($administrador==false||($administrador==true&&$usuario->verificaAdministrador())){
+        if ($administrador == false || ($administrador == true && $usuario->verificaAdministrador())) {
             echo "                                <li ><a href = '$link' > $Texto</a ></li >";
         }
 
     }
-    public function fecharmenu(){
-        echo"
+
+    public function fecharmenu()
+    {
+            echo "
                                     </ul > <!-- .cd - main - nav-->
                         </nav > <!-- .cd - main - nav - wrapper-->
                 
                         <a href = '#0' class='cd-nav-trigger cd-text-replace' > Menu<span ></span ></a >
                     </header >
-                
+             
                     <main class='cd-main-content' >
-                        <div class='content-center' >
-    ";
+                        <div class='content-center' >";
 
     }
+
     // Destrutor
     public function __destruct()
     {
@@ -126,21 +138,27 @@ class Interfaces
                         </div>
                     </main>
                 
-                    <div id="search" class="cd-main-search">
+                    <div id="search" class="cd-main-search">';
+        if ($this->Barrapesquisa) {
+            echo'
+            
                         <form>
                             <input type="search" name="pesquisa" placeholder="Pesquisa..." value="' . $this->pesquisa . '">
                 
                             <div class="cd-select">
                                 <span>em</span>
                                 <select name="filtro">';
-        foreach ($this->filtro as $i => $value) {
-            echo($this->filtro[$i]);
-        }
-        echo '
+            foreach ($this->filtro as $i => $value) {
+                echo($this->filtro[$i]);
+            }
+            echo '
                                 </select>
                                 <span class="selected-value">' . $this->filtroPadrao . '</span>
                             </div>
                         </form>
+            ';
+        }
+        echo'
                 
                 
                 
@@ -151,15 +169,12 @@ class Interfaces
                     <!-- cobrir o conteúdo principal quando o formulário de pesquisa estiver aberto -->
                     <script src="js/jquery-2.1.4.js"></script>
                     <script src="js/main.js"></script> <!-- Resource jQuery -->
+            
+
                 </body>
                 
                 </html>';
 
-    }
-
-    public function getNivelUsuario()
-    {
-        return $this->nivelUsuarioLogado;
     }
 
     public function filtroDePesquisa($descricao, $link, $selecionado)
@@ -176,8 +191,10 @@ class Interfaces
         $this->filtro[] = $linha;
     }
 
-
-
+    public function getNivelUsuario()
+    {
+        return $this->nivelUsuarioLogado;
+    }
 
 
 }//end class
