@@ -8,8 +8,20 @@ include "php/grid.php";
 
 
 $uiux = new Interfaces("Materias", 1);
-
+// Filtros da barra de pesquisa
 $uiux->filtroDePesquisa("Disciplinas","index.php",true);
+
+
+// Itens do menu
+$uiux->addItemMenu("index.php","Inicio",false);
+// Se o usuario for administrador
+$uiux->addItemMenu("index.php","Criar Matéria",true);
+$uiux->addItemMenu("index.php","Editar Usuários",true);
+
+$uiux->addItemMenu("index.php","Meu Perfil",false);
+$uiux->addItemMenu("index.php","Trocar Senha",false);
+$uiux->addItemMenu("Login.php","Sair",false);
+$uiux->fecharmenu();
 
 
 $grid=new grid("grid");

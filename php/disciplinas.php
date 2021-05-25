@@ -57,7 +57,7 @@ class Disciplinas extends banco
 
     private function atribuir()
     {
-        if (isset($this->Dados[$this->getRegistro()][1])){
+        if (isset($this->Dados[$this->getRegistro()][1])) {
             $this->codigoDisciplina = $this->Dados[$this->getRegistro()][1];
             $this->nomeDisciplina = $this->Dados[$this->getRegistro()][2];
             $this->imagemDisciplina = $this->Dados[$this->getRegistro()][3];

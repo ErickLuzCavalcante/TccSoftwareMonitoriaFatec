@@ -10,7 +10,9 @@ include 'php\usuarios.php';
 include 'php\alunos.php';
 include 'php\disciplinas.php';
 include "php\publicacoes.php";
-/*
+
+
+
 
 $classeUsuaario = new usuario();
 $classeUsuaario->novoUsuario(
@@ -27,10 +29,7 @@ $classeUsuaario->editarUsuario("1111", "Paula", "Rodriguez", "emaildapaula", "12
 
 $classeUsuaario->login('1111', 'Senha');
 
-echo 'Desconectar ' . $classeUsuaario->logoff();
-echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
-echo '<br>Logar ' . $classeUsuaario->login('1111', 'Senha');
-echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
+//echo 'Desconectar ' . $classeUsuaario->logoff();
 
 // Teste Classes Alunos
 
@@ -38,6 +37,11 @@ $classeAluno = new alunos();
 
 $classeAluno->novoAluno('1111', '66698', 0);
 $classeAluno->editarAluno('1111', '77777', 1);
+
+echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
+echo '<br>Logar ' . $classeUsuaario->login('1111', 'Senha');
+echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
+echo '<br>Verificar se é administrador ' . $classeUsuaario->verificaAdministrador();
 
 $classeAluno->porCPF('1111');
 $classeAluno->porNome('Erick Cavalcante');
@@ -55,7 +59,7 @@ echo $classeAluno->getMonitorAluno();
 echo "<br><br>";
 
 $ClasseDisciplinas = new Disciplinas();
-$codigoDisciplina = $ClasseDisciplinas->novaDisciplina("Gestao de pastel", "imagem", "é uma bosta", "Xinguiling");
+$codigoDisciplina = $ClasseDisciplinas->novaDisciplina("Gestao de pastel", '<img src="img/banco-dados.png">', "é uma bosta", "Xinguiling");
 echo "<br>Codigo " . $codigoDisciplina;
 
 $classePostagens = new Publicacoes();
@@ -64,15 +68,16 @@ $classePostagens->editar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplin
 $classePostagens->publicar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
 
 
-$classeUsuaario->excluirusuario("1111");
-$classeAluno->excluirAluno('1111');
+//$classeUsuaario->excluirusuario("1111");
+//$classeAluno->excluirAluno('1111');
 
 
 
-*/
+
 
 
 $classeUsuaario = new usuario();
+/*
 $classeUsuaario->novoUsuario(
     '1111',
     'Erick',
@@ -85,6 +90,7 @@ $classeUsuaario->novoUsuario(
 $classeAluno = new alunos();
 
 $classeAluno->novoAluno('1111', '66698', 0);
+*/
 
 
 ?>
@@ -93,4 +99,4 @@ $classeAluno->novoAluno('1111', '66698', 0);
 
 
 
-<a href="Login.php">Entrar</a>
+<a href="old/Login.php">Entrar</a>

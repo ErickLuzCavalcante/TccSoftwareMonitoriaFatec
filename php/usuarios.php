@@ -71,6 +71,13 @@ class Usuario extends banco
             $this->telefoneUsuario = $this->Dados[$this->getRegistro()][4];
             $this->emailUsuario = $this->Dados[$this->getRegistro()][5];
             $this->palavraChaveUsuario = $this->Dados[$this->getRegistro()][6];
+        } else {
+            $this->CPFUsuario = "";
+            $this->nomeUsuario = "";
+            $this->sobrenomeUsuario = "";
+            $this->telefoneUsuario = "";
+            $this->emailUsuario = "";
+            $this->palavraChaveUsuario = "";
         }
     }
 
@@ -270,20 +277,20 @@ class Usuario extends banco
             $this->logoff();
             $usuario = strtoupper($usuario);
             $this->porCPF($usuario);
-
-            // Valida se há cadastro na tabela alunos
-            $classeAluno = new alunos();
-            $confirmaAluno = $classeAluno->porCPF($usuario);
-
-
             if (
                 strtoupper($this->CPFUsuario) == $usuario &&
-                $this->palavraChaveUsuario == $senha &&
-                $confirmaAluno != false
+                $this->palavraChaveUsuario == $senha
             ) {
                 $_SESSION['login'] = strtoupper($usuario);
                 $_SESSION['senha'] = $senha;
-                return true;
+
+                $aluno = new Alunos();
+                $aluno->porCPF($usuario);
+                if (strtoupper($aluno->getCPFUsuario()) == $usuario){
+                    return false;
+                }else{
+                    return true;
+                }
             } else {
                 return false;
             }

@@ -64,11 +64,19 @@ class Rascunhos extends Banco
 
     private function atribuir()
     {
-        $this->codigoRascunho = $this->Dados[$this->getRegistro()][1];
-        $this->tituloRascunho = $this->Dados[$this->getRegistro()][2];
-        $this->conteudoRascunho = $this->Dados[$this->getRegistro()][3];
-        $this->dataCriacaoRascunho = $this->Dados[$this->getRegistro()][4];
-        $this->codigoDisciplina = $this->Dados[$this->getRegistro()][5];
+        if (isset($this->Dados[$this->getRegistro()][1])) {
+            $this->codigoRascunho = $this->Dados[$this->getRegistro()][1];
+            $this->tituloRascunho = $this->Dados[$this->getRegistro()][2];
+            $this->conteudoRascunho = $this->Dados[$this->getRegistro()][3];
+            $this->dataCriacaoRascunho = $this->Dados[$this->getRegistro()][4];
+            $this->codigoDisciplina = $this->Dados[$this->getRegistro()][5];
+        } else {
+            $this->codigoRascunho = "";
+            $this->tituloRascunho = "";
+            $this->conteudoRascunho = "";
+            $this->dataCriacaoRascunho = "";
+            $this->codigoDisciplina = "";
+        }
     }
 
     public function anterior()

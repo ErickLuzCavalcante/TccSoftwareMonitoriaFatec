@@ -13,37 +13,40 @@ class Interfaces
 
     public $pesquisa;
     public $pagina;
-    public $filtro=[];
-    public $filtroPadrao;
+    private $filtro = [];
+    private $filtroPadrao;
+    private $nivelUsuarioLogado = 0;
+    private $itensMenu = [];
+
+
+    /*
+    Nivel de acesso:
+    False - nao necessita de autenticacao para acessar a pagina
+    1 - Só precisa estar logado (Aluno)
+    2 - Precisa ser administrador
+    */
 
     /**
      * interfaces constructor.
      */
 
-    /*
-        Nivel de acesso:
-        False - nao necessita de autenticacao para acessar a pagina
-        1 - Só precisa estar logado (Aluno)
-        2 - Precisa ser administrador
-    */
-
 
     public function __construct($titulo, $nivelDeAcesso)
     {
 
-        if (isset($_GET['pesquisa'])){
-            $this->pesquisa=$_GET['pesquisa'];
-        }else{
-            $this->pesquisa="";
+        if (isset($_GET['pesquisa'])) {
+            $this->pesquisa = $_GET['pesquisa'];
+        } else {
+            $this->pesquisa = "";
         }
-        if (isset($_GET['pagina'])){
-            $this->pagina=$_GET['pagina'];
-        }else{
-            $this->pagina=1;
+        if (isset($_GET['pagina'])) {
+            $this->pagina = $_GET['pagina'];
+        } else {
+            $this->pagina = 1;
         }
 
-        if (isset($_GET['filtro'])){
-            header('Location: '.$_GET['filtro'].'?pesquisa='.$this->pesquisa.'&pagina='.$this->pagina);
+        if (isset($_GET['filtro'])) {
+            header('Location: ' . $_GET['filtro'] . '?pesquisa=' . $this->pesquisa . '&pagina=' . $this->pagina);
         }
 
         // Instancia o objeto com a classe usuario
@@ -51,17 +54,21 @@ class Interfaces
         $MensagemNivelTeste = '';
         if ($usuario->verificaLogado() && $nivelDeAcesso == 1) {
             // Precisa estar logado para acessar
+            $this->nivelUsuarioLogado = 1;
         } else if ($usuario->verificaAdministrador() && $nivelDeAcesso == 2) {
             // Precisa estar logado para acessar e tem que ser adm
+            $this->nivelUsuarioLogado = 2;
         } else if ($nivelDeAcesso == false) {
             // nao possui restricao
+            $this->nivelUsuarioLogado = 0;
         } else {
+            $this->nivelUsuarioLogado = 0;
             header('Location: Login.php');
         }
 
         echo "
                <!doctype html>
-                <html lang='en' class='no-js'>
+                <html lang='pt-br' class='no-js'>
                 
                 <head>
                     <meta charset='UTF-8'>
@@ -73,7 +80,7 @@ class Interfaces
                     <link rel = 'stylesheet' href = 'css/style.css' > <!--Estilos do pagina-->
                     <script src = 'js/modernizr.js' ></script > <!--Modernizr -->
                 
-                    <title > Home | Fatec monitor </title >
+                    <title > $titulo | Fatec monitor </title >
                 </head >
                 
                 <body >
@@ -84,11 +91,20 @@ class Interfaces
                             <a href = '#search' class='cd-search-trigger cd-text-replace' > Pesquisa</a >
                 
                             <ul class='cd-main-nav' >
-                                <li ><a href = '#0' > Inicio</a ></li >
-                                <li ><a href = '#0' > Perfil</a ></li >
-                                <li ><a href = '#0' > Trocar senha </a ></li >
-                                <li ><a href = 'login.php' > Sair</a ></li >
-                            </ul > <!-- .cd - main - nav-->
+    ";
+
+    }    //end __construct()
+
+    public function addItemMenu($link, $Texto,$administrador){
+        $usuario = new Usuario();
+        if ($administrador==false||($administrador==true&&$usuario->verificaAdministrador())){
+            echo "                                <li ><a href = '$link' > $Texto</a ></li >";
+        }
+
+    }
+    public function fecharmenu(){
+        echo"
+                                    </ul > <!-- .cd - main - nav-->
                         </nav > <!-- .cd - main - nav - wrapper-->
                 
                         <a href = '#0' class='cd-nav-trigger cd-text-replace' > Menu<span ></span ></a >
@@ -98,27 +114,12 @@ class Interfaces
                         <div class='content-center' >
     ";
 
-    }//end __construct()
-
-
-    public function filtroDePesquisa($descricao,$link,$selecionado){
-
-        $linha='<option value="'.$link.'"';
-        
-        if ($selecionado){
-            $linha= $linha . " selected";
-            $this->filtroPadrao=$descricao;
-        }
-        $linha =$linha.'>'.$descricao.'</option>';
-
-        $this->filtro[] = $linha;
     }
-
     // Destrutor
     public function __destruct()
     {
-        if (!isset($this->filtroPadrao)){
-            $this->filtroDePesquisa("Disciplinas","index.php",true);
+        if (!isset($this->filtroPadrao)) {
+            $this->filtroDePesquisa("Disciplinas", "index.php", true);
         }
 
         echo '
@@ -127,7 +128,7 @@ class Interfaces
                 
                     <div id="search" class="cd-main-search">
                         <form>
-                            <input type="search" name="pesquisa" placeholder="Pesquisa..." value="'.$this->pesquisa.'">
+                            <input type="search" name="pesquisa" placeholder="Pesquisa..." value="' . $this->pesquisa . '">
                 
                             <div class="cd-select">
                                 <span>em</span>
@@ -135,9 +136,9 @@ class Interfaces
         foreach ($this->filtro as $i => $value) {
             echo($this->filtro[$i]);
         }
-    echo '
+        echo '
                                 </select>
-                                <span class="selected-value">'.$this->filtroPadrao.'</span>
+                                <span class="selected-value">' . $this->filtroPadrao . '</span>
                             </div>
                         </form>
                 
@@ -155,6 +156,28 @@ class Interfaces
                 </html>';
 
     }
+
+    public function getNivelUsuario()
+    {
+        return $this->nivelUsuarioLogado;
+    }
+
+    public function filtroDePesquisa($descricao, $link, $selecionado)
+    {
+
+        $linha = '<option value="' . $link . '"';
+
+        if ($selecionado) {
+            $linha = $linha . " selected";
+            $this->filtroPadrao = $descricao;
+        }
+        $linha = $linha . '>' . $descricao . '</option>';
+
+        $this->filtro[] = $linha;
+    }
+
+
+
 
 
 }//end class

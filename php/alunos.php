@@ -28,9 +28,15 @@ class Alunos extends banco
 
     private function atribuir()
     {
-        $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
-        $this->raAluno = $this->Dados[$this->getRegistro()][2];
-        $this->monitorAluno = $this->Dados[$this->getRegistro()][3];
+        if (isset($this->Dados[$this->getRegistro()][1])) {
+            $this->CPFUsuario = $this->Dados[$this->getRegistro()][1];
+            $this->raAluno = $this->Dados[$this->getRegistro()][2];
+            $this->monitorAluno = $this->Dados[$this->getRegistro()][3];
+        } else {
+            $this->CPFUsuario = "";
+            $this->raAluno = "";
+            $this->monitorAluno = "";
+        }
     }
 
     public function anterior()
@@ -38,25 +44,6 @@ class Alunos extends banco
         $this->anteriorDados();
         $this->atribuir();
     }
-
-
-    private function get($query)
-    {
-        $retorno = $this->Pesquisa($query);
-        $this->primeiro();
-        return $retorno;
-    }
-
-    public function primeiro()
-    {
-        $this->primeiroDados();
-        $this->atribuir();
-    }
-
-    /*
-        Metodos de inserção de alteracao de dados
-     */
-
 
     public function novoAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
@@ -85,7 +72,6 @@ class Alunos extends banco
         return $this->ExecultaSQL($sql);
     }
 
-
     public function editarAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
 
@@ -105,6 +91,10 @@ class Alunos extends banco
         return $this->ExecultaSQL($sql);
     }
 
+    /*
+        Metodos de inserção de alteracao de dados
+     */
+
     public function excluirAluno($CPFUsuario)
     {
         $sql = "
@@ -112,12 +102,6 @@ class Alunos extends banco
                   `CPFUsuario`=" . $CPFUsuario . ";";
         return $this->ExecultaSQL($sql);
     }
-
-
-    /*
-    Metodos de pesquisa
-    */
-
 
     public function porRa($raAluno)
     {
@@ -127,6 +111,23 @@ class Alunos extends banco
         return $this->Get($query);
     }
 
+    private function get($query)
+    {
+        $retorno = $this->Pesquisa($query);
+        $this->primeiro();
+        return $retorno;
+    }
+
+
+    /*
+    Metodos de pesquisa
+    */
+
+    public function primeiro()
+    {
+        $this->primeiroDados();
+        $this->atribuir();
+    }
 
     public function porCPF($CPFUsuario)
     {

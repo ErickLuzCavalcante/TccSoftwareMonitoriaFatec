@@ -65,10 +65,18 @@ class Publicacoes extends Rascunhos
 
     private function atribuir()
     {
-        $this->codigoMaterial = $this->Dados[$this->getRegistro()][1];
-        $this->tituloMaterial = $this->Dados[$this->getRegistro()][2];
-        $this->conteudoMaterial = $this->Dados[$this->getRegistro()][3];
-        $this->dataCriacaoMaterial = $this->Dados[$this->getRegistro()][4];
+        if (isset($this->Dados[$this->getRegistro()][1])) {
+            $this->codigoMaterial = $this->Dados[$this->getRegistro()][1];
+            $this->tituloMaterial = $this->Dados[$this->getRegistro()][2];
+            $this->conteudoMaterial = $this->Dados[$this->getRegistro()][3];
+            $this->dataCriacaoMaterial = $this->Dados[$this->getRegistro()][4];
+        } else {
+            $this->codigoMaterial = "";
+            $this->tituloMaterial = "";
+            $this->conteudoMaterial = "";
+            $this->dataCriacaoMaterial = "";
+        }
+
     }
 
     public function anterior()
