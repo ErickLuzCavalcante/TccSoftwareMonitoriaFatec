@@ -33,7 +33,7 @@ $disciplinas=new Disciplinas();
 $disciplinas->porDescricao($uiux->pagina,6,$uiux->pesquisa);
 if ($disciplinas->getTamanho()>0){
     for ($i=0; $disciplinas->ponteiro($i); $i++) {
-        $grid->add("publicacao.php?codigo=".$disciplinas->getCodigoDisciplina(),$disciplinas->getImagemDisciplina());
+        $grid->add("disciplina.php?codigo=".$disciplinas->getCodigoDisciplina(),$disciplinas->getImagemDisciplina());
         $disciplinas->proximo();
     }
     $grid->home="index.php?pesquisa=$uiux->pesquisa";

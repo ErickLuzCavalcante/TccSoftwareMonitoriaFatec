@@ -118,7 +118,7 @@ class Disciplinas extends banco
         //  Valores onde serão inseridos
         $sql = $sql .
             " WHERE  `codigoDisciplina`='" . $codigoDisciplina . "';";
-        $this->ExecultaSQL($sql);
+        $this->ExecultaSQL($sql);;
     }
 
     public function excluirDisciplina($codigoDisciplina)

@@ -10,6 +10,9 @@ namespace tcc\monitoria;
 class quill
 {
     private $maisopcoes = false;
+    public $visivelPublicar = false;
+    public $visivelTirarDoAr = false;
+    public $visivelExcluir = false;
 
 
     function __construct($link, $Titulo, $maisopcoes)
@@ -51,16 +54,50 @@ class quill
 
         echo "                
                 <h4><i class='material-icons'>edit</i>
-                Conteudo</h4><div id='editor-container'>$conteudo</div><h4 class='btn-expandir'><i class='material-icons'>settings_overscan</i></h4><h4>Açoes no servidor</h4><ul class='cd-form-list'><li><input type='radio' name='radio-button' id='cd-radio-1' value='1' checked><label for='cd-radio-1'><i class='material-icons'>save</i> Salvar</label></li>";
-        if ($this->maisopcoes != false) {
-            echo "<li>
-                    <input type='radio' name='radio-button' id='cd-radio-2' value='2'>
-                    <label for='cd-radio-3'>
-                    <i class='material-icons'>cloud_done</i> Publicar</label>
-                   </li>
+                Conteudo</h4>
+                <div id='editor-container'>$conteudo</div>
+                <h4 class='btn-expandir'>
+                <i class='material-icons'>
+                settings_overscan</i></h4>
                 
-                <li><input type='radio' name='radio-button' id='cd-radio-3' value='3'>
-                <label for='cd-radio-4'><i class='material-icons'>cloud_off</i> Tirar do ar</label></li><li><input type='radio' name='radio-button' id='cd-radio-4' value='4'><label for='cd-radio-5'><i class='material-icons'>delete_forever</i> Excluir</label></li>";
+                <h4>Açoes no servidor</h4>
+                <ul class='cd-form-list'>
+                <li>
+                    <input type='radio' name='radio-button' id='cd-radio-1' value='1' checked>
+                    <label for='cd-radio-1'>
+                        <i class='material-icons'>save</i> Salvar</label>
+                    </li>";
+        if ($this->maisopcoes != false) {
+            if ($this->visivelPublicar){
+                echo "
+                    <li>
+                        <input type='radio' name='radio-button' id='cd-radio-2' value='2'>
+                        <label for='cd-radio-3'>
+                        <i class='material-icons'>cloud_done</i> Publicar</label>
+                   </li>
+                ";
+            }
+            if ($this->visivelTirarDoAr){
+                echo "
+                    <li>
+                       <input type='radio' name='radio-button' id='cd-radio-3' value='3'>
+                       <label for='cd-radio-4'>
+                        <i class='material-icons'>cloud_off</i> 
+                            Tirar do ar
+                        </label>
+                    </li>
+                ";
+            }
+            if ($this->visivelExcluir){
+                echo "
+                  <li>
+                        <input type='radio' name='radio-button' id='cd-radio-4' value='4'>
+                     <label for='cd-radio-5'>
+                        <i class='material-icons'>delete_forever</i>
+                            Excluir
+                        </label>
+                  </li>";
+            }
         }
         echo "</ul><input type='submit' value='Enviar'></p>";
 
