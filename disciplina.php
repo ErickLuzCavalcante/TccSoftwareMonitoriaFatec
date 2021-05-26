@@ -76,9 +76,8 @@ if ($codigo!="") {
             <hr/>
             <p>
                 Controles de postagem:
-                <a href='disciplina.php?codigo=$codigo'><i class='material-icons'>reorder</i> Todos </a>/
-                <a href='disciplina.php?codigo=$codigo&controlepostagem=rascunhos'><i class='material-icons'>edit_note</i> Rascunhos </a>/
-            <a href='disciplina.php?codigo=$codigo&controlepostagem=postados'><i class='material-icons'>publish</i> Postados</a>
+                <a href='disciplina.php?codigo=$codigo'><i class='material-icons'>edit_note</i> Todos </a>/
+            <a href='disciplina.php?codigo=$codigo&controlepostagem=postados'><i class='material-icons'>publish</i> Somente os postados</a>
             </p>
         ";
     }
@@ -99,9 +98,8 @@ if ($codigo!="") {
 <br>
 
 <br>
-<li class='cd-main-list-item cd-main-list-item_first'><a href='#'>
+<li class='cd-main-list-item cd-main-list-item_first'>
         <i class='material-icons'>text_snippet</i>
-    </a>
 </li>
 <li class='cd-main-list-item cd-main-list-item_second'><a href='#'>
         <h1>Titulo do material</h1>
@@ -121,17 +119,19 @@ if ($codigo!="") {
         <i class='material-icons'>text_snippet</i>
     </a>
 </li>
-<li class='cd-main-list-item cd-main-list-item_second'><a href='#'>
+<li class='cd-main-list-item cd-main-list-item_second'>
+    <a href='#'>
         <h1>Titulo do material</h1>
+    </a>
         <hr/>
         <p>
             <i class='material-icons'>tips_and_updates</i>
             Atualizado: 22/22/2201<br>
             <i class='material-icons'>face</i>
-            Por: Erick Cavalcante<br>
+            <b>Por: Erick Cavalcante<br></b>
             <i class='material-icons'>create</i>
             Criado em: 22/22/2201
-    </a></li>
+    </li>
 <br>
 
 </ul>

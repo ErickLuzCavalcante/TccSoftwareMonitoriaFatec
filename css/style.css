@@ -5,6 +5,7 @@ Estilo primário
 -------------------------------- */
 *, *::after, *::before {
     box-sizing: border-box;
+    font: none;
 }
 
 html {
@@ -735,7 +736,7 @@ Conteúdo principal da página
     height: calc(100vh - 50px);
     position: relative;
     z-index: 2;
-    background-color: #ffffff;
+    background-color: #ebe9eb;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-transition: -webkit-transform 0.3s;
@@ -785,16 +786,15 @@ Lista
 
 -------------------------------- */
 .cd-main-list {
-    color: #FFF;
+    color: black;
     text-align: center;
     margin: 10px auto 0;
-
 }
 .cd-main-list h1{
     text-transform: capitalize;
 }
 .cd-main-list a{
-    color: #FFFFFF;
+    color: black;
 }
 .cd-main-list:after {
     content: '';
@@ -810,14 +810,23 @@ Lista
 }
 .cd-main-list-item_first {
     background-color: #df1c24;
+    color: #ffffff;
+    vertical-align: top;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
 
 }
 .cd-main-list-item_second {
-    background-color: #14151c;
+    background-color: #ffffff;
     width: 70%;
     padding: 1em;
-    border-radius: 0.5em;
+    border-radius: 0.2em;
     text-align: left;
+    border: #94aab0 thin none;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+}
+
+hr{
+    border: 0.5px solid #ebe9eb;
 }
 
 /* --------------------------------

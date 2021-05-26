@@ -67,7 +67,7 @@ class quill
                     <label for='cd-radio-1'>
                         <i class='material-icons'>save</i> Salvar</label>
                     </li>";
-        if ($this->maisopcoes != false) {
+
             if ($this->visivelPublicar){
                 echo "
                     <li>
@@ -98,7 +98,6 @@ class quill
                         </label>
                   </li>";
             }
-        }
         echo "</ul><input type='submit' value='Enviar'></p>";
 
     }

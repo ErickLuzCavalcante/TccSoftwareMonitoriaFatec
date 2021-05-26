@@ -75,7 +75,7 @@ $uiux = new Interfaces("Editor de disciplina", 0, false);
 $uiux->addItemMenu("javascript:close();", "Para sair do editor feche a guia", false);
 $uiux->fecharmenu();
 
-$editor = new quill($link, "de disciplina", true);
+$editor = new quill($link, "de disciplina", false);
 
 // Controla os controles do menu "Açoes no servidor"
 
