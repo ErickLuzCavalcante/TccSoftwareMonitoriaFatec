@@ -12,8 +12,6 @@ include 'php\disciplinas.php';
 include "php\publicacoes.php";
 
 
-
-
 $classeUsuaario = new usuario();
 $classeUsuaario->novoUsuario(
     '1111',
@@ -36,7 +34,7 @@ $classeUsuaario->login('1111', 'Senha');
 $classeAluno = new alunos();
 
 $classeAluno->novoAluno('1111', '66698', 0);
-$classeAluno->editarAluno('1111', '77777', 1);
+$classeAluno->editarAluno('1111', '77777', 0);
 
 echo '<br>Verificar se esta logado ' . $classeUsuaario->verificaLogado();
 echo '<br>Logar ' . $classeUsuaario->login('1111', 'Senha');
@@ -58,22 +56,18 @@ echo "CPF MONITOR";
 echo $classeAluno->getMonitorAluno();
 echo "<br><br>";
 
-$ClasseDisciplinas = new Disciplinas();
-$codigoDisciplina = $ClasseDisciplinas->novaDisciplina("Gestao de pastel", '<img src="img/banco-dados.png">', "é uma bosta", "Xinguiling");
-echo "<br>Codigo " . $codigoDisciplina;
+//$ClasseDisciplinas = new Disciplinas();
+//$codigoDisciplina = $ClasseDisciplinas->novaDisciplina("Gestao de pastel", '<img src="img/banco-dados.png">', "é uma bosta", "Xinguiling");
+//echo "<br>Codigo " . $codigoDisciplina;
 
-$classePostagens = new Publicacoes();
-$codigoPostagem = $classePostagens->novo("Titulo" . $codigoDisciplina, "conteudo" . $codigoDisciplina, $codigoDisciplina, "1111");
-$classePostagens->editar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
-$classePostagens->publicar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
+//$classePostagens = new Publicacoes();
+//$codigoPostagem = $classePostagens->novo("Titulo" . $codigoDisciplina, "conteudo" . $codigoDisciplina, $codigoDisciplina, "1111");
+//$classePostagens->editar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
+//$classePostagens->publicar($codigoPostagem, "Titulo", "conteudo", $codigoDisciplina, "1111", "Teste de rascunho");
 
 
 //$classeUsuaario->excluirusuario("1111");
 //$classeAluno->excluirAluno('1111');
-
-
-
-
 
 
 $classeUsuaario = new usuario();
@@ -94,9 +88,6 @@ $classeAluno->novoAluno('1111', '66698', 0);
 
 
 ?>
-
-
-
 
 
 <a href="old/Login.php">Entrar</a>

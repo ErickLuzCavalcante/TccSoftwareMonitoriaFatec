@@ -17,12 +17,12 @@ class Publicacoes extends Rascunhos
 
     // Atributos de configuração com a tabela
 
-    private $camposSQL = '`codigoMaterial`, 
+    private $camposSQLRascunho = '`codigoMaterial`, 
                          `tituloMaterial`, 
                          `conteudoMaterial`,
                          `dataCriacaoMaterial`';
 
-    private $tabela = "`materiais`";
+    private $tabelaRascunho = "`materiais`";
 
 
     /*
@@ -95,7 +95,7 @@ class Publicacoes extends Rascunhos
 
         $sql =
 
-            "INSERT INTO " . $this->tabela . "
+            "INSERT INTO " . $this->tabelaRascunho . "
                   (
                   `codigoMaterial`,
                   `tituloMaterial`,
@@ -119,14 +119,23 @@ class Publicacoes extends Rascunhos
 
     }
 
+    public function tirarDoAr($codigo)
+    {
+        $sql="UPDATE `atualizacoes` SET `codigoMaterial`=null WHERE  `codigoRascunho`=$codigo";
+        echo $sql;
+        $this->ExecultaSQL($sql);
+        $sql = "DELETE FROM `materiais` WHERE  `codigoMaterial`=$codigo";
+        $this->ExecultaSQL($sql);
+    }
+
     private function get($query)
     {
         $retorno = $this->Pesquisa($query);
-        $this->primeiro();
+        $this->primeiroRascunhos();
         return $retorno;
     }
 
-    public function primeiro()
+    public function primeiroRascunhos()
     {
         $this->primeiroDados();
         $this->atribuir();

@@ -47,7 +47,7 @@ class Interfaces
         }
 
         if (isset($_GET['filtro'])) {
-            header('Location: ' . $_GET['filtro'] . '?pesquisa=' . $this->pesquisa . '&pagina=' . $this->pagina);
+            header('Location: ' . $_GET['filtro'] . 'pesquisa=' . $this->pesquisa . '&pagina=' . $this->pagina);
         }
 
         // Instancia o objeto com a classe usuario

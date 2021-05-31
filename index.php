@@ -9,7 +9,7 @@ include "php/grid.php";
 
 $uiux = new Interfaces("Inicio", 1,true);
 // Filtros da barra de pesquisa
-$uiux->filtroDePesquisa("Disciplinas","index.php",true);
+$uiux->filtroDePesquisa("Disciplinas","index.php?",true);
 
 
 // Itens do menu

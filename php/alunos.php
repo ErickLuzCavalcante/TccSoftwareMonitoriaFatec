@@ -129,16 +129,6 @@ class Alunos extends banco
         $this->atribuir();
     }
 
-    public function porCPF($CPFUsuario)
-    {
-        $query = "SELECT " . $this->camposSQL . "
-              
-              FROM " . $this->tabela . " WHERE
-              `CPFUsuario` = " . strtoupper($CPFUsuario);
-        return $this->Get($query);
-    }
-
-
     public function porNome($nomeCompletoUsuario)
     {
         $nomeCompletoUsuario = str_replace(" ", "%", $nomeCompletoUsuario);
@@ -156,6 +146,40 @@ class Alunos extends banco
         return $this->Get($query);
     }
 
+    public function verificaLogadoMonitor()
+    {
+        $usuario = new Usuario();
+        $retorno = $usuario->verificaLogado();
+        if ($retorno == true) {
+            $retorno = $this->verificaMonitor($usuario->getCPFUsuario());
+        }
+        return $retorno;
+    }
+
+    public function verificaMonitor($CPFUsuario)
+    {
+        $this->porCPF($CPFUsuario);
+        if ($this->getMonitorAluno() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function porCPF($CPFUsuario)
+    {
+        $query = "SELECT " . $this->camposSQL . "
+              
+              FROM " . $this->tabela . " WHERE
+              `CPFUsuario` = " . strtoupper($CPFUsuario);
+        return $this->Get($query);
+    }
+
+    public function getMonitorAluno()
+    {
+        return $this->monitorAluno;
+    }
+
     /**
      * Get dos atributos
      */
@@ -168,10 +192,5 @@ class Alunos extends banco
     public function getRaAluno()
     {
         return $this->raAluno;
-    }
-
-    public function getMonitorAluno()
-    {
-        return $this->monitorAluno;
     }
 }

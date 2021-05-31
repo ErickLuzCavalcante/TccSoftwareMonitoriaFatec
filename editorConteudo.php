@@ -4,10 +4,14 @@ namespace tcc\monitoria;
 
 include "php/interfaces.php";
 include "php/quill.php";
+require "php/publicacoes.php";
 
 
+$aluno = new Alunos();
 $usuario = new Usuario();
-$secao = $usuario->verificaAdministrador();
+$usuario->verificaLogado();
+$secao = $aluno->verificaLogadoMonitor();
+
 if (!$secao) {
     $falha = "
   Você nao possui permissão, ou sua sessão foi finalizada. Nenhuma ação foi executada no servidor<br><br>
@@ -16,52 +20,64 @@ if (!$secao) {
 }
 
 $disciplinas = new Disciplinas();
+$postagens = new Publicacoes();
 
 /*Inicialização das variaveis e Objetos */
 
-$nomeDisciplina = "";
-$imagemDisciplina = "";
-$sobreDisciplina = "";
-$professorDisciplina = "";
-$link = "editorMateria.php";
+$titulo = "";
+$conteudo = "";
+
+
+$link = "editorConteudo.php";
+
 /*FIM - Inicialização das variaveis e Objetos */
+
 if (isset($_GET["codigoDisciplina"])) {
-    $codigo = $_GET["codigoDisciplina"];
-    $disciplinas->porCodigo($codigo);
-    $nomeDisciplina = $disciplinas->getNomeDisciplina();
-    $imagemDisciplina = $disciplinas->getImagemDisciplina();
-    $sobreDisciplina = $disciplinas->getSobreDisciplina();
-    $professorDisciplina = $disciplinas->getProfessorDisciplina();
-    $link = "editorMateria.php?codigoDisciplina=$codigo";
+    $codigoDisciplina = $_GET["codigoDisciplina"];
+    $link = "editorConteudo.php?codigoDisciplina=$codigoDisciplina";
+} else {
+    $codigoDisciplina = false;
+    $falha = "<br><br> disciplina nao informada! <br> As alterações não serão salvas <br><br>";
+}
+
+if (isset($_GET["codigo"]) && $codigoDisciplina != false) {
+    $codigo = $_GET["codigo"];
+    $postagens->rascunhoPorCodigo($codigo);
+    $titulo = $postagens->getTituloMaterial();
+    $conteudo = $postagens->getConteudoMaterial();
+
+    $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
 
 }
-if (isset($_POST["nomeDisciplina"])) {
+if (isset($_POST["delta"])) {
 
-    $nomeDisciplina = $_POST["nomeDisciplina"];
-    $imagemDisciplina = $_POST["deltaIMG"];
-    $sobreDisciplina = $_POST["delta"];
-    $professorDisciplina = $_POST["professorDisciplina"];
 
-    if ($imagemDisciplina == "") {
-        $falha = $falha . "<br><br>Falta adcionar uma imagem para capa da matéria, esta irá identificar a disciplina dentre as demais<br>";
-    }
-    if ($professorDisciplina == "") {
-        $falha = $falha . "<br><br>Qual o professor responsavel pela matéria<br>";
-    }
+    $titulo = $_POST["titulo"];
+    $conteudo = $_POST["delta"];
+
     if (isset($falha) == false) {
-        if (isset($_GET["codigoDisciplina"])) {
-            $operacao = $_POST["radio-button"];
+        $operacao = $_POST["radio-button"];
+        if (isset($_GET["codigo"])) {
             if ($operacao == '1') {
-                $disciplinas->editarDisciplina($_GET["codigoDisciplina"], $nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina);
-                $link = "editorMateria.php?codigoDisciplina=$codigo";
+                $postagens->editar($_GET["codigo"], $titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario(), $_POST["Comentario"]);
+                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+            }
+            if ($operacao == '2') {
+                $postagens->publicar($_GET["codigo"], $titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
+                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+            }
+            if ($operacao == '3') {
+                $postagens->tirarDoAr($codigo);
+                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
             }
             if ($operacao == '4') {
-                $disciplinas->excluirDisciplina($_GET["codigoDisciplina"]);
-                $link = "editorMateria.php";
+                $postagens->excluir($codigo);
+                $link = "index.php";
+                $falha = "Conteudo excluido";
             }
         } else {
-            $codigo = $disciplinas->novaDisciplina($nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina);
-            $link = "editorMateria.php?codigoDisciplina=$codigo";
+            $codigo = $postagens->novo($titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
+            $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
         }
 
     }
@@ -70,17 +86,18 @@ if (isset($_POST["nomeDisciplina"])) {
 $uiux = new Interfaces("Editor de disciplina", 0, false);
 // Filtros da barra de pesquisa
 
-
 // Itens do menu
 $uiux->addItemMenu("javascript:close();", "Para sair do editor feche a guia", false);
 $uiux->fecharmenu();
 
-$editor = new quill($link, "de disciplina", true);
+$editor = new quill($link, "de conteúdo", isset($_GET['codigo']));
 
 // Controla os controles do menu "Açoes no servidor"
 
-if (isset($_GET["codigoDisciplina"])) {
+if (isset($codigo)) {
     $editor->visivelExcluir = true;
+    $editor->visivelTirarDoAr=true;
+    $editor->visivelPublicar=true;
 }
 
 
@@ -88,9 +105,10 @@ if (isset($falha)) {
     $editor->falha($falha);
 }
 
-$editor->adcionarCampo("nomeDisciplina", "drive_file_rename_outline", "Nome da disciplina", $nomeDisciplina);
-$editor->adcionarCampo("professorDisciplina", "assignment_ind", "Professor da materia", $professorDisciplina);
-
-$editor->Editor($sobreDisciplina);
+$editor->adcionarCampo("titulo", "drive_file_rename_outline", "Titulo da disciplina", $titulo);
+if (isset($codigo)) {
+    $editor->adcionarCampo("Comentario", "assignment_ind", "Comentarios de alteração", "");
+}
+$editor->Editor($conteudo);
 unset($uiux)
 ?>

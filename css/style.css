@@ -736,7 +736,7 @@ Conteúdo principal da página
     height: calc(100vh - 50px);
     position: relative;
     z-index: 2;
-    background-color: #ebe9eb;
+    background-color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-transition: -webkit-transform 0.3s;
@@ -822,11 +822,11 @@ Lista
     border-radius: 0.2em;
     text-align: left;
     border: #94aab0 thin none;
-    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+    //box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
 }
 
 hr{
-    border: 0.5px solid #ebe9eb;
+    border: 1px solid #ebe9eb;
 }
 
 /* --------------------------------

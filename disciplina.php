@@ -3,19 +3,54 @@
 namespace tcc\monitoria;
 
 include "php/interfaces.php";
-include "php/grid.php";
+include "php/lista.php";
+require "php/publicacoes.php";
+
+// Back-end
+// Coleta de dados para alimentar a interface
 
 
+$usuario = new Usuario();
+$aluno = new Alunos();
+$administrador = $usuario->verificaAdministrador();
+$monitor = $aluno->verificaLogadoMonitor();
+
+
+$aluno->getCPFUsuario($usuario->getCPFUsuario());
+$disciplina = new Disciplinas();
+$postagens = new Publicacoes();
+
+
+// inicilizo a interface
 $uiux = new Interfaces("Inicio", 1, true);
-// Filtros da barra de pesquisa
-$uiux->filtroDePesquisa("Gestao de tecnologia", "disciplina.php?codigo=8", true);
-$uiux->filtroDePesquisa("Disciplinas", "index.php", false);
+
+// Carrega os dados confome o codgio da url, se houver o código na URL
+$link = "disciplina.php?";
+
+if (isset($_GET["controlepostagem"])) {
+    $link = $link . "controlepostagem=" . $_GET["controlepostagem"] . "&";
+}
+
+if (isset($_GET["codigo"])) {
+    $codigo = $_GET["codigo"];
+    $disciplina->porCodigo($codigo);
+    $codigo = $disciplina->getCodigoDisciplina();
+    // Gera o filtro para a pesquisa na materia
+    $uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo", true);
+
+} else {
+    unset ($codigo);
+}
+
+
+// Filtros padrão
+
+$uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
 
 // Itens do menu
 $uiux->addItemMenu("index.php", "Inicio", false);
 // Se o usuario for administrador
-$uiux->addItemMenu("editorMateria.php' target='_blank'", "item", true);
 $uiux->addItemMenu('index.php', "Editar Usuários", true);
 
 $uiux->addItemMenu("index.php", "Meu Perfil", false);
@@ -24,82 +59,113 @@ $uiux->addItemMenu("Login.php", "Logoff", false);
 $uiux->fecharmenu();
 
 
-// Cabecalho da disciplina
-echo "<ul class='cd-main-list'><br>";
+// inicializa a lista
+$lista = new lista();
 
-$usuario = new Usuario();
-$aluno = new Alunos();
-$monitor = false;
-$administrador = $usuario->verificaAdministrador();
-if ($administrador) {
-    $monitor = true;
-} else {
-    $aluno->getCPFUsuario($usuario->getCPFUsuario());
-    if ($aluno->getMonitorAluno() == 1) {
-        $monitor = true;
-    }
-}
-$aluno->getCPFUsuario($usuario->getCPFUsuario());
-$disciplina = new Disciplinas();
 
-if (isset($_GET["codigo"])) {
-    $codigo = $_GET["codigo"];
-    $disciplina->porCodigo($codigo);
-    $codigo=$disciplina->getCodigoDisciplina();
-
-} else {
-    $codigo = "";
-}
-if ($codigo!="") {
-    echo "<li class='cd-main-list-item cd-main-list-item_first'><i class='material-icons'>history_edu</i></li>";
-
-} else {
-    echo "<li class='cd-main-list-item cd-main-list-item_first'><i class='material-icons'>error</i></li>";
-    echo "<li class='cd-main-list-item cd-main-list-item_second'><a href='index.php'>  <h1>Conteudo não encontrado!!!
-    </h1></a>
-    <hr/>
-    <a href='index.php'><i class='material-icons'>restart_alt</i>Volte para o incio </a></li>";
+// Casso não tenha o codigo da disciplina declarada, o sistema mostra a mensagem de erro e finaliza a pagina
+if (!isset($codigo)) {
+    $lista->add("error", "Conteudo não encontrado!!!", "<a href='index.php'><i class='material-icons'>restart_alt</i>Volte para o incio </a>");
     exit();
 }
+
+
+// Administrador tem as permicoes de monitor
+if ($administrador) $monitor = true;
+
+
+// informacoes da disciplinas
+
+// Cria a string de que conterá as açoes e informacoes da diciplina conforme oo nivel de acesso do usuario
+$infodisciplina = "";
+
+// Se o usuario for monitor
+if ($monitor) {
+    $infodisciplina = $infodisciplina .
+        "
+        
+        <i class='material-icons'>auto_awesome</i> Controles adcionais:<br>
+        
+        <!-- Link para a visualizacao de todos os materiais -->
+        <a href='disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>view_list</i> Mostrar todos materiais 
+        </a><br>
+        <!-- Fim Link para a visualizacao de todos os materiais -->
+        
+         
+         <!-- Link para a visualizacao somente dos que estao postados -->
+        <a href='disciplina.php?codigo=$codigo&controlepostagem=postados&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>visibility</i> Mostrar os que estão postado 
+        </a><br>
+        <!-- Fim Link para a visualizacao somente dos que estao postados -->
+        
+        <!-- Link para a visualizacao somente dos que NAO estao postados -->
+        <a href='disciplina.php?codigo=$codigo&controlepostagem=rascunhos&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>visibility_off</i> Mostrar os que não esta postado 
+        </a><br>
+         <!-- Fim Link para a visualizacao somente dos que NAO estao postados -->
+         
+
+        <!-- Link para criar um novo material na disciplina -->
+        <a href='editorConteudo.php?codigoDisciplina=$codigo'  target='_blank'>
+            <i class='material-icons'>post_add</i> Novo material
+        </a><br>
+        <!-- Fim Link para criar um novo material na disciplina --> 
+    ";
+
+}
+// Se o usuario for aadministrador
+if ($administrador) {
+    $infodisciplina = $infodisciplina . "
+    <!-- Link para editar a disciplina -->
+    <a href='editorMateria.php?codigoDisciplina=$codigo'  target='_blank'>
+        <i class='material-icons'>folder_open</i> Editar disciplina
+     </a><br>
+    <!-- Fim Link para editar a disciplina -->
+    ";
+}
+
+
+// para todos
+$infodisciplina = $infodisciplina . "
+    <hr/>
+    <i class='material-icons'>school</i> Professor(a): " . $disciplina->getProfessorDisciplina() . " <br>
+    
+    <!-- Link para mostrar mais informacoes  -->
+    <a href='#  target='_blank'>
+        <i class='material-icons'>info</i> Mais informações  
+     </a><br>
+    <!-- Fim Link para mostrar mais informacoes  -->
+";
+
+
+$lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
+
+unset($infodisciplina);
+
+$tipoDeListagem = "todos";
+if (isset($_POST["controlepostagem"])) {
+    $tipoDeListagem = $_POST["controlepostagem"];
+}
+// pesquisa
+$postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+if ($postagens->getTamanho() > 0) {
+    for ($i = 0; $postagens->ponteiro($i); $i++) {
+
+        $lista->add("text_snippet", $postagens->getTituloMaterial(), "
+        <i class='material-icons'>tips_and_updates</i>
+        Criado em: " . $postagens->getDataCriacaoMaterial()
+        );
+        $postagens->proximo();
+    }
+
+
+}
+
 ?>
 
-
-<li class='cd-main-list-item cd-main-list-item_second'>
-    <h1>
-        <?php echo $disciplina->getNomeDisciplina() ?>
-    </h1>
-    <br>
-
-    <?php
-    if ($monitor) {
-        echo "
-            <hr/>
-            <p>
-                Controles de postagem:
-                <a href='disciplina.php?codigo=$codigo'><i class='material-icons'>edit_note</i> Todos </a>/
-            <a href='disciplina.php?codigo=$codigo&controlepostagem=postados'><i class='material-icons'>publish</i> Somente os postados</a>
-            </p>
-        ";
-    }
-
-    if ($administrador) {
-        echo "
-            <hr/>
-                <a href='editorMateria.php?codigoDisciplina=$codigo'  target='_blank'><i class='material-icons'>apps</i> Editar disciplina
-        ";
-    }
-    ?>
-
-
-    <hr/>
-    <i class='material-icons'>school</i> Professor(a): Pastel<br>
-    <i class='material-icons'>info</i> Mais informações
-</li>
-<br>
-
-<br>
 <li class='cd-main-list-item cd-main-list-item_first'>
-        <i class='material-icons'>text_snippet</i>
+    <i class='material-icons'>text_snippet</i>
 </li>
 <li class='cd-main-list-item cd-main-list-item_second'><a href='#'>
         <h1>Titulo do material</h1>
@@ -123,15 +189,15 @@ if ($codigo!="") {
     <a href='#'>
         <h1>Titulo do material</h1>
     </a>
-        <hr/>
-        <p>
-            <i class='material-icons'>tips_and_updates</i>
-            Atualizado: 22/22/2201<br>
-            <i class='material-icons'>face</i>
-            <b>Por: Erick Cavalcante<br></b>
-            <i class='material-icons'>create</i>
-            Criado em: 22/22/2201
-    </li>
+    <hr/>
+    <p>
+        <i class='material-icons'>tips_and_updates</i>
+        Atualizado: 22/22/2201<br>
+        <i class='material-icons'>face</i>
+        <b>Por: Erick Cavalcante<br></b>
+        <i class='material-icons'>create</i>
+        Criado em: 22/22/2201
+</li>
 <br>
 
 </ul>

@@ -53,7 +53,7 @@ class quill
     {
 
         echo "                
-                <h4><i class='material-icons'>edit</i>
+                <h4><i class='material-icons'>article</i>
                 Conteudo</h4>
                 <div id='editor-container'>$conteudo</div>
                 <h4 class='btn-expandir'>

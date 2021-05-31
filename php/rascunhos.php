@@ -12,11 +12,12 @@ class Rascunhos extends Banco
     private $tituloRascunho;
     private $conteudoRascunho;
     private $codigoDisciplina;
+    private $dataCriacaoRascunho;
 
     // Atributos de configuração com a tabela
 
-    private $camposSQL = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`';
-    private $tabela = "`rascunhos`";
+    private $camposSQLRascunho = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`';
+    private $tabelaRascunho = "`rascunhos`";
 
     /*
         Classe de atribuição da recepção dos dados do banco
@@ -46,10 +47,15 @@ class Rascunhos extends Banco
         return $this->codigoDisciplina;
     }
 
+    public function getDataCriacaoRascunho()
+    {
+        return $this->dataCriacaoRascunho;
+    }
+
     public function proximo()
     {
         $this->proximoDados();
-        $this->atribuir();
+        $this->atribuirRascunhos();
     }
 
 
@@ -62,7 +68,7 @@ class Rascunhos extends Banco
 
     /*Não altera */
 
-    private function atribuir()
+    private function atribuirRascunhos()
     {
         if (isset($this->Dados[$this->getRegistro()][1])) {
             $this->codigoRascunho = $this->Dados[$this->getRegistro()][1];
@@ -82,7 +88,7 @@ class Rascunhos extends Banco
     public function anterior()
     {
         $this->anteriorDados();
-        $this->atribuir();
+        $this->atribuirRascunhos();
     }
 
     public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
@@ -95,7 +101,7 @@ class Rascunhos extends Banco
 
         $sql =
 
-            "INSERT INTO " . $this->tabela . "
+            "INSERT INTO " . $this->tabelaRascunho . "
                   (
                   `tituloRascunho`,
                   `conteudoRascunho`,
@@ -173,34 +179,46 @@ class Rascunhos extends Banco
 
     }
 
-
-    /*
-        Metodos de alteração
-    */
-
-    public function rascunhoPorCodigo($raAluno)
+    public function excluir($codigoRascunho)
     {
-        $query = "SELECT " . $this->camposSQL . "
-              FROM " . $this->tabela . " WHERE
-              `raAluno` = " . strtoupper($raAluno) . "";
-        return $this->Get($query);
+        $sql = "DELETE FROM `atualizacoes` WHERE  `codigoRascunho`=$codigoRascunho";
+        $this->ExecultaSQL($sql);
+        $sql = "DELETE FROM `softwaredemonitoria`.`rascunhos` WHERE  `codigoRascunho`=$codigoRascunho";
+        $this->ExecultaSQL($sql);
+        $sql = "DELETE FROM `softwaredemonitoria`.`materiais` WHERE  `codigoMaterial`=$codigoRascunho";
+        $this->ExecultaSQL($sql);
     }
 
-    private function get($query)
+
+    private function getRascunhos($query)
     {
         $retorno = $this->Pesquisa($query);
-        $this->primeiro();
+        $this->primeiroRascunhos();
         return $retorno;
     }
 
-    /*
-    Metodos de pesquisa
-    */
-
-    public function primeiro()
+    public function primeiroRascunhos()
     {
         $this->primeiroDados();
-        $this->atribuir();
+        $this->atribuirRascunhos();
+    }
+
+    public function rascunhoPorCodigo($porCodigo)
+    {
+        $query = "SELECT " . $this->camposSQLRascunho . "
+              FROM " . $this->tabelaRascunho . " WHERE
+              `codigoRascunho` = " . $porCodigo . "";
+        return $this->getRascunhos($query);
+    }
+
+    public function rascunhoPorDiciplina($codigoDiciplina,$descricao,$pagina,$quantidade)
+    {
+        $query = "SELECT  $this->camposSQLRascunho 
+              FROM  $this->tabelaRascunho 
+              WHERE WHERE codigoDisciplina = $codigoDiciplina
+              LIMIT $pagina,$quantidade";
+
+        return $this->getRascunhos($query);
     }
 }
 
