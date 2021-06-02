@@ -16,7 +16,7 @@ class Rascunhos extends Banco
 
     // Atributos de configuração com a tabela
 
-    private $camposSQLRascunho = '`codigoRascunho`,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`';
+    private $camposSQLRascunho = 'rascunhos.codigoRascunho,  `tituloRascunho`, `conteudoRascunho`,`dataCriacaoRascunho`,`codigoDisciplina`';
     private $tabelaRascunho = "`rascunhos`";
 
     /*
@@ -119,20 +119,21 @@ class Rascunhos extends Banco
 
         // Cria o rascunho
         $codigo = $this->ExecultaSQL($sql);
+        $dataDeHoje = date('Y-m-d');
 
         $sql =
             "INSERT INTO 
-                `atualizacoes` (
-                    `codigoRascunho`,
-                    `descricaoUpdate`,
-                    `personaUpdate`,
-                    `dataUpdate`
-                ) VALUES (
-                    '" . $codigo . "',
-                    'Criado rascunho',
-                    '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
-                    '" . $dataCriacaoRascunho . "'
-                    );
+           `atualizacoes` (
+               `codigoRascunho`,
+               `descricaoAtualizacoes`,
+               `personaAtualizacoes`,
+               `dataAtualizacoes`
+           ) VALUES (
+               '" . $codigo . "',
+               ' Criado material ',
+               '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
+               '" . $dataDeHoje . "'
+               );
         ";
 
         $this->ExecultaSQL($sql);
@@ -189,6 +190,13 @@ class Rascunhos extends Banco
         $this->ExecultaSQL($sql);
     }
 
+    public function rascunhoPorCodigo($porCodigo)
+    {
+        $query = "SELECT " . $this->camposSQLRascunho . "
+              FROM " . $this->tabelaRascunho . " WHERE
+              `codigoRascunho` = " . $porCodigo . "";
+        return $this->getRascunhos($query);
+    }
 
     private function getRascunhos($query)
     {
@@ -203,21 +211,30 @@ class Rascunhos extends Banco
         $this->atribuirRascunhos();
     }
 
-    public function rascunhoPorCodigo($porCodigo)
+    public function rascunhoPostagensPorDiciplina($codigoDiciplina, $descricao, $pagina, $quantidade)
     {
-        $query = "SELECT " . $this->camposSQLRascunho . "
-              FROM " . $this->tabelaRascunho . " WHERE
-              `codigoRascunho` = " . $porCodigo . "";
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query = "SELECT  $this->camposSQLRascunho 
+              FROM  $this->tabelaRascunho 
+              WHERE codigoDisciplina = $codigoDiciplina
+              ORDER BY `codigoRascunho` DESC
+              LIMIT $pagina,$quantidade";
         return $this->getRascunhos($query);
     }
 
-    public function rascunhoPorDiciplina($codigoDiciplina,$descricao,$pagina,$quantidade)
+    public function rascunhoPorDiciplina($codigoDiciplina, $descricao, $pagina, $quantidade)
     {
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
         $query = "SELECT  $this->camposSQLRascunho 
               FROM  $this->tabelaRascunho 
-              WHERE WHERE codigoDisciplina = $codigoDiciplina
+              JOIN atualizacoes on codigoMaterial IS NULL AND atualizacoes.codigoRascunho = rascunhos.codigoRascunho
+              AND rascunhos.codigoDisciplina = $codigoDiciplina
+              ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
-
         return $this->getRascunhos($query);
     }
 }

@@ -7,8 +7,8 @@ include "php/quill.php";
 
 
 $usuario = new Usuario();
-$secao = $usuario->verificaAdministrador();
-if (!$secao) {
+
+if (!$usuario->verificaAdministrador()) {
     $falha = "
   Você nao possui permissão, ou sua sessão foi finalizada. Nenhuma ação foi executada no servidor<br><br>
   Para resolver click no link abaixo e efetue o login, enquanto isso eu irei recuperar os dados apartir do checkpoint salvo neste computador

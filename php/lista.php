@@ -20,8 +20,8 @@ class lista
 
     function __destruct()
     {
-        /*
-        echo '</div></div><div class="content"><span class="loading"></span></div></section><script src="./grid/grid3d.js"></script><script src="./grid/classie-grid.js"></script><script src="./grid/helper-grid.js"></script><script>new grid3D( document.getElementById( "grid3d" ) );</script>';
+
+        echo '</ul><br>';
         echo '<div class="cd-nav"><p>';
         if ($this->prev != false) {
             echo '<a href="' . $this->prev . '"><i class="material-icons">arrow_back_ios</i><i class="material-icons">more_horiz</i></a>';
@@ -31,10 +31,10 @@ class lista
             echo '<a href="' . $this->next . '"><i class="material-icons">more_horiz</i><i class="material-icons">arrow_forward_ios</i></a>';
         }
         echo "</p></div>";
-        */
+
     }
 
-    public function add($icone,$titulo,$conteudo)
+    public function add($icone, $titulo, $conteudo)
     {
         echo "<li class='cd-main-list-item cd-main-list-item_first'><i class='material-icons'>$icone</i></li>";
         echo "<li class='cd-main-list-item cd-main-list-item_second'>

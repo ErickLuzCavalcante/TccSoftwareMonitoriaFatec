@@ -17,16 +17,17 @@ class Publicacoes extends Rascunhos
 
     // Atributos de configuração com a tabela
 
-    private $camposSQLRascunho = '`codigoMaterial`, 
+    private $camposSQLpublicado = '`codigoMaterial`, 
                          `tituloMaterial`, 
                          `conteudoMaterial`,
                          `dataCriacaoMaterial`';
 
-    private $tabelaRascunho = "`materiais`";
+    private $tabelaPublicado = "`materiais`";
 
 
     /*
         Getters
+
     */
     public function getCodigoMaterial()
     {
@@ -95,7 +96,7 @@ class Publicacoes extends Rascunhos
 
         $sql =
 
-            "INSERT INTO " . $this->tabelaRascunho . "
+            "INSERT INTO " . $this->tabelaPublicado . "
                   (
                   `codigoMaterial`,
                   `tituloMaterial`,
@@ -122,13 +123,12 @@ class Publicacoes extends Rascunhos
     public function tirarDoAr($codigo)
     {
         $sql="UPDATE `atualizacoes` SET `codigoMaterial`=null WHERE  `codigoRascunho`=$codigo";
-        echo $sql;
         $this->ExecultaSQL($sql);
         $sql = "DELETE FROM `materiais` WHERE  `codigoMaterial`=$codigo";
         $this->ExecultaSQL($sql);
     }
 
-    private function get($query)
+    private function getPublicado($query)
     {
         $retorno = $this->Pesquisa($query);
         $this->primeiroRascunhos();
@@ -141,10 +141,29 @@ class Publicacoes extends Rascunhos
         $this->atribuir();
     }
 
-    /*
-        Metodos de alteração
-    */
 
+    public function publicadoPorCodigo($porCodigo)
+    {
+        $query = "SELECT " . $this->camposSQLpublicado . "
+              FROM " . $this->tabelaPublicado . " WHERE
+              `codigoMaterial` = " . $porCodigo . "";
+        return $this->getPublicado($query);
+    }
+
+
+    public function publicadoPorDiciplina($codigoDiciplina, $descricao, $pagina, $quantidade)
+    {
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query = "SELECT  $this->camposSQLpublicado 
+              FROM  $this->tabelaPublicado 
+              JOIN rascunhos	ON rascunhos.codigoDisciplina = $codigoDiciplina
+              AND codigoMaterial = codigoRascunho 
+              ORDER BY `codigoRascunho` DESC
+              LIMIT $pagina,$quantidade";
+        return $this->getPublicado($query);
+    }
 
 }
 

@@ -17,16 +17,26 @@ $monitor = $aluno->verificaLogadoMonitor();
 
 
 $aluno->getCPFUsuario($usuario->getCPFUsuario());
-$disciplina = new Disciplinas();
 $postagens = new Publicacoes();
-
-if (isset($_GET["codigo"])) {
-    $codigo = $_GET["codigo"];
-    $disciplina->porCodigo($codigo);
-    $codigo = $disciplina->getCodigoDisciplina();
+$rascunho=true;
+if (isset($_GET["rascunho"])){
+    $rascunho =$_GET["rascunho"];
 }
-// inicilizo a interface
-$uiux = new Interfaces($disciplina->getNomeDisciplina(), 1, isset($codigo));
+
+if (isset($_GET["codigo"])&&$rascunho==false) {
+    $codigo = $_GET["codigo"];
+    $postagens->publicadoPorCodigo($codigo);
+
+}else if (isset($_GET["codigo"])&&$rascunho==true){
+    $codigo = $_GET["codigo"];
+    $postagens->rascunhoPorCodigo($codigo);
+}
+
+if ($postagens->getCodigoMaterial()==""){
+    unset($codigo);
+}
+
+$uiux = new Interfaces($postagens->getTituloMaterial(), 1, isset($codigo));
 
 // Carrega os dados confome o codgio da url, se houver o código na URL
 $link = "disciplina.php?";
@@ -37,7 +47,7 @@ if (isset($_GET["controlepostagem"])) {
 
 if (isset($_GET["codigo"])) {
     // Gera o filtro para a pesquisa na materia
-    $uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo", true);
+    //$uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo", true);
 
 } else {
     unset ($codigo);
@@ -124,7 +134,7 @@ if ($administrador) {
     <!-- Link para editar a disciplina -->
     <a href='editorMateria.php?codigoDisciplina=$codigo'  target='_blank'>
         <i class='material-icons'>folder_open</i> Editar disciplina
-     </a><br><hr/>
+     </a><br>
     <!-- Fim Link para editar a disciplina -->
     ";
 }
@@ -132,6 +142,7 @@ if ($administrador) {
 
 // para todos
 $infodisciplina = $infodisciplina . "
+    <hr/>
     <i class='material-icons'>school</i> Professor(a): " . $disciplina->getProfessorDisciplina() . " <br>
     
     <!-- Link para mostrar mais informacoes  -->
@@ -147,66 +158,13 @@ $lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
 unset($infodisciplina);
 
 $tipoDeListagem = "todos";
-if (isset($_GET["controlepostagem"])) {
-    $tipoDeListagem = $_GET["controlepostagem"];
+if (isset($_POST["controlepostagem"])) {
+    $tipoDeListagem = $_POST["controlepostagem"];
 }
-
 // pesquisa
-if ($monitor) {
-
-    switch ($tipoDeListagem) {
-        case "todos":
-            $postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-            break;
-        case "rascunhos":
-            $postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-            break;
-        default:
-            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);;
-            break;
-    }
-
-} else {
-
-    $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-}
-
-
+$postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
 if ($postagens->getTamanho() > 0) {
-    for ($i = 0; $postagens->ponteiro($i); $i++) {
-        $infopostagem = "
-            <i class='material-icons'>tips_and_updates</i>
-            Criado em: " . $postagens->getDataCriacaoMaterial() . "</a>";
-        $PublicacaoAtual = new Publicacoes();
-        $PublicacaoAtual->publicadoPorCodigo($postagens->getCodigoMaterial());
 
-        if ($PublicacaoAtual->getCodigoMaterial() == "") {
-            $estapublicado = false;
-            $infopostagem = $infopostagem . "
-                <br>
-                <i class='material-icons'>visibility_off</i>
-                Status: Não publicado  
-                <br>";
-        } else {
-            $estapublicado = true;
-            $infopostagem = $infopostagem . "
-                <br>
-                <i class='material-icons'>visibility</i>
-                Status: Publicado  
-                <br>";
-        }
-
-        if ($monitor) {
-            $infopostagem = $infopostagem . "
-            <a href='editorConteudo.php?codigoDisciplina=$codigo&codigo=" . $postagens->getCodigoMaterial() . "'><i class='material-icons'>mode_edit</i>
-            Editar  </a>
-            ";
-        }
-        $lista->add("text_snippet", "<a href='conteudo.php?codigo=" . $postagens->getCodigoMaterial() . "'>" . $postagens->getTituloMaterial(), $infopostagem);
-
-
-        $postagens->proximo();
-    }
 
 }
 
