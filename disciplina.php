@@ -136,12 +136,12 @@ $infodisciplina = $infodisciplina . "
     
     <!-- Link para mostrar mais informacoes  -->
     <a href='#  target='_blank'>
-        <i class='material-icons'>info</i> Mais informações  
+        <i class='material-icons'>info</i> Detalhes  
      </a><br>
     <!-- Fim Link para mostrar mais informacoes  -->
 ";
 
-
+echo "<br><br>";
 $lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
 
 unset($infodisciplina);
@@ -176,6 +176,7 @@ if ($monitor) {
     $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
 }
 
+
 // IF que Verifica se ha algum resultado da pesquisa
 if ($postagens->getTamanho() > 0) {
     // Loop que percorre por todo o resultado da pesquisa
@@ -189,14 +190,12 @@ if ($postagens->getTamanho() > 0) {
         $PublicacaoAtual->publicadoPorCodigo($postagens->getCodigoMaterial());
 
         if ($PublicacaoAtual->getCodigoMaterial() == "") {
-            $estapublicado = false;
             $infopostagem = $infopostagem . "
                 <br>
                 <i class='material-icons'>visibility_off</i>
                 Status: Não publicado  
                 <br>";
         } else {
-            $estapublicado = true;
             $infopostagem = $infopostagem . "
                 <br>
                 <i class='material-icons'>visibility</i>
@@ -216,9 +215,26 @@ if ($postagens->getTamanho() > 0) {
 
         $postagens->proximo();
     } // Fim do Loop que percorre por todo o resultado da pesquisa
-
-} // Fim do IF que Verifica se ha algum resultado da pesquisa
-
+    $lista->home = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa";
+    $proximaPagina = $uiux->pagina + 1;
+    if ($uiux->pagina <= 1) {
+        $lista->prev = false;
+    } else {
+        $anteriorPagina = $uiux->pagina - 1;
+        $lista->prev = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
+    }
+    $lista->next = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$proximaPagina";
+} else { // Fim do IF que Verifica se ha algum resultado da pesquisa
+    echo "<br><br><h2> <i class='material-icons'>find_in_page</i>Não encontramos nada </h2>";
+    $lista->home="disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa";
+    if ($uiux->pagina<=1){
+        $lista->prev=false;
+    }else{
+        $anteriorPagina=$uiux->pagina-1;
+        $lista->prev="disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
+    }
+    $lista->next=false;
+}
 unset($lista);
 unset($uiux)
 ?>

@@ -792,7 +792,7 @@ Lista
 }
 
 .cd-main-list h1 {
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .cd-main-list a {
@@ -843,8 +843,9 @@ Lista
 }
 
 hr {
-    border: 1px solid #ebe9eb;
+    border: 1px dotted #ebe9eb;
 }
+
 
 .cd-nav {
 
