@@ -1,6 +1,7 @@
 <?php
 
 namespace tcc\monitoria;
+include "atualizacoes.php";
 
 class Rascunhos extends Banco
 {
@@ -91,11 +92,9 @@ class Rascunhos extends Banco
         $this->atribuirRascunhos();
     }
 
-    public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    public function novo($tituloRascunho, $conteudoRascunho, $codigoDisciplina)
     {
 
-        $classeUsuario = new usuario();
-        $classeUsuario->porCPF($CPFUsuario);
 
         $dataCriacaoRascunho = date('Y-m-d');
 
@@ -121,61 +120,30 @@ class Rascunhos extends Banco
         $codigo = $this->ExecultaSQL($sql);
         $dataDeHoje = date('Y-m-d');
 
-        $sql =
-            "INSERT INTO 
-           `atualizacoes` (
-               `codigoRascunho`,
-               `descricaoAtualizacoes`,
-               `personaAtualizacoes`,
-               `dataAtualizacoes`
-           ) VALUES (
-               '" . $codigo . "',
-               ' Criado material ',
-               '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
-               '" . $dataDeHoje . "'
-               );
-        ";
 
-        $this->ExecultaSQL($sql);
+        $atualizacao = new atualizacoes();
+        $atualizacao->inserirAtualizacao($codigo,"Criado material","fiber_new");
 
         return $codigo;
 
     }
 
-    public function editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario, $descricaoAlteracao)
+    public function editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $descricaoAlteracao)
     {
 
-
-        $classeUsuario = new usuario();
-        $classeUsuario->porCPF($CPFUsuario);
-
-        $dataDeHoje = date('Y-m-d');
 
         $sql = "
             UPDATE `rascunhos` 
             SET                  
                 `tituloRascunho` ='" . $tituloRascunho . "', 
-                `conteudoRascunho`='" . $conteudoRascunho . "', 
-                `codigoDisciplina`=" . $codigoDisciplina . "             
+                `conteudoRascunho`='" . $conteudoRascunho . "'          
             WHERE  `codigoRascunho`=" . $codigoRascunho . ";";
 
         $this->ExecultaSQL($sql);
 
-        $sql =
-            "INSERT INTO 
-           `atualizacoes` (
-               `codigoRascunho`,
-               `descricaoAtualizacoes`,
-               `personaAtualizacoes`,
-               `dataAtualizacoes`
-           ) VALUES (
-               '" . $codigoRascunho . "',
-               '" . $descricaoAlteracao . "',
-               '" . $classeUsuario->getNomeUsuario() . " " . $classeUsuario->getSobrenomeUsuario() . "',
-               '" . $dataDeHoje . "'
-               );
-        ";
-        $this->ExecultaSQL($sql);
+        $atualizacao = new atualizacoes();
+        $atualizacao->inserirAtualizacao($codigoRascunho,"Documento modificado - ".$descricaoAlteracao,"auto_fix_high");
+
         return $codigoRascunho;
 
     }
@@ -219,6 +187,7 @@ class Rascunhos extends Banco
         $query = "SELECT  $this->camposSQLRascunho 
               FROM  $this->tabelaRascunho 
               WHERE codigoDisciplina = $codigoDiciplina
+              AND CONCAT (tituloRascunho, ' ', conteudoRascunho) LIKE '%$descricao%' 
               ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
         return $this->getRascunhos($query);
@@ -233,6 +202,7 @@ class Rascunhos extends Banco
               FROM  $this->tabelaRascunho 
               JOIN atualizacoes on codigoMaterial IS NULL AND atualizacoes.codigoRascunho = rascunhos.codigoRascunho
               AND rascunhos.codigoDisciplina = $codigoDiciplina
+              AND CONCAT(tituloRascunho, conteudoRascunho) LIKE '%$descricao%'
               ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
         return $this->getRascunhos($query);

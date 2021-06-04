@@ -80,17 +80,18 @@ class Publicacoes extends Rascunhos
 
     }
 
+
     public function anterior()
     {
         $this->anteriorDados();
         $this->atribuir();
     }
 
-    public function publicar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario)
+    public function publicar($codigoRascunho, $tituloRascunho, $conteudoRascunho,$descricaoAlteracao)
     {
 
-        $this->editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $codigoDisciplina, $CPFUsuario, "Material Disponibilizado");
-
+        $this->editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $descricaoAlteracao);
+        $this->tirarDoAr($codigoRascunho);
 
         $dataCriacaoMaterial = date('Y-m-d');
 
@@ -112,18 +113,20 @@ class Publicacoes extends Rascunhos
             . $conteudoRascunho . "', '"
             . $dataCriacaoMaterial . "');";
 
-        $sqlAtualizcao = "UPDATE `atualizacoes` SET `codigoMaterial` = '" . $codigoRascunho . "' WHERE  `codigoRascunho` = " . $codigoRascunho;
 
         $this->ExecultaSQL($sql);
-        $this->ExecultaSQL($sqlAtualizcao);
+        $atualizacao = new atualizacoes();
+        $atualizacao->publicar($codigoRascunho);
 
 
     }
 
     public function tirarDoAr($codigo)
     {
-        $sql="UPDATE `atualizacoes` SET `codigoMaterial`=null WHERE  `codigoRascunho`=$codigo";
-        $this->ExecultaSQL($sql);
+
+        $atualizacao = new atualizacoes();
+        $atualizacao->tirarDoAr($codigo);
+
         $sql = "DELETE FROM `materiais` WHERE  `codigoMaterial`=$codigo";
         $this->ExecultaSQL($sql);
     }
@@ -164,6 +167,7 @@ class Publicacoes extends Rascunhos
               LIMIT $pagina,$quantidade";
         return $this->getPublicado($query);
     }
+
 
 }
 

@@ -14,49 +14,38 @@ $usuario = new Usuario();
 $aluno = new Alunos();
 $administrador = $usuario->verificaAdministrador();
 $monitor = $aluno->verificaLogadoMonitor();
-
+if ($administrador) $monitor=$administrador;
 
 $aluno->getCPFUsuario($usuario->getCPFUsuario());
 $postagens = new Publicacoes();
-$rascunho=true;
-if (isset($_GET["rascunho"])){
-    $rascunho =$_GET["rascunho"];
+$rascunho=false;
+
+if (isset($_GET["controlepostagem"])&&$monitor){
+    switch ($_GET["controlepostagem"]){
+        case "rascunho" :
+            $rascunho=true;
+            break;
+        default:
+            $rascunho=false;
+            break;
+    }
 }
 
-if (isset($_GET["codigo"])&&$rascunho==false) {
-    $codigo = $_GET["codigo"];
-    $postagens->publicadoPorCodigo($codigo);
-
-}else if (isset($_GET["codigo"])&&$rascunho==true){
-    $codigo = $_GET["codigo"];
-    $postagens->rascunhoPorCodigo($codigo);
-}
-
-if ($postagens->getCodigoMaterial()==""){
-    unset($codigo);
-}
-
-$uiux = new Interfaces($postagens->getTituloMaterial(), 1, isset($codigo));
 
 // Carrega os dados confome o codgio da url, se houver o código na URL
-$link = "disciplina.php?";
-
-if (isset($_GET["controlepostagem"])) {
-    $link = $link . "controlepostagem=" . $_GET["controlepostagem"] . "&";
-}
 
 if (isset($_GET["codigo"])) {
-    // Gera o filtro para a pesquisa na materia
-    //$uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo", true);
-
-} else {
-    unset ($codigo);
+    $codigo = $_GET["codigo"];
+    if ($rascunho){
+        $postagens->rascunhoPorCodigo($codigo);
+    }else{
+        $postagens->publicadoPorCodigo($codigo);
+    }
 }
+// inicilizo a interface
+$uiux = new Interfaces($postagens->getTituloMaterial(), 1, false);
 
 
-// Filtros padrão
-
-$uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
 
 // Itens do menu
@@ -73,100 +62,85 @@ $uiux->fecharmenu();
 // inicializa a lista
 $lista = new lista();
 
+$lista->next = false;
+$lista->prev = false;
 
-// Casso não tenha o codigo da disciplina declarada, o sistema mostra a mensagem de erro e finaliza a pagina
-if (!isset($codigo)) {
+// Casso não tenha o codigo da  declarada, o sistema mostra a mensagem de erro e finaliza a pagina
+if (!isset($codigo)||($postagens->getTituloMaterial()==""&&!$monitor)) {
     $lista->add("error", "Conteudo não encontrado!!!", "<a href='index.php'><i class='material-icons'>restart_alt</i>Volte para o incio </a>");
-    $lista->next = false;
-    $lista->prev = false;
     $lista->home = "index.php";
     exit();
+}else if($postagens->getTituloMaterial()==""&&$monitor){
+    $lista->add("error", "Atenção", "<p>Este conteudo não foi publicado, há apenas o rascunho</p>");
+    $postagens->rascunhoPorCodigo($codigo);
+    $rascunho=true;
+    $codigo = $postagens->getCodigoMaterial();
 }
+
+if($monitor){
+    $controle="
+                <a href='editorConteudo.php?codigo=$codigo' target='_blank'>
+                    <i class='material-icons'>edit</i>Editar 
+                </a>
+                <br>
+    ";
+    if ($rascunho){
+        $controle=$controle."
+            <a href='Conteudo.php?codigo=$codigo'>
+                <i class='material-icons'>visibility</i>
+                Visualizar publicado  
+            </a>
+            <br>
+        ";
+    }else{
+        $controle=$controle."
+            <a href='Conteudo.php?codigo=$codigo&controlepostagem=rascunho'>
+                <i class='material-icons'>edit_note</i>Visualizar rascunho 
+            </a>
+            <br>        
+        ";
+    }
+    $lista->add("assistant", "Controle", $controle);
+}
+if ($rascunho){
+    $titulo="[RASCUNHO] ".$postagens->getTituloMaterial();
+}else{
+    $titulo=$postagens->getTituloMaterial();
+}
+$lista->add("text_snippet", $titulo, $postagens->getConteudoMaterial());
+// Atualizacoes
+$atualizacoes = new atualizacoes();
+if ($monitor){
+    $atualizacoes->listarTodasAsAtualizacoes($codigo);
+}else{
+    $atualizacoes->listarAtualizacoesPublicadas($codigo);
+}
+
+// IF que Verifica se ha algum resultado da pesquisa
+if ($atualizacoes->getTamanho() > 0) {
+    $logAtualizacoes="";
+// Loop que percorre por todo o resultado da pesquisa
+    for ($i = 0; $atualizacoes->ponteiro($i); $i++) {
+        $logAtualizacoes=$logAtualizacoes.
+                                            "<i class='material-icons'>"
+                                                .$atualizacoes->getIconeAtualizacoes().
+                                            "</i> "
+                                            .$atualizacoes->getDescricaoAtualizacoes()." 
+                                            por ".$atualizacoes->getPersonaAtualizacoes()
+                                            ." em ". $atualizacoes->getDataAtualizacoes()
+                                            ."<br>";
+        $atualizacoes->proximo();
+    }
+
+    $lista->add("update", "Atualizações", $logAtualizacoes);
+}
+
+$lista->home = "#";
 
 
 // Administrador tem as permicoes de monitor
 if ($administrador) $monitor = true;
 
-
-// informacoes da disciplinas
-
-// Cria a string de que conterá as açoes e informacoes da diciplina conforme oo nivel de acesso do usuario
-$infodisciplina = "";
-
-// Se o usuario for monitor
-if ($monitor) {
-    $infodisciplina = $infodisciplina .
-        "
-        
-        <i class='material-icons'>auto_awesome</i> Controles adcionais:<br>
-        
-        <!-- Link para a visualizacao de todos os materiais -->
-        <a href='disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=1'>
-            <i class='material-icons'>view_list</i> Mostrar todos materiais 
-        </a><br>
-        <!-- Fim Link para a visualizacao de todos os materiais -->
-        
-         
-         <!-- Link para a visualizacao somente dos que estao postados -->
-        <a href='disciplina.php?codigo=$codigo&controlepostagem=postados&pesquisa=$uiux->pesquisa&pagina=1'>
-            <i class='material-icons'>visibility</i> Mostrar os que estão postado 
-        </a><br>
-        <!-- Fim Link para a visualizacao somente dos que estao postados -->
-        
-        <!-- Link para a visualizacao somente dos que NAO estao postados -->
-        <a href='disciplina.php?codigo=$codigo&controlepostagem=rascunhos&pesquisa=$uiux->pesquisa&pagina=1'>
-            <i class='material-icons'>visibility_off</i> Mostrar os que não esta postado 
-        </a><br>
-         <!-- Fim Link para a visualizacao somente dos que NAO estao postados -->
-         
-
-        <!-- Link para criar um novo material na disciplina -->
-        <a href='editorConteudo.php?codigoDisciplina=$codigo'  target='_blank'>
-            <i class='material-icons'>post_add</i> Novo material
-        </a><br>
-        <!-- Fim Link para criar um novo material na disciplina --> 
-    ";
-
-}
-// Se o usuario for aadministrador
-if ($administrador) {
-    $infodisciplina = $infodisciplina . "
-    <!-- Link para editar a disciplina -->
-    <a href='editorMateria.php?codigoDisciplina=$codigo'  target='_blank'>
-        <i class='material-icons'>folder_open</i> Editar disciplina
-     </a><br>
-    <!-- Fim Link para editar a disciplina -->
-    ";
-}
-
-
-// para todos
-$infodisciplina = $infodisciplina . "
-    <hr/>
-    <i class='material-icons'>school</i> Professor(a): " . $disciplina->getProfessorDisciplina() . " <br>
-    
-    <!-- Link para mostrar mais informacoes  -->
-    <a href='#  target='_blank'>
-        <i class='material-icons'>info</i> Mais informações  
-     </a><br>
-    <!-- Fim Link para mostrar mais informacoes  -->
-";
-
-
-$lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
-
-unset($infodisciplina);
-
-$tipoDeListagem = "todos";
-if (isset($_POST["controlepostagem"])) {
-    $tipoDeListagem = $_POST["controlepostagem"];
-}
-// pesquisa
-$postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-if ($postagens->getTamanho() > 0) {
-
-
-}
 
 unset($lista);
 unset($uiux)

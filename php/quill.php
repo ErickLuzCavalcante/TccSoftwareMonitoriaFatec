@@ -73,7 +73,7 @@ class quill
                     <li>
                         <input type='radio' name='radio-button' id='cd-radio-2' value='2'>
                         <label for='cd-radio-3'>
-                        <i class='material-icons'>cloud_done</i> Publicar</label>
+                        <i class='material-icons'>cloud_done</i> Salvar&Publicar</label>
                    </li>
                 ";
             }

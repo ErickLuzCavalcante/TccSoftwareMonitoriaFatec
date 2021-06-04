@@ -37,7 +37,7 @@ if (isset($_GET["controlepostagem"])) {
 
 if (isset($_GET["codigo"])) {
     // Gera o filtro para a pesquisa na materia
-    $uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo", true);
+    $uiux->filtroDePesquisa($disciplina->getNomeDisciplina(), $link . "codigo=$codigo&", true);
 
 } else {
     unset ($codigo);
@@ -146,37 +146,45 @@ $lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
 
 unset($infodisciplina);
 
-$tipoDeListagem = "todos";
+
+// Variavel pelo controle do tipo de pesquisa
+$tipoDeListagem = "todos"; // define um valor padrao
 if (isset($_GET["controlepostagem"])) {
-    $tipoDeListagem = $_GET["controlepostagem"];
+    $tipoDeListagem = $_GET["controlepostagem"]; // caso tenha um get na url, troca o valor padrao pelo valor do get
 }
 
 // pesquisa
 if ($monitor) {
-
+    // Filtra conforme o a variavel $tipoDeListagem
     switch ($tipoDeListagem) {
         case "todos":
+            // Pesquisa pelos rascunhos e pelos publicados
             $postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
             break;
         case "rascunhos":
+            // Pesquisa somente os publicados
             $postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
             break;
-        default:
-            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);;
+        default: // pesquisa padrao
+            // Pesquisa somente os que estão postados
+            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
             break;
     }
 
 } else {
-
+    // Se for um aluno padrão ele ira pesquisar apenas pelos conteudos postados
     $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
 }
 
-
+// IF que Verifica se ha algum resultado da pesquisa
 if ($postagens->getTamanho() > 0) {
+    // Loop que percorre por todo o resultado da pesquisa
     for ($i = 0; $postagens->ponteiro($i); $i++) {
+        // String que mostra as informacoes sobre o artigo atual
         $infopostagem = "
             <i class='material-icons'>tips_and_updates</i>
             Criado em: " . $postagens->getDataCriacaoMaterial() . "</a>";
+
         $PublicacaoAtual = new Publicacoes();
         $PublicacaoAtual->publicadoPorCodigo($postagens->getCodigoMaterial());
 
@@ -198,17 +206,18 @@ if ($postagens->getTamanho() > 0) {
 
         if ($monitor) {
             $infopostagem = $infopostagem . "
-            <a href='editorConteudo.php?codigoDisciplina=$codigo&codigo=" . $postagens->getCodigoMaterial() . "'><i class='material-icons'>mode_edit</i>
+            <a href='editorConteudo.php?codigo=" . $postagens->getCodigoMaterial() . "' target='_blank'><i class='material-icons'>mode_edit</i>
             Editar  </a>
             ";
         }
+
         $lista->add("text_snippet", "<a href='conteudo.php?codigo=" . $postagens->getCodigoMaterial() . "'>" . $postagens->getTituloMaterial(), $infopostagem);
 
 
         $postagens->proximo();
-    }
+    } // Fim do Loop que percorre por todo o resultado da pesquisa
 
-}
+} // Fim do IF que Verifica se ha algum resultado da pesquisa
 
 unset($lista);
 unset($uiux)

@@ -790,46 +790,63 @@ Lista
     text-align: center;
     margin: 10px auto 0;
 }
-.cd-main-list h1{
+
+.cd-main-list h1 {
     text-transform: capitalize;
 }
-.cd-main-list a{
+
+.cd-main-list a {
     color: black;
 }
+
 .cd-main-list:after {
     content: '';
     display: inline-table;
     width: 100%;
     height: 0;
 }
+
 .cd-main-list-item {
     width: 50px;
     padding: 0.5em;
     display: inline-block;
-    border-radius: 5em;
+    border-radius: 1em;
 }
+
 .cd-main-list-item_first {
     background-color: #df1c24;
     color: #ffffff;
     vertical-align: top;
-    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
 
 }
+
 .cd-main-list-item_second {
     background-color: #ffffff;
     width: 70%;
     padding: 1em;
+    padding-top: 0;
     border-radius: 0.2em;
     text-align: left;
     border: #94aab0 thin none;
-    //box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
 }
 
-hr{
+@media only screen and (max-width: 640px) {
+    .cd-main-list-item_second {
+        width: 90%;
+    }
+
+    .cd-main-list-item {
+        width: 90%;
+        margin-bottom: 10px;
+        border-radius: 0.2em;
+    }
+}
+
+hr {
     border: 1px solid #ebe9eb;
 }
 
-.cd-nav{
+.cd-nav {
 
 
     text-align: center;

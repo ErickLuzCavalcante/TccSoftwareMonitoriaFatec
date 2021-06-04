@@ -11,7 +11,7 @@ $aluno = new Alunos();
 $usuario = new Usuario();
 $usuario->verificaLogado();
 
-if (!$aluno->verificaLogadoMonitor()&&!$usuario->verificaAdministrador()) {
+if (!$aluno->verificaLogadoMonitor() && !$usuario->verificaAdministrador()) {
     $falha = "
   Você nao possui permissão, ou sua sessão foi finalizada. Nenhuma ação foi executada no servidor<br><br>
   Para resolver click no link abaixo e efetue o login, enquanto isso eu irei recuperar os dados apartir do checkpoint salvo neste computador
@@ -31,23 +31,29 @@ $link = "editorConteudo.php";
 
 /*FIM - Inicialização das variaveis e Objetos */
 
-if (isset($_GET["codigoDisciplina"])) {
+if (isset($_GET["codigoDisciplina"])&&!isset($_GET["codigo"])) {
     $codigoDisciplina = $_GET["codigoDisciplina"];
     $link = "editorConteudo.php?codigoDisciplina=$codigoDisciplina";
 } else {
     $codigoDisciplina = false;
-    $falha = "<br><br> disciplina nao informada! <br> As alterações não serão salvas <br><br>";
+    if (!isset($_GET["codigo"])){
+        $falha = "<br><br> disciplina nao informada! <br> As alterações não serão salvas <br><br>";
+    }
 }
 
-if (isset($_GET["codigo"]) && $codigoDisciplina != false) {
+if (isset($_GET["codigo"])) {
     $codigo = $_GET["codigo"];
     $postagens->rascunhoPorCodigo($codigo);
     $titulo = $postagens->getTituloMaterial();
     $conteudo = $postagens->getConteudoMaterial();
 
-    $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+    $link = "editorConteudo.php?codigo=$codigo";
 
 }
+if ($codigoDisciplina&&isset($_GET["codigo"])){
+    $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+}
+
 if (isset($_POST["delta"])) {
 
 
@@ -58,16 +64,16 @@ if (isset($_POST["delta"])) {
         $operacao = $_POST["radio-button"];
         if (isset($_GET["codigo"])) {
             if ($operacao == '1') {
-                $postagens->editar($_GET["codigo"], $titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario(), $_POST["Comentario"]);
-                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+                $postagens->editar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
+                $link = "editorConteudo.php?codigo=$codigo";
             }
             if ($operacao == '2') {
-                $postagens->publicar($_GET["codigo"], $titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
-                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+                $postagens->publicar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
+                $link = "editorConteudo.php?codigo=$codigo";
             }
             if ($operacao == '3') {
                 $postagens->tirarDoAr($codigo);
-                $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+                $link = "editorConteudo.php?codigo=$codigo";
             }
             if ($operacao == '4') {
                 $postagens->excluir($codigo);
@@ -95,8 +101,8 @@ $editor = new quill($link, "de conteúdo", isset($_GET['codigo']));
 
 if (isset($codigo)) {
     $editor->visivelExcluir = true;
-    $editor->visivelTirarDoAr=true;
-    $editor->visivelPublicar=true;
+    $editor->visivelTirarDoAr = true;
+    $editor->visivelPublicar = true;
 }
 
 
