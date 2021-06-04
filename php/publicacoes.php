@@ -163,6 +163,7 @@ class Publicacoes extends Rascunhos
               FROM  $this->tabelaPublicado 
               JOIN rascunhos	ON rascunhos.codigoDisciplina = $codigoDiciplina
               AND codigoMaterial = codigoRascunho 
+              AND CONCAT (tituloMaterial, ' ', conteudoMaterial) LIKE '%$descricao%' 
               ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
         return $this->getPublicado($query);
