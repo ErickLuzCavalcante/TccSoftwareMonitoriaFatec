@@ -86,10 +86,9 @@ class Interfaces
                 
                 <body >
     ";
-
-            echo "
+        echo "
                     <header class='cd-main-header animate-search' >
-                        <div class='cd-logo' ><a href = '#0' ><img src = 'img/cd-logo.svg' alt = 'Logo' ></a ></div >
+                        <div class='cd-logo' ><a href = 'index.php' ><img src = 'img/cd-logo.svg' alt = 'Logo' ></a ></div >
                         <nav class='cd-main-nav-wrapper' >
                   ";
         if ($this->Barrapesquisa) {
@@ -115,7 +114,7 @@ class Interfaces
 
     public function fecharmenu()
     {
-            echo "
+        echo "
                                     </ul > <!-- .cd - main - nav-->
                         </nav > <!-- .cd - main - nav - wrapper-->
                 
@@ -140,7 +139,7 @@ class Interfaces
                 
                     <div id="search" class="cd-main-search">';
         if ($this->Barrapesquisa) {
-            echo'
+            echo '
             
                         <form>
                             <input type="search" name="pesquisa" placeholder="Pesquisa..." value="' . $this->pesquisa . '">
@@ -158,7 +157,7 @@ class Interfaces
                         </form>
             ';
         }
-        echo'
+        echo '
                 
                 
                 
