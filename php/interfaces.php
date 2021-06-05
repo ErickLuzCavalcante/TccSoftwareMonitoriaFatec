@@ -88,7 +88,7 @@ class Interfaces
     ";
         echo "
                     <header class='cd-main-header animate-search' >
-                        <div class='cd-logo' ><a href = 'index.php' ><img src = 'img/cd-logo.svg' alt = 'Logo' ></a ></div >
+                        <div class='cd-logo' ><a href = 'index.php' ><img src = 'img/logo-new.svg' alt = 'Logo' ></a ></div >
                         <nav class='cd-main-nav-wrapper' >
                   ";
         if ($this->Barrapesquisa) {

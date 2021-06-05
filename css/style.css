@@ -155,7 +155,7 @@ Cabeçalho
     padding: 30px;
     padding-top: 0;
     margin-left: 0px;
-    background-color: #df1c24;
+    background-color: white;
     /* remove jump em dispositivos iOS - quando disparamos a navegação */
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
