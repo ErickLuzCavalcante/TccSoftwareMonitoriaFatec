@@ -122,7 +122,7 @@ class Rascunhos extends Banco
 
 
         $atualizacao = new atualizacoes();
-        $atualizacao->inserirAtualizacao($codigo,"Criado material","fiber_new");
+        $atualizacao->inserirAtualizacao($codigo, "Criado material", "fiber_new");
 
         return $codigo;
 
@@ -142,7 +142,7 @@ class Rascunhos extends Banco
         $this->ExecultaSQL($sql);
 
         $atualizacao = new atualizacoes();
-        $atualizacao->inserirAtualizacao($codigoRascunho,"Documento modificado - ".$descricaoAlteracao,"auto_fix_high");
+        $atualizacao->inserirAtualizacao($codigoRascunho, "Documento modificado - " . $descricaoAlteracao, "auto_fix_high");
 
         return $codigoRascunho;
 
@@ -198,11 +198,33 @@ class Rascunhos extends Banco
         $pagina = $pagina - 1;
         $pagina = $pagina * $quantidade;
 
-        $query = "SELECT  $this->camposSQLRascunho 
+        $query = "SELECT DISTINCT $this->camposSQLRascunho 
               FROM  $this->tabelaRascunho 
               JOIN atualizacoes on codigoMaterial IS NULL AND atualizacoes.codigoRascunho = rascunhos.codigoRascunho
               AND rascunhos.codigoDisciplina = $codigoDiciplina
               AND CONCAT(tituloRascunho, conteudoRascunho) LIKE '%$descricao%'
+              ORDER BY `codigoRascunho` DESC
+              LIMIT $pagina,$quantidade";
+        return $this->getRascunhos($query);
+    }
+
+    public function offlinePorDiciplina($codigoDiciplina, $descricao, $pagina, $quantidade)
+    {
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query = "SELECT DISTINCT $this->camposSQLRascunho 
+              FROM  $this->tabelaRascunho 
+              JOIN atualizacoes on codigoMaterial IS NULL AND atualizacoes.codigoRascunho = rascunhos.codigoRascunho
+              AND rascunhos.codigoDisciplina = $codigoDiciplina
+              AND CONCAT(tituloRascunho, conteudoRascunho) LIKE '%$descricao%'
+              AND rascunhos.codigoRascunho NOT IN (
+                SELECT rascunhos.codigoRascunho FROM
+                `materiais` 
+                JOIN rascunhos 
+                ON rascunhos.codigoDisciplina = $codigoDiciplina 
+                AND codigoMaterial = codigoRascunho 
+              )
               ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
         return $this->getRascunhos($query);
