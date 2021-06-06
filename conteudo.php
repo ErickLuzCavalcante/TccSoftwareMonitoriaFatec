@@ -51,7 +51,6 @@ $uiux->addItemMenu("index.php", "Inicio", false);
 // Se o usuario for administrador
 $uiux->addItemMenu('index.php', "Editar Usuários", true);
 
-$uiux->addItemMenu("index.php", "Meu Perfil", false);
 $uiux->addItemMenu("index.php", "Trocar Senha", false);
 $uiux->addItemMenu("Login.php", "Logoff", false);
 $uiux->fecharmenu();

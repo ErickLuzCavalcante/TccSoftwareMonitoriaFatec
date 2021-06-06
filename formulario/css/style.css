@@ -238,7 +238,7 @@ position: relative;
 .cd-form input[type="submit"] {
   /* button style */
   border: none;
-  background: #2c97de;
+  background:#dc3545;
   border-radius: .25em;
   padding: 16px 20px;
   color: #ffffff;
@@ -254,7 +254,7 @@ position: relative;
   appearance: none;
 }
 .no-touch .cd-form input[type="submit"]:hover {
-  background: #42a2e1;
+  background: #96202c;;
 }
 .cd-form input[type="submit"]:focus {
   outline: none;
@@ -421,4 +421,9 @@ FLoating labels
   box-shadow: 0px 3px 5px #6d6d6d;
   overflow: hidden;
   z-index: 0;
+}
+
+.title_form{
+text-align: center;
+
 }
