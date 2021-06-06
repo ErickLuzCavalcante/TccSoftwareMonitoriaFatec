@@ -18,7 +18,7 @@ $uiux->addItemMenu("index.php","Inicio",false);
 $uiux->addItemMenu("editorMateria.php' target='_blank'","Criar Matéria",true);
 $uiux->addItemMenu('cadastro.php',"Usuários",true);
 
-$uiux->addItemMenu("index.php","Trocar Senha",false);
+$uiux->addItemMenu("troca_senha.php","Trocar Senha",false);
 $uiux->addItemMenu("Login.php","Logoff",false);
 $uiux->fecharmenu();
 

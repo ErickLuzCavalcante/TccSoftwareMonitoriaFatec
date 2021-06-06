@@ -69,8 +69,8 @@ $infodisciplina = "";
 if ($administrador) {
     $infodisciplina = $infodisciplina . "
     <!-- Link para editar a disciplina -->
-    <a href='editorMateria.php?codigoDisciplina=$codigo'  target='_blank'>
-        <i class='material-icons'>folder_open</i> Editar disciplina
+    <a href='cadastrar.php?codigoDisciplina=$codigo'>
+        <i class='material-icons'>folder_open</i> Editar Usuario
      </a><br><hr/>
     <!-- Fim Link para editar a disciplina -->
     ";

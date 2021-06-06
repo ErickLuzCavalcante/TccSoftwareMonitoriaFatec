@@ -64,7 +64,7 @@ if (isset($_POST["Login_CPF"])) {
     </div>
     <!-- botoes -->
     <button class="btn btn-lg btn-danger btn-block" type="submit">Logar</button><br>
-    <a href="cadastro.php" class="btn btn-lg btn-danger btn-block" type="button">Cadastrar</a>
+   
 
   </form>
 </body>

@@ -50,6 +50,7 @@ $uiux = new Interfaces($postagens->getTituloMaterial(), 1, false);
 // Itens do menu
 $uiux->addItemMenu("index.php", "Inicio", false);
 // Se o usuario for administrador
+$uiux->addItemMenu('index.php', "Editar Usuários", true);
 
 $uiux->addItemMenu("index.php", "Trocar Senha", false);
 $uiux->addItemMenu("Login.php", "Logoff", false);
@@ -62,7 +63,6 @@ $uiux->fecharmenu();
 $SenhasIguais = true;
 $CadastradoComSucesso = false;
 $esqueceTipoAlunos = false;
-
 
 
 
@@ -83,63 +83,8 @@ if (isset($_POST["CPFUsuario"])) {
     if ($_POST["palavraChaveUsuario_1"] == $_POST["palavraChaveUsuario_2"]) {
         $CadastradoComSucesso = true;
 
-        switch ($TipoUsuario) {
-            case '2':
-                // Aluno
-                    $classeUsuario->novoUsuario(
-                        $CPFUsuario,
-                        $nomeUsuario,
-                        $sobrenomeUsuario,
-                        $emailUsuario,
-                        $telefoneUsuario,
-                        $palavraChaveUsuario
-                    );
-                    // cadastrando  o aluno
-                    $monitorAluno = 0;
-                    $classealuno = new alunos();
-                    $classealuno->novoAluno(
-                    $CPFUsuario,
-                    $raAluno,
-                    $monitorAluno
-                );
-                break;
-                
-            case '1':
-                // Monitor
-                $classeUsuario->novoUsuario(
-                    $CPFUsuario,
-                    $nomeUsuario,
-                    $sobrenomeUsuario,
-                    $emailUsuario,
-                    $telefoneUsuario,
-                    $palavraChaveUsuario
-                );
-                // cadastrando  o aluno
-                $monitorAluno = 1;// setando como 1 o aluno sera monitor
-                $classealuno = new alunos();
-                $classealuno->novoAluno(
-                $CPFUsuario,
-                $raAluno,
-                $monitorAluno
-            );
-                break;
-
-            case '3':
-                // Professor
-                $classeUsuario->novoUsuario(
-                    $CPFUsuario,
-                    $nomeUsuario,
-                    $sobrenomeUsuario,
-                    $emailUsuario,
-                    $telefoneUsuario,
-                    $palavraChaveUsuario
-                );
-                break;
-
-            default:
-                // Esqueceu de selcionar o tipo de usuário
-                $esqueceTipoAlunos = false;
-        }
+      
+    
 
 
         
@@ -161,7 +106,7 @@ if (isset($_POST["CPFUsuario"])) {
         <div class="title_form">
             
         </div><br>
-        <h1 class="title_form">Cadastrar </h1>
+        <h1 class="title_form">Alterar Senha </h1>
         <!-- Formulario  Cadastro -->
     <?php
     if ($SenhasIguais == false) {
@@ -171,7 +116,7 @@ if (isset($_POST["CPFUsuario"])) {
     }
     if ($CadastradoComSucesso) {
         echo '<div class="alert center alert-success" role="alert">
-        <center>Usuario Cadastrado com Sucesso!<center>
+        <center>Usuario Senha alterada com Sucesso!<center>
       </div>';
     }
     ?>
@@ -181,29 +126,7 @@ if (isset($_POST["CPFUsuario"])) {
 
         
         <div class="col-4">
-                <br><input type="text"  name="nomeUsuario" placeholder="Nome" required>
-            </div>
-
-            <div class="col-4">
-                <br><input type="text"  name="sobrenomeUsuario" placeholder="Sobrenome" required>
-            </div>
-
-            <div class="col-4">
-                <br><input type="email"  name="emailUsuario" placeholder="E-mail" required>
-            </div>
-
-            <div class="col-4">
-                <br><input type="text"  name="telefoneUsuario" placeholder="Telefone" required>
-            </div>
-
-            <div class="col-4">
-                <br><input type="text"  name="raAluno" placeholder="R.A">
-            </div>
-
-            <div class="col-4">
-                <br><input type="text"  name="CPFUsuario" placeholder="CPF" required>
-            </div>
-
+           
             <div class="col-4">
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_1" 
                     placeholder="Senha" required>
@@ -213,19 +136,10 @@ if (isset($_POST["CPFUsuario"])) {
                 <br><input type="password" id="inputPassword" name="palavraChaveUsuario_2" 
                     placeholder="Confirme senha" required>
             </div>
-            <div class="col-4">
-                <br>
-                <select class="form-control" name="TipoUsuario" required>
-                    <option value="0" selected disabled>Tipo De Usuario</option>
-                    <option value="2">Aluno</option>
-                    <option value="1">Monitor</option>
-                    <option value="3">Professor</option>
-                </select>
-            </div>
         </div>
         <br>
         <div class="botao1">
-        <input type='submit' value='Enviar' >
+        <input type='submit' value='Salvar' >
         </div>
 </div>
 </form>
