@@ -152,10 +152,10 @@ Cabeçalho
 .cd-logo {
     display: inline-block;
     height: 100%;
-    padding: 30px;
+    padding: 5px;
     padding-top: 0;
     margin-left: 0px;
-    background-color: white;
+    background-color: #09253c;
     /* remove jump em dispositivos iOS - quando disparamos a navegação */
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
@@ -168,7 +168,7 @@ Cabeçalho
 
 .cd-logo img {
     display: block;
-    margin-top: 14px;
+    margin-top: 8px;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -178,7 +178,7 @@ Cabeçalho
     }
 
     .cd-logo img {
-        margin-top: 29px;
+        margin-top: 20px;
     }
 }
 

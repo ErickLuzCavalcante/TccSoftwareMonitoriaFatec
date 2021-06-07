@@ -286,9 +286,9 @@ class Usuario extends banco
 
                 $aluno = new Alunos();
                 $aluno->porCPF($usuario);
-                if (strtoupper($aluno->getCPFUsuario()) == $usuario){
+                if (strtoupper($aluno->getCPFUsuario()) == $usuario) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             } else {
