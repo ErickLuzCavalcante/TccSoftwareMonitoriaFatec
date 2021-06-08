@@ -16,9 +16,9 @@ $uiux->filtroDePesquisa("Disciplinas","index.php?",true);
 $uiux->addItemMenu("index.php","Inicio",false);
 // Se o usuario for administrador
 $uiux->addItemMenu("editorMateria.php' target='_blank'","Criar Matéria",true);
-$uiux->addItemMenu('cadastro.php',"Usuários",true);
+$uiux->addItemMenu('usuario.php',"Usuários",true);
 
-$uiux->addItemMenu("troca_senha.php","Trocar Senha",false);
+$uiux->addItemMenu("troca_senha.php","Meu Perfil",false);
 $uiux->addItemMenu("Login.php","Logoff",false);
 $uiux->fecharmenu();
 

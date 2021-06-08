@@ -6,28 +6,14 @@ include "php/interfaces.php";
 include "php/lista.php";
 require "php/publicacoes.php";
 
-// Back-end
-// Coleta de dados para alimentar a interface
-
-
-$usuario = new Usuario();
-$aluno = new Alunos();
-$administrador = $usuario->verificaAdministrador();
-
-
-
-$aluno->getCPFUsuario($usuario->getCPFUsuario());
-$disciplina = new Disciplinas();
-$postagens = new Publicacoes();
-
-
 // inicilizo a interface
-$uiux = new Interfaces($disciplina->getNomeDisciplina(), 1, true);
+$uiux = new Interfaces("Usuários", 2, true);
 
 // Carrega os dados confome o codgio da url, se houver o código na URL
 $link = "usuario.php?";
 
-
+// Filtro da pagina
+$uiux->filtroDePesquisa("Usuários", "usuario.php?", true);
 
 // Filtros padrão
 $uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
@@ -35,92 +21,83 @@ $uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
 // Itens do menu
 $uiux->addItemMenu("index.php", "Inicio", false);
-// Se o usuario for administrador
-$uiux->addItemMenu('index.php', "Editar Usuários", true);
 
-$uiux->addItemMenu("index.php", "Meu Perfil", false);
-$uiux->addItemMenu("index.php", "Trocar Senha", false);
+$uiux->addItemMenu("troca_senha.php", "Meu perfil", false);
 $uiux->addItemMenu("Login.php", "Logoff", false);
 $uiux->fecharmenu();
 
-
 // inicializa a lista
 $lista = new lista();
-
-
-// Casso não tenha o codigo da disciplina declarada, o sistema mostra a mensagem de erro e finaliza a pagina
-if (!$administrador) {
-    $lista->add("error", "Conteudo não encontrado!!!", "<a href='index.php'><i class='material-icons'>restart_alt</i>Volte para o incio </a>");
-    $lista->next = false;
-    $lista->prev = false;
-    $lista->home = "index.php";
-    exit();
-}
-
-
-
-// informacoes da disciplinas
-
-// Cria a string de que conterá as açoes e informacoes da diciplina conforme oo nivel de acesso do usuario
-$infodisciplina = "";
-
-
-// Se o usuario for aadministrador
-if ($administrador) {
-    $infodisciplina = $infodisciplina . "
-    <!-- Link para editar a disciplina -->
-    <a href='cadastrar.php?codigoDisciplina=$codigo'>
-        <i class='material-icons'>folder_open</i> Editar Usuario
-     </a><br><hr/>
-    <!-- Fim Link para editar a disciplina -->
-    ";
-}
-
-
-// para todos
-$infodisciplina = $infodisciplina . "
-    <i class='material-icons'>school</i> Professor(a): " . $disciplina->getProfessorDisciplina() . " <br>
-    
-    <!-- Link para mostrar mais informacoes  -->
-    <a href='#  target='_blank'>
-        <i class='material-icons'>info</i> Detalhes  
-     </a><br>
-    <!-- Fim Link para mostrar mais informacoes  -->
-";
-
 echo "<br><br>";
-$lista->add("history_edu", $disciplina->getNomeDisciplina(), $infodisciplina);
 
-unset($infodisciplina);
+
+// Cria o cabecalho da lista com o filtro da listagem de usuarios
+$lista->add("manage_accounts", "Usuários", "
+        <!-- Label filtro -->
+        <i class='material-icons'>filter_alt</i> Filtros: <br>
+        <!-- Fim Label -->
+
+        <!-- Link para a visualizacao de todos os usuarios -->
+        <a href='usuario.php?pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>people</i> Todos 
+        </a><br>
+        
+         <!-- Link para a visualizacao somente os alunos -->
+        <a href='usuario.php?filtro=Alunos&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>face</i> Alunos 
+        </a><br>
+        <!-- Fim Link para a visualizacao somente os alunos -->
+        
+        <!-- Link para a visualizacao somente os monitores -->
+        <a href='usuario.php?filtro=Monitores&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>emoji_people</i> Monitores
+        </a><br>
+        <!-- Fim Link para a visualizacao somente os monitores -->
+        
+        <!-- Link para a visualizacao somente os monitores -->
+        <a href='usuario.php?filtro=Administradores&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>assignment_ind</i> Administradores 
+        </a><br>
+        <!-- Fim Link para a visualizacao somente os monitores -->
+        
+        <hr/>
+        <i class='material-icons'>add_circle</i> Novo: <br>
+        
+        <!-- Link para a visualizacao somente os monitores -->
+        <a href='usuario.php?filtro=Administradores&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>person </i> Aluno ou Monitor
+        </a><br>
+        <!-- Fim Link para a visualizacao somente os monitores -->
+        
+        <!-- Link para a visualizacao somente os monitores -->
+        <a href='usuario.php?filtro=Administradores&pesquisa=$uiux->pesquisa&pagina=1'>
+            <i class='material-icons'>assignment_ind</i> Administrador
+        </a><br>
+        <!-- Fim Link para a visualizacao somente os monitores -->
+");
 
 
 // Variavel pelo controle do tipo de pesquisa
 $tipoDeListagem = "todos"; // define um valor padrao
-if (isset($_GET["controlepostagem"])) {
-    $tipoDeListagem = $_GET["controlepostagem"]; // caso tenha um get na url, troca o valor padrao pelo valor do get
+if (isset($_GET["filtro"])) {
+    $tipoDeListagem = $_GET["filtro"]; // caso tenha um get na url, troca o valor padrao pelo valor do get
 }
 
-// pesquisa
-if ($monitor) {
-    // Filtra conforme o a variavel $tipoDeListagem
-    switch ($tipoDeListagem) {
-        case "todos":
-            // Pesquisa pelos rascunhos e pelos publicados
-            $postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-            break;
-        case "rascunhos":
-            // Pesquisa somente os publicados
-            $postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-            break;
-        default: // pesquisa padrao
-            // Pesquisa somente os que estão postados
-            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
-            break;
-    }
 
-} else {
-    // Se for um aluno padrão ele ira pesquisar apenas pelos conteudos postados
-    $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+// Filtra conforme o a variavel $tipoDeListagem
+switch ($tipoDeListagem) {
+    case "Alunos":
+        // Pesquisa somente pelos alunos
+
+        break;
+    case "Administradores":
+        // Pesquisa somente pelos administradores
+
+        break;
+    default: // pesquisa padrao
+        // Pesquisa todos os usuarios
+
+        break;
 }
 
 
@@ -150,12 +127,7 @@ if ($postagens->getTamanho() > 0) {
                 <br>";
         }
 
-        if ($monitor) {
-            $infopostagem = $infopostagem . "
-            <a href='editorConteudo.php?codigo=" . $postagens->getCodigoMaterial() . "' target='_blank'><i class='material-icons'>mode_edit</i>
-            Editar  </a>
-            ";
-        }
+
 
         $lista->add("text_snippet", "<a href='conteudo.php?codigo=" . $postagens->getCodigoMaterial() . "'>" . $postagens->getTituloMaterial(), $infopostagem);
 
@@ -173,14 +145,14 @@ if ($postagens->getTamanho() > 0) {
     $lista->next = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$proximaPagina";
 } else { // Fim do IF que Verifica se ha algum resultado da pesquisa
     echo "<br><br><h2> <i class='material-icons'>find_in_page</i>Não encontramos nada </h2>";
-    $lista->home="disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa";
-    if ($uiux->pagina<=1){
-        $lista->prev=false;
-    }else{
-        $anteriorPagina=$uiux->pagina-1;
-        $lista->prev="disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
+    $lista->home = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa";
+    if ($uiux->pagina <= 1) {
+        $lista->prev = false;
+    } else {
+        $anteriorPagina = $uiux->pagina - 1;
+        $lista->prev = "disciplina.php?codigo=$codigo&pesquisa=$uiux->pesquisa&pagina=$anteriorPagina";
     }
-    $lista->next=false;
+    $lista->next = false;
 }
 unset($lista);
 unset($uiux)

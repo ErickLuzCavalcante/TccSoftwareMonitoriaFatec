@@ -298,6 +298,20 @@ class Usuario extends banco
             return false;
         }
     }
+
+
+    public function PorNome(){
+        $query =
+            'SELECT' .
+            $this->camposSQL .
+            "
+      
+      FROM `usuarios` WHERE
+      `CPFUsuario` = '" .
+            strtoupper($CPFUsuario) .
+            "'";
+        return $this->Get($query);
+    }
 }
 
 ?>
