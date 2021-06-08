@@ -22,7 +22,7 @@ class Usuario extends banco
     // Variavel que deve ser usada na composição de todas as requisições SQL
     // Para que possamos manter a organização e a ordem no retorno dos campos
     // e assim não quebrar o código no metodo atribuir()
-    private $camposSQL = '`CPFUsuario`,  `nomeUsuario`, `sobrenomeUsuario`,`telefoneUsuario`,`emailUsuario`, `palavraChaveUsuario`';
+    private $camposSQL = ' DISTINCT usuarios.CPFUsuario,  `nomeUsuario`, `sobrenomeUsuario`,`telefoneUsuario`,`emailUsuario`, `palavraChaveUsuario`';
 
     /**
      * Gets
@@ -300,16 +300,115 @@ class Usuario extends banco
     }
 
 
-    public function PorNome(){
+    public function Listar($pesquisa, $pagina, $quantidade)
+    {
+
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
         $query =
-            'SELECT' .
+            'SELECT ' .
             $this->camposSQL .
-            "
-      
-      FROM `usuarios` WHERE
-      `CPFUsuario` = '" .
-            strtoupper($CPFUsuario) .
-            "'";
+            "FROM `usuarios` 
+              WHERE 
+                CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' 
+                OR usuarios.CPFUsuario = '$pesquisa'
+                OR usuarios.telefoneUsuario = '$pesquisa'
+                OR usuarios.emailUsuario LIKE '%$pesquisa%'
+                ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
+                LIMIT $pagina,$quantidade";
+
+        return $this->Get($query);
+    }
+
+    public function ListarUsuarioAlunos($pesquisa, $pagina, $quantidade)
+    {
+
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query =
+            'SELECT ' .
+            $this->camposSQL .
+            "FROM `usuarios` 
+               JOIN alunos ON alunos.CPFUsuario = usuarios.CPFUsuario
+               AND alunos.monitorAluno=0
+                AND (
+                CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' 
+                OR usuarios.CPFUsuario = '$pesquisa'
+                OR usuarios.telefoneUsuario = '$pesquisa'
+                OR usuarios.emailUsuario LIKE '%$pesquisa%')
+                ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
+                LIMIT $pagina,$quantidade";
+
+
+        return $this->Get($query);
+    }
+
+    public function ListarUsuarioMonitores($pesquisa, $pagina, $quantidade)
+    {
+
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query =
+            'SELECT ' .
+            $this->camposSQL .
+            "FROM `usuarios` 
+               JOIN alunos ON alunos.CPFUsuario = usuarios.CPFUsuario
+               AND alunos.monitorAluno=1
+                AND (
+                CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' 
+                OR usuarios.CPFUsuario = '$pesquisa'
+                OR usuarios.telefoneUsuario = '$pesquisa'
+                OR usuarios.emailUsuario LIKE '%$pesquisa%')
+                ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
+                LIMIT $pagina,$quantidade";
+        return $this->Get($query);
+    }
+
+    public function ListarUsuarioAlunosEMonitores($pesquisa, $pagina, $quantidade)
+    {
+
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+        $query =
+            'SELECT ' .
+            $this->camposSQL .
+            "FROM `usuarios` 
+               JOIN alunos ON alunos.CPFUsuario = usuarios.CPFUsuario
+                AND (
+                CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' 
+                OR usuarios.CPFUsuario = '$pesquisa'
+                OR usuarios.telefoneUsuario = '$pesquisa'
+                OR usuarios.emailUsuario LIKE '%$pesquisa%')
+                ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
+                LIMIT $pagina,$quantidade";
+        return $this->Get($query);
+    }
+
+    public function ListarUsuarioAdministradores($pesquisa, $pagina, $quantidade)
+    {
+
+        $pagina = $pagina - 1;
+        $pagina = $pagina * $quantidade;
+
+
+        $query = "
+                    SELECT 
+                    $this->camposSQL 
+                    FROM `usuarios` 
+                    JOIN alunos ON 
+                        usuarios.CPFUsuario NOT IN (
+                            SELECT 
+                                usuarios.CPFUsuario
+                               FROM usuarios
+                             JOIN alunos 
+                             ON alunos.CPFUsuario = usuarios.CPFUsuario
+                             AND ( CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' OR usuarios.CPFUsuario = '$pesquisa' OR usuarios.telefoneUsuario = '$pesquisa' OR usuarios.emailUsuario LIKE '%$pesquisa%') 
+                        ) AND ( CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' OR usuarios.CPFUsuario = '$pesquisa' OR usuarios.telefoneUsuario = '$pesquisa' OR usuarios.emailUsuario LIKE '%$pesquisa%')                 ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
+                LIMIT $pagina,$quantidade";
         return $this->Get($query);
     }
 }

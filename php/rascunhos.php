@@ -186,7 +186,7 @@ class Rascunhos extends Banco
 
         $query = "SELECT  $this->camposSQLRascunho 
               FROM  $this->tabelaRascunho 
-              WHERE codigoDisciplina = $codigoDiciplina
+              WHERE codigoDisciplina = $codigoDiciplina    
               AND CONCAT (tituloRascunho, ' ', conteudoRascunho) LIKE '%$descricao%' 
               ORDER BY `codigoRascunho` DESC
               LIMIT $pagina,$quantidade";
