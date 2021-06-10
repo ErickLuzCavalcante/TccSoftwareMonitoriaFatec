@@ -49,10 +49,10 @@ if (isset($_GET['codigo'])) {
     $telefoneUsuario = $usuario->getTelefoneUsuario();
     $emailUsuario = $usuario->getEmailUsuario();
     $CPFUsuario = $usuario->getCPFUsuario();
+    $aluno->porCPF($codigo);
+    if ($aluno->getRaAluno()!="") $ehAluno =true;
 
-    $ehAluno = !$usuario->verificaAdministrador();
     if ($ehAluno) {
-        $aluno->porCPF($codigo);
         $raAluno = $aluno->getRaAluno();
         $TipoUsuario = $aluno->getMonitorAluno();
     } else {
@@ -95,13 +95,18 @@ if (isset($_POST["nomeUsuario"])) {
                 break;
             case "pssd":
                 $codigo = $CPFUsuario;
-                if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
-                    $usuario->AlterarSenhaUsuario($CPFUsuario, $palavraChaveUsuario_1);
-                    $link = "Cadastro.php?codigo=$codigo";
-                    $falha = "Senha alterada com sucesso";
+                if ($palavraChaveUsuario_1 != "") {
+                    if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
+                        $usuario->AlterarSenhaUsuario($CPFUsuario, $palavraChaveUsuario_1);
+                        $link = "Cadastro.php?codigo=$codigo";
+                        $falha = "Senha alterada com sucesso";
+                    } else {
+                        $falha = "A senha e a confirmação da senha são divergentes";
+                    }
                 } else {
-                    $falha = "A senha e a confirmação da senha são divergentes";
+                    $falha = "A senha não pode estar em branco";
                 }
+
 
                 $link = "Cadastro.php?codigo=$codigo";
                 break;
@@ -115,13 +120,17 @@ if (isset($_POST["nomeUsuario"])) {
         }
 
     } else {
-        if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
-            $codigo = $CPFUsuario;
-            $usuario->novoUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario, $palavraChaveUsuario_1);
-            if ($ehAluno) $aluno->novoAluno($CPFUsuario, $raAluno, $TipoUsuario);
-            $link = "Cadastro.php?codigo=$codigo";
+        if ($palavraChaveUsuario_1 != "") {
+            if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
+                $codigo = $CPFUsuario;
+                $usuario->novoUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario, $palavraChaveUsuario_1);
+                if ($ehAluno) $aluno->novoAluno($CPFUsuario, $raAluno, $TipoUsuario);
+                $link = "Cadastro.php?codigo=$codigo";
+            } else {
+                $falha = "A senha e a confirmação da senha são divergentes";
+            }
         } else {
-            $falha = "A senha e a confirmação da senha são divergentes";
+            $falha = "A senha não pode estar em branco";
         }
 
     }
@@ -143,40 +152,53 @@ if ($TipoUsuario == 1) {
 } else {
     $TipoUsuario = false;
 }
-$formulario = new formulario($link, "Cadastro Usuario");
+$formulario = new formulario($link, "");
 if ($falha != "") {
     $formulario->falha(strtoupper($falha));
 }
-$formulario->adcionarCampo("nomeUsuario", "emoji_people", "Nome", $nomeUsuario, "requerido");
-$formulario->adcionarCampo("sobrenomeUsuario", "family_restroom", "Sobrenome", $sobrenomeUsuario, "requerido");
-$formulario->adcionarCampo("telefoneUsuario", "call", "Telefone", $telefoneUsuario, "requerido");
-$formulario->adcionarCampo("emailUsuario", "mail", "E-mail", $emailUsuario, "email-requerido");
-if ($ehAluno) {
-    $formulario->adcionarCampo("raAluno", "local_offer", "R.A.", $raAluno, "requerido");
-}
-if ($CPFUsuario == "") {
-    $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, "requerido");
-    $formulario->adcionarCampo("palavraChaveUsuario_1", "password", "Senha", "", "senha-requerido");
-    $formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "", "senha-requerido");
-} else {
-    $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, "desabilitado");
-    $formulario->adcionarCampo("palavraChaveUsuario_1", "password", "Senha", "", "senha");
-    $formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "", "senha");
-}
-if ($ehAluno) {
-    $formulario->inicioCheck("verified", "O aluno é monitor?");
-    $formulario->adcionarCheck("TipoUsuario", "", "Sim, ele é monitor", "yep", $TipoUsuario);
-    $formulario->fimCheck();
-}
+$formulario->inicioConjunto("badge","Dados básicos");
+    $formulario->adcionarCampo("nomeUsuario", "emoji_people", "Nome", $nomeUsuario, "requerido");
+    $formulario->adcionarCampo("sobrenomeUsuario", "family_restroom", "Sobrenome", $sobrenomeUsuario, "requerido");
+    if ($ehAluno) {
+        $formulario->adcionarCampo("raAluno", "local_offer", "R.A.", $raAluno, "requerido");
+    }
+    if ($CPFUsuario == "") {
+        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, "requerido");
+    }else{
+        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, "desabilitado");
+    }
+$formulario->fimConjunto();
 
+
+$formulario->inicioConjunto("play_arrow","Contato");
+    $formulario->adcionarCampo("telefoneUsuario", "call", "Telefone", $telefoneUsuario, "requerido");
+    $formulario->adcionarCampo("emailUsuario", "mail", "E-mail", $emailUsuario, "email-requerido");
+$formulario->fimConjunto();
+
+$formulario->inicioConjunto("admin_panel_settings","Nivel de acesso");
+    if ($CPFUsuario == "") {
+        $formulario->adcionarCampo("palavraChaveUsuario_1", "password", "Senha", "", "senha-requerido");
+        $formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "", "senha-requerido");
+    } else {
+        $formulario->adcionarCampo("palavraChaveUsuario_1", "password", "Senha", "", "senha");
+        $formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "", "senha");
+    }
+    if ($ehAluno) {
+        $formulario->inicioCheck("verified", "O aluno é monitor?");
+        $formulario->adcionarCheck("TipoUsuario", "", "Sim, ele é monitor", "yep", $TipoUsuario);
+
+    }
+$formulario->fimCheck();
+
+$formulario->inicioConjunto("tune","Opções de alteração");
 if (isset($codigo)) {
-    $formulario->inicioRadioButtom("", "Tipos de alteração");
+    $formulario->inicioRadioButtom("", "Deseja");
     $formulario->adcionarRadioButton("alteracoes", "save", "Salvar sem modificar a senha", "salvar", true);
     $formulario->adcionarRadioButton("alteracoes", "vpn_key", "Somente mudar a senha", "pssd", false);
     $formulario->adcionarRadioButton("alteracoes", "delete", "Excluir", "excluir", false);
     $formulario->fimRadioButtom();
 }
-
+$formulario->fimCheck();
 unset($formulario);
 unset($uiux);
 ?>

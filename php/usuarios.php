@@ -172,6 +172,7 @@ class Usuario extends banco
 
         //  Valores onde serão inseridos
         $sql = $sql . " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
+        echo $sql;
         return $this->ExecultaSQL($sql);
     }
 

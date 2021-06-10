@@ -50,14 +50,14 @@ $uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
 
 // Itens do menu
-$uiux->addItemMenu("index.php", "Inicio", false);
+$uiux->addItemMenu("index.php","Inicio",false);
 // Se o usuario for administrador
 $uiux->addItemMenu('usuario.php',"Usuários",true);
 
-
-$uiux->addItemMenu("troca_senha.php","Meu Perfil",false);
-$uiux->addItemMenu("Login.php", "Logoff", false);
+$uiux->addItemMenu("meuPerfil.php","Meu Perfil",false);
+$uiux->addItemMenu("Login.php","Logoff",false);
 $uiux->fecharmenu();
+
 
 
 // inicializa a lista
