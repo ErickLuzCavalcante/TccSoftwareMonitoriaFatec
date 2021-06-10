@@ -175,6 +175,27 @@ class Usuario extends banco
         return $this->ExecultaSQL($sql);
     }
 
+
+    public function AlterarSenhaUsuario(
+        $CPFUsuario,
+        $palavraChaveUsuario,
+    )
+    {
+        // Primeira parte da string de comando SQL
+        // Atributos
+        $sql =
+            "UPDATE `usuarios` SET
+  
+      `palavraChaveUsuario`='" .
+            MD5($palavraChaveUsuario) .
+            "'
+      ";
+
+        //  Valores onde serão inseridos
+        $sql = $sql . " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
+        return $this->ExecultaSQL($sql);
+    }
+
     /*Fim dos metodos padrao */
 
     /* Cria um novo usuário no banco de dados */

@@ -58,8 +58,9 @@ position: relative;
 }
 .cd-form h4, .cd-form .cd-label {
   font-size: 1.3rem;
-  color: #94aab0;
+  color: #2b3e51;
   margin-bottom: 10px;
+  font-weight: normal;
 }
 .cd-form .cd-label {
   display: block;

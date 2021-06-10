@@ -68,13 +68,13 @@ $controleusuario = "
         <i class='material-icons'>add_circle</i> Novo: <br>
         
         <!-- Link para a visualizacao somente os monitores -->
-        <a href='usuario.php?listagem=Administradores&pesquisa=$uiux->pesquisa&pagina=1'>
+        <a href='Cadastro.php' target='_blank'>
             <i class='material-icons'>person</i> Aluno ou Monitor
         </a><br>
         <!-- Fim Link para a visualizacao somente os monitores -->
         
         <!-- Link para a visualizacao somente os monitores -->
-        <a href='usuario.php?listagem=Administradores&pesquisa=$uiux->pesquisa&pagina=1'>
+        <a href='Cadastro.php?modalidade=administrador' target='_blank'>
             <i class='material-icons'>assignment_ind</i> Administrador
         </a><br>
         <!-- Fim Link para a visualizacao somente os monitores -->
@@ -118,7 +118,6 @@ switch ($tipoDeListagem) {
     default: // pesquisa padrao
         // Pesquisa todos os usuarios
         $usuario->Listar($uiux->pesquisa, $uiux->pagina, 20);
-
         break;
 }
 
@@ -136,10 +135,15 @@ if ($usuario->getTamanho() > 0) {
         ";
         $aluno->porCPF($usuario->getCPFUsuario());
 
+        /* Valida o tipo de usuario e cria uma consulta personalizada para este tipo
+            tambem define o caminho do editor reponsavel por alterar o determinado tipo de usuario
+        */
+        $linkcadastro="cadastro.php?codigo=".$usuario->getCPFUsuario(); // Se for um aluno o link do cadastro
         if ($aluno->getRaAluno()!=""){
             if ($aluno->getMonitorAluno()==1){
                 $conteudousuario=$conteudousuario."
                  <i class='material-icons'>escalator_warning</i> Tipo: Monitor<br>";
+
             }else{
                 $conteudousuario=$conteudousuario."
                 <i class='material-icons'>face</i> Tipo: Aluno<br>";
@@ -152,10 +156,10 @@ if ($usuario->getTamanho() > 0) {
                 <i class='material-icons'>assignment_ind</i> Tipo: Administrador<br> ";
         }
         $conteudousuario=$conteudousuario."
-            <i class='material-icons'>badge</i> CPF: ".$usuario->getCPFUsuario()."  <br>  
+            <i class='material-icons'>badge</i> CPF: ".$usuario->getCPFUsuario()."  <br></a>
         ";
 
-        $lista->add("account_circle", $usuario->getNomeUsuario()." ".$usuario->getSobrenomeUsuario(), $conteudousuario);
+        $lista->add("account_circle", "<a href='$linkcadastro' target='_blank'f>".$usuario->getNomeUsuario()." ".$usuario->getSobrenomeUsuario(), $conteudousuario);
 
 
         $usuario->proximo();
