@@ -50,7 +50,9 @@ if (isset($_GET['codigo'])) {
     $emailUsuario = $usuario->getEmailUsuario();
     $CPFUsuario = $usuario->getCPFUsuario();
     $aluno->porCPF($codigo);
-    if ($aluno->getRaAluno()!="") $ehAluno =true;
+    if ($usuario->verificaAdministrador()) {
+        $ehAluno =false;
+    }
 
     if ($ehAluno) {
         $raAluno = $aluno->getRaAluno();
