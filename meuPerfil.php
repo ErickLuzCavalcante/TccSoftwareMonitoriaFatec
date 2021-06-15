@@ -30,10 +30,9 @@ $emailUsuario = $usuario->getEmailUsuario();
 $CPFUsuario = $usuario->getCPFUsuario();
 $aluno->porCPF($CPFUsuario);
 $ehAluno=false;
-if ($aluno->getRaAluno()!="") $ehAluno=true;
+if ($usuario->verificaAdministrador()) $ehAluno=true;
 $falha = "";
 if ($ehAluno) {
-
     $raAluno = $aluno->getRaAluno();
     $monitor = $aluno->getMonitorAluno();
 }
@@ -90,21 +89,21 @@ if ($falha != "") {
     $formulario->falha(strtoupper($falha));
 }
 $formulario->inicioConjunto("badge","Dados básicos");
-$formulario->adcionarCampo("nomeUsuario", "emoji_people", " Nome", $nomeUsuario . " " . $sobrenomeUsuario, "desabilitado");
+$formulario->adcionarCampo("nomeUsuario", "emoji_people", " Nome", $nomeUsuario . " " . $sobrenomeUsuario, 100, "desabilitado");
 if ($ehAluno) {
-    $formulario->adcionarCampo("raAluno", "local_offer", " R.A.", $raAluno, "desabilitado");
+    $formulario->adcionarCampo("raAluno", "local_offer", " R.A.", $raAluno, 100, "desabilitado");
 }
-$formulario->adcionarCampo("CPFUsuario", "badge", " CPF", $CPFUsuario, "desabilitado");
+$formulario->adcionarCampo("CPFUsuario", "badge", " CPF", $CPFUsuario, 100, "desabilitado");
 $formulario->fimSelect();
 
 $formulario->inicioConjunto("play_arrow","Contato");
-$formulario->adcionarCampo("telefoneUsuario", "call", " Telefone", $telefoneUsuario, "requerido");
-$formulario->adcionarCampo("emailUsuario", "mail", " E-mail", $emailUsuario, "email-requerido");
+$formulario->adcionarCampo("telefoneUsuario", "call", " Telefone", $telefoneUsuario, 12, "nao-requerido");
+$formulario->adcionarCampo("emailUsuario", "mail", " E-mail", $emailUsuario, 320, "email-requerido");
 $formulario->fimSelect();
 
 $formulario->inicioConjunto("admin_panel_settings","Senha");
-$formulario->adcionarCampo("palavraChaveUsuario_1", "password", " Senha", "", "senha");
-$formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "", "senha");
+$formulario->adcionarCampo("palavraChaveUsuario_1", "password", " Senha", "",100, "senha");
+$formulario->adcionarCampo("palavraChaveUsuario_2", "check", "Confirme a senha", "",100, "senha");
 $formulario->fimSelect();
 
 $formulario->inicioConjunto("tune","Opções de alteração");
