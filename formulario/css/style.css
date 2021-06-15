@@ -281,6 +281,10 @@ position: relative;
   border-radius: .25em;
   padding: 16px;
 }
+
+.cd-form .sucess p {
+  background: #34ce57;
+}
 .cd-form .error {
   border-color: #e94b35 !important;
 }

@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `materiais` (
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `CPFUsuario` varchar(50) NOT NULL,
+  `CPFUsuario` varchar(11) NOT NULL,
   `nomeUsuario` varchar(50) NOT NULL,
   `sobrenomeUsuario` varchar(50) NOT NULL,
   `telefoneUsuario` varchar(12) DEFAULT NULL,

@@ -130,18 +130,7 @@ class Usuario extends banco
         return $this->ExecultaSQL($sql);
     }
 
-    /* Altera conforme a tabela*/
-    /*Deve ser padronizado, colocando na ordem que aparece na variavel $camposSQL
-      -- Este metodo coleta o resultados das consultas SQL
-         a classe banco retorna, um array do tipo matriz com sendo o primeiro indice a linha da tabela e o segundo
-         indice a coluna da tabela
 
-         Por isso devemos usar o padrao $this->atributo=$this->Dados[$this->getRegistro()][1];
-
-         Respeitando a ordem da variavel $campoSQL
-
-         att, Erick Cavalcante
-    */
 
     public function editarUsuario(
         $CPFUsuario,
@@ -172,7 +161,6 @@ class Usuario extends banco
 
         //  Valores onde serão inseridos
         $sql = $sql . " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
-        echo $sql;
         return $this->ExecultaSQL($sql);
     }
 

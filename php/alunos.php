@@ -47,7 +47,6 @@ class Alunos extends banco
 
     public function novoAluno($CPFUsuario, $raAluno, $monitorAluno)
     {
-
         // Inicio da string de SQL
         // Campos do banco de dados
 
@@ -68,7 +67,7 @@ class Alunos extends banco
             . $CPFUsuario . "', '"
             . $raAluno . "', "
             . $monitorAluno . ");";
-
+        echo $sql;
         return $this->ExecultaSQL($sql);
     }
 
@@ -82,12 +81,12 @@ class Alunos extends banco
 
             "UPDATE " . $this->tabela . " SET
               `raAluno`='" . $raAluno . "',
-              `monitorAluno`='" . $monitorAluno . "'
+              `monitorAluno`=" . $monitorAluno . "
               ";
 
         //  Valores onde serão inseridos
         $sql = $sql .
-            " WHERE  `CPFUsuario`=" . $CPFUsuario . ";";
+            " WHERE  `CPFUsuario`='" . $CPFUsuario . "';";
         return $this->ExecultaSQL($sql);
     }
 
@@ -171,7 +170,7 @@ class Alunos extends banco
         $query = "SELECT " . $this->camposSQL . "
               
               FROM " . $this->tabela . " WHERE
-              `CPFUsuario` = " . strtoupper($CPFUsuario);
+              `CPFUsuario` = '" . strtoupper($CPFUsuario)."'";
         return $this->Get($query);
     }
 

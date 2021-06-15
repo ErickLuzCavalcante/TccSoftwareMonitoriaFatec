@@ -27,7 +27,14 @@ class formulario
 
     public function falha($textofalha)
     {
+        $textofalha=" ".$textofalha;
         echo "<br><br><br><div class='error-message'><p><i class='material-icons'>error_outline</i>$textofalha</p></div><br><br><br>";
+    }
+
+    public function sucesso($texto)
+    {
+        $texto=" ".$texto;
+        echo "<br><br><br><div class='error-message sucess'><p><i class='material-icons'>thumb_up_off_alt</i>$texto</p></div><br><br><br>";
     }
 
     public function inicioConjunto($icone, $titulo)
@@ -40,7 +47,7 @@ class formulario
         echo "</fieldset>";
     }
 
-    public function adcionarCampo($nome, $icone, $etiqueta, $valor, $tipo)
+    public function adcionarCampo($nome, $icone, $etiqueta, $valor,$maximocarcteres, $tipo)
     {
         switch ($tipo) {
             case "requerido":
@@ -76,7 +83,7 @@ class formulario
         echo "<h4>
                 <i class='material-icons'>$icone</i>$etiqueta
               </h4>
-                <input class='$nome' type='$type' value='$valor' name='$nome' id='$nome' $requerido>
+                <input class='$nome' type='$type' maxlength=$maximocarcteres value='$valor' name='$nome' id='$nome' $requerido>
                <br>";
     }
 
