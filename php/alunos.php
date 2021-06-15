@@ -67,7 +67,6 @@ class Alunos extends banco
             . $CPFUsuario . "', '"
             . $raAluno . "', "
             . $monitorAluno . ");";
-        echo $sql;
         return $this->ExecultaSQL($sql);
     }
 

@@ -25,6 +25,7 @@ $telefoneUsuario = "";
 $emailUsuario = "";
 $raAluno = "";
 $CPFUsuario = "";
+$CPFUsuario2 = "";
 $palavraChaveUsuario_1 = "";
 $palavraChaveUsuario_2 = "";
 $monitor = 0;
@@ -34,6 +35,7 @@ $link = "Cadastro.php";
 $ehAluno = true;
 if (isset($_GET["modalidade"])) {
     if ($_GET["modalidade"] == "administrador") {
+        $link = "Cadastro.php?modalidade=administrador";
         $ehAluno = false;
         unset($aluno);
     }
@@ -42,7 +44,6 @@ if (isset($_GET["modalidade"])) {
 if (isset($_GET['codigo'])) {
     $codigo = $_GET['codigo'];
     $usuario->porCPF($codigo);
-
     $nomeUsuario = $usuario->getNomeUsuario();
     $sobrenomeUsuario = $usuario->getSobrenomeUsuario();
     $telefoneUsuario = $usuario->getTelefoneUsuario();
@@ -145,13 +146,12 @@ if (isset($_POST["nomeUsuario"])) {
         if ($palavraChaveUsuario_1 != "") {
             // Consulta os dados no banco de dados para evitar duplicidade
             $usuario->porCPF($CPFUsuario);
-            $aluno->porCPF($CPFUsuario);
+
             if ($usuario->getCPFUsuario()==$CPFUsuario){
-                $falha = $falha."<br>CPF já utilizado em outro cadastro";
+                $falha = "Não foi possivel cadastrar. o CPF já é utilizado em outro cadastro";
+                $CPFUsuario="";
             }
-            if ($aluno->getRaAluno()==$raAluno){
-                $falha = $falha."<br>RA já utilizado em outro cadastro";
-            }
+
             if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
 
             } else {
@@ -164,9 +164,22 @@ if (isset($_POST["nomeUsuario"])) {
                 $usuario->novoUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario, $palavraChaveUsuario_1);
                 if ($ehAluno) {
                     $aluno->novoAluno($CPFUsuario, $raAluno, $TipoUsuario);
+                    $aluno->porCPF($CPFUsuario);
+                    if ($aluno->getRaAluno()==""){
+                        $falha = "Não foi possivel cadastrar. o R.A. já é utilizado em outro cadastro";
+                        $usuario->excluirusuario($CPFUsuario);
+                        $CPFUsuario2=$CPFUsuario;
+                        $CPFUsuario="";
+                        $raAluno="";
+                        unset($codigo);
+                    }
                 }
-                $link = "Cadastro.php?codigo=$codigo";
-                $sucesso = "Cadastro realizado com sucesso";
+
+
+                if ($falha=="") {
+                    $sucesso = "Cadastro realizado com sucesso";
+                    $link = "Cadastro.php?codigo=$codigo";
+                }
             }
 
         } else {
@@ -206,7 +219,7 @@ $formulario->inicioConjunto("badge","Dados básicos");
         $formulario->adcionarCampo("raAluno", "local_offer", "R.A.", $raAluno, 20, "requerido");
     }
     if ($CPFUsuario == "") {
-        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF (Somente numero)", $CPFUsuario, 11, "requerido");
+        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF (somente numeros)", $CPFUsuario.$CPFUsuario2, 11, "requerido");
     }else{
         $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, 12, "desabilitado");
     }
