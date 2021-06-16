@@ -7,7 +7,7 @@ include "php/quill.php";
 
 
 $usuario = new Usuario();
-
+$falha="";
 if (!$usuario->verificaAdministrador()) {
     $falha = "
   Você nao possui permissão, ou sua sessão foi finalizada. Nenhuma ação foi executada no servidor<br><br>
@@ -48,20 +48,38 @@ if (isset($_POST["nomeDisciplina"])) {
     if ($professorDisciplina == "") {
         $falha = $falha . "<br><br>Qual o professor responsavel pela matéria<br>";
     }
-    if (isset($falha) == false) {
+    if ($falha=="") {
         if (isset($_GET["codigoDisciplina"])) {
             $operacao = $_POST["radio-button"];
             if ($operacao == '1') {
+                $codigo=$_GET["codigoDisciplina"];
                 $disciplinas->editarDisciplina($_GET["codigoDisciplina"], $nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina);
                 $link = "editorMateria.php?codigoDisciplina=$codigo";
+                $sucesso="Disciplina alterada com sucesso";
             }
             if ($operacao == '4') {
+                $codigo=$_GET["codigoDisciplina"];
                 $disciplinas->excluirDisciplina($_GET["codigoDisciplina"]);
-                $link = "editorMateria.php";
+                $disciplinas->porCodigo($codigo);
+                if ($disciplinas->getNomeDisciplina()==""){
+                    $sucesso="Disciplina excluida";
+                    $link = "index.php";
+                    unset($codigo);
+                }else{
+                    $falha="Não foi possivel excluir a disciplina de ".$disciplinas->getNomeDisciplina().", pois há conteudo nela";
+                    $link = "editorMateria.php?codigoDisciplina=$codigo";
+                }
             }
         } else {
             $codigo = $disciplinas->novaDisciplina($nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina);
             $link = "editorMateria.php?codigoDisciplina=$codigo";
+            $disciplinas->porCodigo($codigo);
+            if ($disciplinas->getNomeDisciplina()==""){
+                $falha="Não foi possivel gerar a disciplina";
+            }else{
+                $sucesso="Disciplina criada com sucesso";
+                $link = "editorMateria.php?codigoDisciplina=$codigo";
+            }
         }
 
     }
@@ -79,13 +97,16 @@ $editor = new quill($link, "de disciplina", false);
 
 // Controla os controles do menu "Açoes no servidor"
 
-if (isset($_GET["codigoDisciplina"])) {
+if (isset($codigo)) {
     $editor->visivelExcluir = true;
 }
 
 
-if (isset($falha)) {
+if ($falha!="") {
     $editor->falha($falha);
+}
+if (isset($sucesso)){
+    $editor->sucesso($sucesso);
 }
 
 $editor->adcionarCampo("nomeDisciplina", "drive_file_rename_outline", "Nome da disciplina", $nomeDisciplina);

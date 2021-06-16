@@ -80,6 +80,8 @@ class Interfaces
                     <link rel = 'stylesheet' href = 'css/reset.css' > <!--CSS reset-->
                     <link rel = 'stylesheet' href = 'css/style.css' > <!--Estilos do pagina-->
                     <script src = 'js/modernizr.js' ></script > <!--Modernizr -->
+                    <link rel='stylesheet' href='./quill/quill.css'>
+                    <link rel='stylesheet' href='./grid/grid.css'>
                 
                     <title > $titulo | Fatec monitor </title >
                 </head >
@@ -168,7 +170,6 @@ class Interfaces
                     <!-- cobrir o conteúdo principal quando o formulário de pesquisa estiver aberto -->
                     <script src="js/jquery-2.1.4.js"></script>
                     <script src="js/main.js"></script> <!-- Resource jQuery -->
-            
 
                 </body>
                 

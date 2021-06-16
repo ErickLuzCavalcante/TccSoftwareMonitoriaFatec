@@ -40,6 +40,12 @@ class quill
         echo "<br><br><br><div class='error-message'><p><i class='material-icons'>error_outline</i>$textofalha</p></div><br><br><br>";
     }
 
+    public function sucesso($texto)
+    {
+        $texto=" ".$texto;
+        echo "<br><br><br><div class='error-message sucess'><p><i class='material-icons'>thumb_up_off_alt</i>$texto</p></div><br><br><br>";
+    }
+
     public function adcionarCampo($nome, $icone, $etiqueta, $valor)
     {
         echo "<h4>

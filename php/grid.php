@@ -15,7 +15,7 @@ class grid
         $this->next = "#";
         $this->next = "#";
         $this->home = "#";
-        echo '<link rel="stylesheet" href="./grid/grid.css"><section class="grid3d vertical" id="grid3d"><div class="grid-wrap"><div class="grid">';
+        echo '<section class="grid3d vertical" id="grid3d"><div class="grid-wrap"><div class="grid">';
     }
 
     function __destruct()
