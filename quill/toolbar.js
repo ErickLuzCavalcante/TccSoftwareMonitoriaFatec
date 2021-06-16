@@ -8,6 +8,7 @@ $("document").ready(function($){
   var btn = $('.btn-expandir');
 
   btn.click(function() {
+    window.scrollTo(0, 0);
     editor.toggleClass("full");
     nav.toggleClass("fix-toobar");
     btn.toggleClass("Btnfull");

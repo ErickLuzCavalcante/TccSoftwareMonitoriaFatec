@@ -156,6 +156,8 @@ if (isset($_POST["nomeUsuario"])) {
 
             } else {
                 $falha = "A senha e a confirmação da senha são divergentes";
+                $CPFUsuario2=$CPFUsuario;
+                $CPFUsuario="";
             }
 
             // Caso nao encontre nenhuma falha realiza o cadastro
