@@ -149,7 +149,7 @@ $infodisciplina = $infodisciplina . "
 
     
     <!-- Link para mostrar mais informacoes  -->
-    <a href='#  target='_blank'>
+    <a href='conteudoDisciplina.php?codigo=".$disciplina->getCodigoDisciplina()."' >
         <i class='material-icons'>info</i> Detalhes  
      </a><br>
     <!-- Fim Link para mostrar mais informacoes  -->
