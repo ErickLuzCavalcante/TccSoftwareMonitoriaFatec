@@ -124,7 +124,6 @@ class formulario
 
     public function adcionarCheck($nome, $icone, $etiqueta, $valor, $selecionado)
     {
-
         if ($selecionado) {
             $selecionado = "checked";
         } else {

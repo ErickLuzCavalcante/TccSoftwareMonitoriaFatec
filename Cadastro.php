@@ -243,7 +243,7 @@ $formulario->inicioConjunto("admin_panel_settings","Nivel de acesso");
     }
     if ($ehAluno) {
         $formulario->inicioCheck("verified", "O aluno é monitor?");
-        $formulario->adcionarCheck("TipoUsuario", "", "Sim, ele é monitor", "yep", 10, $TipoUsuario);
+        $formulario->adcionarCheck("TipoUsuario", "", "Sim, ele é monitor", "yep", $TipoUsuario);
 
     }
 $formulario->fimCheck();

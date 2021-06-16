@@ -82,7 +82,7 @@ if ($rascunho) {
     $titulo = $postagens->getTituloMaterial()."<br>";
 }
 
-$lista->add("text_snippet", $titulo, "<div class='ql-editor'>".$postagens->getConteudoMaterial()</div>);
+$lista->add("text_snippet", $titulo, "<div class='ql-editor'>".$postagens->getConteudoMaterial()."</div>");
 if ($monitor) {
     $controle = "
                 <a href='editorConteudo.php?codigo=$codigo' target='_blank'>
