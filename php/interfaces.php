@@ -87,10 +87,11 @@ class Interfaces
                 </head >
                 
                 <body >
+                
     ";
         echo "
                     <header class='cd-main-header animate-search' >
-                        <div class='cd-logo' ><a href = 'index.php' ><img src = 'img/logo.png' alt = 'Logo' ></a ></div >
+                        <div class='cd-logo' ><img src = 'img/logo.png' alt = 'Logo' ></div >
                         <nav class='cd-main-nav-wrapper' >
                   ";
         if ($this->Barrapesquisa) {
@@ -105,6 +106,17 @@ class Interfaces
 
     }    //end __construct()
 
+
+    public function padraoMenu(){
+        $this->addItemMenu("index.php", "Inicio", false);
+        // Se o usuario for administrador
+        $this->addItemMenu("editorMateria.php' target='_blank'", "Criar Matéria", true);
+        $this->addItemMenu('usuario.php', "Usuários", true);
+
+        $this->addItemMenu("meuPerfil.php", "Meu Perfil", false);
+        $this->addItemMenu("Login.php", "Logoff", false);
+        $this->fecharmenu();
+    }
     public function addItemMenu($link, $Texto, $administrador)
     {
         $usuario = new Usuario();

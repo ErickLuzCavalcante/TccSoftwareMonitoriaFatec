@@ -48,15 +48,7 @@ if (isset($_GET["codigo"])) {
 
 $uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
-
-// Itens do menu
-$uiux->addItemMenu("index.php","Inicio",false);
-// Se o usuario for administrador
-$uiux->addItemMenu('usuario.php',"Usuários",true);
-
-$uiux->addItemMenu("meuPerfil.php","Meu Perfil",false);
-$uiux->addItemMenu("Login.php","Logoff",false);
-$uiux->fecharmenu();
+$uiux->padraoMenu();
 
 
 
@@ -178,25 +170,25 @@ if ($monitor) {
     switch ($tipoDeListagem) {
         case "todos":
             // Pesquisa pelos rascunhos e pelos publicados
-            $postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+            $postagens->rascunhoPostagensPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 6);
             break;
         case "rascunhos":
             // Pesquisa somente os publicados
-            $postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+            $postagens->rascunhoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 6);
             break;
         case "naopostado":
             // Pesquisa somente os publicados
-            $postagens->offlinePorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+            $postagens->offlinePorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 6);
             break;
         default: // pesquisa padrao
             // Pesquisa somente os que estão postados
-            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+            $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 6);
             break;
     }
 
 } else {
     // Se for um aluno padrão ele ira pesquisar apenas pelos conteudos postados
-    $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 20);
+    $postagens->publicadoPorDiciplina($codigo, $uiux->pesquisa, $uiux->pagina, 6);
 }
 
 

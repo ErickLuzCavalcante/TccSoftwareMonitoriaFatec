@@ -68,14 +68,8 @@ if (isset($_POST["telefoneUsuario"])) {
 
 
 $uiux = new Interfaces("Meu Perfil", 1, false);
-// Itens do menu
-$uiux->addItemMenu("index.php","Inicio",false);
-// Se o usuario for administrador
-$uiux->addItemMenu('usuario.php',"Usuários",true);
 
-$uiux->addItemMenu("meuPerfil.php","Meu Perfil",false);
-$uiux->addItemMenu("Login.php","Logoff",false);
-$uiux->fecharmenu();
+$uiux->padraoMenu();
 
 
 /**

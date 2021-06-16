@@ -19,14 +19,7 @@ $uiux->filtroDePesquisa("Usuários", "usuario.php?", true);
 $uiux->filtroDePesquisa("Disciplinas", "index.php?", false);
 
 
-// Itens do menu
-$uiux->addItemMenu("index.php","Inicio",false);
-// Se o usuario for administrador
-$uiux->addItemMenu('usuario.php',"Usuários",true);
-
-$uiux->addItemMenu("meuPerfil.php","Meu Perfil",false);
-$uiux->addItemMenu("Login.php","Logoff",false);
-$uiux->fecharmenu();
+$uiux->padraoMenu();
 
 // inicializa a lista
 $lista = new lista();
@@ -103,23 +96,23 @@ $aluno = new Alunos();
 switch ($tipoDeListagem) {
     case "Alunos":
         // Pesquisa somente pelos alunos
-        $usuario->ListarUsuarioAlunos($uiux->pesquisa, $uiux->pagina, 20);
+        $usuario->ListarUsuarioAlunos($uiux->pesquisa, $uiux->pagina, 6);
         break;
     case "Monitores":
         // Pesquisa somente pelos monitores
-        $usuario->ListarUsuarioMonitores($uiux->pesquisa, $uiux->pagina, 20);
+        $usuario->ListarUsuarioMonitores($uiux->pesquisa, $uiux->pagina, 6);
         break;
     case "Administradores":
         // Pesquisa somente pelos administradores
-        $usuario->ListarUsuarioAdministradores($uiux->pesquisa, $uiux->pagina, 20);
+        $usuario->ListarUsuarioAdministradores($uiux->pesquisa, $uiux->pagina, 6);
         break;
     case "naoAdministradores":
         // Pesquisa somente pelos alunos e monitores
-        $usuario->ListarUsuarioAlunosEMonitores($uiux->pesquisa, $uiux->pagina, 20);
+        $usuario->ListarUsuarioAlunosEMonitores($uiux->pesquisa, $uiux->pagina, 6);
         break;
     default: // pesquisa padrao
         // Pesquisa todos os usuarios
-        $usuario->Listar($uiux->pesquisa, $uiux->pagina, 20);
+        $usuario->Listar($uiux->pesquisa, $uiux->pagina, 6);
         break;
 }
 

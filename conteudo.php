@@ -46,14 +46,7 @@ if (isset($_GET["codigo"])) {
 $uiux = new Interfaces($postagens->getTituloMaterial(), 1, false);
 
 
-// Itens do menu
-$uiux->addItemMenu("index.php", "Inicio", false);
-// Se o usuario for administrador
-$uiux->addItemMenu('index.php', "Editar Usuários", true);
-
-$uiux->addItemMenu("index.php", "Trocar Senha", false);
-$uiux->addItemMenu("Login.php", "Logoff", false);
-$uiux->fecharmenu();
+$uiux->padraoMenu();
 
 
 // inicializa a lista
