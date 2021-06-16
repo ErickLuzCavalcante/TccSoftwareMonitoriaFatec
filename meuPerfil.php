@@ -29,8 +29,8 @@ $telefoneUsuario = $usuario->getTelefoneUsuario();
 $emailUsuario = $usuario->getEmailUsuario();
 $CPFUsuario = $usuario->getCPFUsuario();
 $aluno->porCPF($CPFUsuario);
-$ehAluno=false;
-if ($usuario->verificaAdministrador()) $ehAluno=true;
+$ehAluno=true;
+if ($usuario->verificaAdministrador()) $ehAluno=false;
 $falha = "";
 if ($ehAluno) {
     $raAluno = $aluno->getRaAluno();
@@ -47,6 +47,7 @@ if (isset($_POST["telefoneUsuario"])) {
     switch ($_POST['alteracoes']) {
         case "salvar":
             $usuario->editarUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario);
+            $sucesso="Dados alterados com sucesso";
             break;
 
         case "pssd":
@@ -54,7 +55,7 @@ if (isset($_POST["telefoneUsuario"])) {
                 if ($palavraChaveUsuario_1 == $palavraChaveUsuario_2) {
                     $usuario->editarUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario);
                     $usuario->AlterarSenhaUsuario($CPFUsuario, $palavraChaveUsuario_1);
-                    $falha = "Senha alterada com sucesso";
+                    $sucesso = "Dados e senha alterados com sucesso";
                 } else {
                     $falha = "A senha e a confirmação da senha são divergentes";
                 }
@@ -87,6 +88,9 @@ $uiux->fecharmenu();
 $formulario = new formulario("meuPerfil.php", "");
 if ($falha != "") {
     $formulario->falha(strtoupper($falha));
+}
+if (isset($sucesso)){
+    $formulario->sucesso(strtoupper($sucesso));
 }
 $formulario->inicioConjunto("badge","Dados básicos");
 $formulario->adcionarCampo("nomeUsuario", "emoji_people", " Nome", $nomeUsuario . " " . $sobrenomeUsuario, 100, "desabilitado");

@@ -1,4 +1,9 @@
 <?php
+// Para o banco de dados é necessario mudar a linha max_allowed_packet, para:
+// max_allowed_packet=16GB
+// no arquivo My.ini
+
+
 
 namespace tcc\monitoria;
 

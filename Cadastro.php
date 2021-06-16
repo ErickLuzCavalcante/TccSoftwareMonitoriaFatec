@@ -228,7 +228,7 @@ $formulario->fimConjunto();
 
 $formulario->inicioConjunto("play_arrow","Contato");
     $formulario->adcionarCampo("telefoneUsuario", "call", "Telefone", $telefoneUsuario, 12, "nao-requerido");
-    $formulario->adcionarCampo("emailUsuario", "mail", "E-mail", "erick@erick.com", 320, "email-requerido");
+    $formulario->adcionarCampo("emailUsuario", "mail", "E-mail", $emailUsuario, 320, "email-requerido");
 $formulario->fimConjunto();
 
 $formulario->inicioConjunto("admin_panel_settings","Nivel de acesso");

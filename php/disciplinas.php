@@ -99,6 +99,7 @@ class Disciplinas extends banco
             . $imagemDisciplina . "', '"
             . $sobreDisciplina . "', '"
             . $professorDisciplina . "');";
+        
         return $this->ExecultaSQL($sql);
     }
 
