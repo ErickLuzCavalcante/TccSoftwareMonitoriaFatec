@@ -6,14 +6,14 @@ $("document").ready(function($){
   var nav = $('.ql-toolbar');
   var editor = $('.ql-editor');
   var btn = $('.btn-expandir');
+  var header = $('.cd-main-header');
 
   btn.click(function() {
-    window.scrollTo(0, 0);
+    header.toggleClass("header-hidden");
     editor.toggleClass("full");
     nav.toggleClass("fix-toobar");
     btn.toggleClass("Btnfull");
-
-
+    //$('html, body').animate({scrollTop:0}, 'slow');
   });
 
 });

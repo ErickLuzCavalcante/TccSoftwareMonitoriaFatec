@@ -29,10 +29,7 @@ class quill
         <h2>Editor $Titulo</h2>
         <a onclick='puxaCookie()'><i class='material-icons'>settings_backup_restore</i> Usar o Check point - Tive um problema ao tentar salvar da última vez </a>
         ";
-        if ($maisopcoes != false) {
-            echo "&nbsp&nbsp&nbsp<a href='editor.php?postagem=$maisopcoes'>
-                    <i class='material-icons'>cloud_download</i> Apartir do que já esta publicado</a>";
-        }
+
     }
 
     public function falha($textofalha)
@@ -59,13 +56,7 @@ class quill
     {
 
         echo "                
-                <h4><i class='material-icons'>article</i>
-                Conteudo</h4>
-                <div id='editor-container'>$conteudo</div>
-                <h4 class='btn-expandir'>
-                <i class='material-icons'>
-                settings_overscan</i></h4>
-                
+               
                 <h4>Açoes no servidor</h4>
                 <ul class='cd-form-list'>
                 <li>
@@ -104,7 +95,13 @@ class quill
                         </label>
                   </li>";
             }
-        echo "</ul><input type='submit' value='Enviar'></p>";
+        echo "</ul><input type='submit' value='Enviar'></p><br><br><br><br><br>";
+        echo "                
+                <h4><i class='material-icons'>article</i>
+                Conteudo </h4><p class='btn-expandir'>
+                <i class='material-icons'>
+                photo_size_select_small</i></p><hr>            
+                <div id='editor-container'>$conteudo</div>";
 
     }
 

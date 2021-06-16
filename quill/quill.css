@@ -3,6 +3,7 @@
     z-index: 1000;
     margin: 0;
     transition: all 0.5s, padding 0.25s;
+    text-align: center;
 }
 
 .ql-toolbar.ql-snow {
@@ -35,7 +36,7 @@
 .full {
     height: auto;
     position: fixed;
-    top: 50px;
+    top: 0px;
     background: #fff;
     bottom: 0;
     left: 0;
@@ -44,20 +45,17 @@
     transition: all 0.5s, padding 0.25s;
     padding-top: 65px;
 }
-
-@media only screen and (min-width: 1024px) {
-    .fix-toobar {
-        top: 80px;
-    }
-
-    .full {
-        top: 80px;
-    }
+.header-hidden {
+    z-index: 0;
 }
 
+
 .btn-expandir {
-    text-align: center;
+    position: absolute;
+    text-align: right;
+    right: 5%;
     cursor: pointer;
+    align-content: center;
 }
 
 .Btnfull {
