@@ -61,6 +61,9 @@ if (isset($_POST["nomeDisciplina"])) {
                 $codigo=$_GET["codigoDisciplina"];
                 $disciplinas->excluirDisciplina($_GET["codigoDisciplina"]);
                 $disciplinas->porCodigo($codigo);
+                unset($disciplinas);
+                $disciplinas= new Disciplinas();
+                echo $disciplinas->getNomeDisciplina();
                 if ($disciplinas->getNomeDisciplina()==""){
                     $sucesso="Disciplina excluida";
                     $link = "index.php";
@@ -73,6 +76,8 @@ if (isset($_POST["nomeDisciplina"])) {
         } else {
             $codigo = $disciplinas->novaDisciplina($nomeDisciplina, $imagemDisciplina, $sobreDisciplina, $professorDisciplina);
             $link = "editorMateria.php?codigoDisciplina=$codigo";
+            unset($disciplinas);
+            $disciplinas= new Disciplinas();
             $disciplinas->porCodigo($codigo);
             if ($disciplinas->getNomeDisciplina()==""){
                 $falha="Não foi possivel gerar a disciplina";
