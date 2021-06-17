@@ -1,12 +1,14 @@
 var toolbarOptions = {    toolbar: [
-  ['save'],
-  [ 'bold', 'italic', 'underline', 'strike' ],
-  [{ 'color': [] }, { 'background': [] }],
-  [{ 'header': '1' }, { 'header': '2' }, 'code-block' ],
-  [{ 'list': 'ordered' }, { 'list': 'bullet'}],
-  [ 'link', 'image', 'video'],
-  [ 'clean' ],
-]
+
+      [{'size': [] }],
+      [ 'bold', 'italic', 'underline', 'strike' ],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'header': '1' }, { 'header': '2' }, 'code-block' ],
+      [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'indent': '-1' }, { 'indent': '+1' }],
+      [  { 'align': [] }],
+      [ 'link', 'image', 'video'],
+      [ 'clean' ] , ['save']
+    ]
 
 };
 

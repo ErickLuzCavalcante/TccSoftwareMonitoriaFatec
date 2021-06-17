@@ -80,6 +80,7 @@ class Interfaces
                     <link rel = 'stylesheet' href = 'css/reset.css' > <!--CSS reset-->
                     <link rel = 'stylesheet' href = 'css/style.css' > <!--Estilos do pagina-->
                     <script src = 'js/modernizr.js' ></script > <!--Modernizr -->
+                    <link href='https://cdn.quilljs.com/1.3.6/quill.snow.css' rel='stylesheet'>
                     <link rel='stylesheet' href='./quill/quill.css'>
                     <link rel='stylesheet' href='./grid/grid.css'>
                 

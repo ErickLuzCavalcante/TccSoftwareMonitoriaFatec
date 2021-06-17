@@ -41,7 +41,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 5;
     transition: all 0.5s, padding 0.25s;
     padding-top: 65px;
 }
@@ -49,6 +49,9 @@
     z-index: 0;
 }
 
+.ql-editing{
+    z-index: 5;
+}
 
 .btn-expandir {
     position: absolute;
@@ -56,6 +59,7 @@
     right: 5%;
     cursor: pointer;
     align-content: center;
+    background: #ffffff;
 }
 
 .Btnfull {
