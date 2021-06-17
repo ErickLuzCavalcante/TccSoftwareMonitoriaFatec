@@ -21,7 +21,7 @@ if (!$aluno->verificaLogadoMonitor() && !$usuario->verificaAdministrador()) {
 $disciplinas = new Disciplinas();
 $postagens = new Publicacoes();
 
-/*Inicialização das variaveis e Objetos */
+/*Inicialização das variáveis e Objetos */
 
 $titulo = "";
 $conteudo = "";
@@ -66,23 +66,27 @@ if (isset($_POST["delta"])) {
             if ($operacao == '1') {
                 $postagens->editar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
                 $link = "editorConteudo.php?codigo=$codigo";
+                $sucesso="Salvo com sucesso";
             }
             if ($operacao == '2') {
                 $postagens->publicar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
                 $link = "editorConteudo.php?codigo=$codigo";
+                $sucesso="Salvo e publicado com sucesso";
             }
             if ($operacao == '3') {
                 $postagens->tirarDoAr($codigo);
                 $link = "editorConteudo.php?codigo=$codigo";
+                $sucesso="Removido o conteúdo para os alunos";
             }
             if ($operacao == '4') {
                 $postagens->excluir($codigo);
                 $link = "index.php";
-                $falha = "Conteudo excluido";
+                $sucesso="Conteudo excluído da base de dados";
             }
         } else {
             $codigo = $postagens->novo($titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
             $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
+            $sucesso="Publicado com sucesso";
         }
 
     }
@@ -110,9 +114,13 @@ if (isset($falha)) {
     $editor->falha($falha);
 }
 
+if (isset($sucesso)) {
+    $editor->sucesso($sucesso);
+}
+
 $editor->adcionarCampo("titulo", "drive_file_rename_outline", "Titulo da disciplina", $titulo);
 if (isset($codigo)) {
-    $editor->adcionarCampo("Comentario", "assignment_ind", "Comentarios de alteração", "");
+    $editor->adcionarCampo("Comentario", "assignment_ind", "Comentários de alteração", "");
 }
 $editor->Editor($conteudo);
 unset($uiux)

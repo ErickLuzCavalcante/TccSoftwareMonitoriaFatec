@@ -37,7 +37,7 @@ if (!isset($codigo) || $disciplina->getNomeDisciplina() == "") {
 echo
 $lista->add("history_edu", $disciplina->getNomeDisciplina(),
     "<i class='material-icons'>school</i> Professor(a): " . $disciplina->getProfessorDisciplina() . " <br>
-              <i class='material-icons'>info</i> Informações: <br><br><div class='ql-editor'>" .
+              <br><br><div class='ql-editor'>" .
     $disciplina->getSobreDisciplina()
     ."</div>"
 );

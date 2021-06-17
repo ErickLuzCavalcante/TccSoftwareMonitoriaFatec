@@ -27,7 +27,7 @@ class quill
         <script src='./quill/toolbar.js'></script>
         <form class='cd-form floating-labels' method='post' action='$link' onSubmit='Localizar()'>
         <h2>Editor $Titulo</h2>
-        <a onclick='puxaCookie()'><i class='material-icons'>settings_backup_restore</i> Usar o Check point - Tive um problema ao tentar salvar da última vez </a>
+        <a onclick='puxaCookie()'><i class='material-icons'>settings_backup_restore</i> Usar o Check point </a>
         ";
 
     }

@@ -11,7 +11,7 @@ $falha="";
 if (!$usuario->verificaAdministrador()) {
     $falha = "
   Você nao possui permissão, ou sua sessão foi finalizada. Nenhuma ação foi executada no servidor<br><br>
-  Para resolver click no link abaixo e efetue o login, enquanto isso eu irei recuperar os dados apartir do checkpoint salvo neste computador
+  Para resolver click no link abaixo e efetue o login, enquanto isso eu irei recuperar os dados a partir do checkpoint salvo neste computador
   <br><br><a href='login.php' onclick='puxaCookie()' target='_blank'>Link [Clique Aqui]</a><br>";
 }
 
@@ -43,10 +43,10 @@ if (isset($_POST["nomeDisciplina"])) {
     $professorDisciplina = $_POST["professorDisciplina"];
 
     if ($imagemDisciplina == "") {
-        $falha = $falha . "<br><br>Falta adcionar uma imagem para capa da matéria, esta irá identificar a disciplina dentre as demais<br>";
+        $falha = $falha . "<br><br>Falta adicionar uma imagem para capa da matéria, esta irá identificar a disciplina dentre as demais<br>";
     }
     if ($professorDisciplina == "") {
-        $falha = $falha . "<br><br>Qual o professor responsavel pela matéria<br>";
+        $falha = $falha . "<br><br>Qual o professor responsável pela matéria<br>";
     }
     if ($falha=="") {
         if (isset($_GET["codigoDisciplina"])) {

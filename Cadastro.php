@@ -101,14 +101,14 @@ if (isset($_POST["nomeUsuario"])) {
                 $usuario->editarUsuario($CPFUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $telefoneUsuario);
                 $usuario->porCPF($CPFUsuario);
                 if ($usuario->getCPFUsuario()==""){
-                    $falha = "Não foi possivel alterar o usuario. '".$nomeUsuario." ".$sobrenomeUsuario."', pois foi removido da base de dados";
+                    $falha = "Não foi possível alterar o usuário. '".$nomeUsuario." ".$sobrenomeUsuario."', pois foi removido da base de dados";
                 }else if ($ehAluno) {
                     $aluno->editarAluno($CPFUsuario, $raAluno, $TipoUsuario);
                     $aluno->porCPF($CPFUsuario);
                     if ($aluno->getRaAluno()=="$raAluno"){
                         $sucesso = "Dados alterados com sucesso";
                     }else{
-                        $falha = "Não foi possivel alterar o R.A. '".$raAluno."', pois Já esta sendo usado por em outro cadastro";
+                        $falha = "Não foi possível alterar o R.A. '".$raAluno."', pois Já esta sendo usado por em outro cadastro";
                         $raAluno=$aluno->getRaAluno();
                     }
                 }else{
@@ -137,7 +137,7 @@ if (isset($_POST["nomeUsuario"])) {
             case "excluir" :
                 if ($ehAluno) $aluno->excluirAluno($CPFUsuario);
                 $usuario->excluirusuario($CPFUsuario);
-                $falha = "Usuário excluido";
+                $falha = "Usuário excluidão";
                 $link = "index.php";
                 break;
         }
@@ -148,7 +148,7 @@ if (isset($_POST["nomeUsuario"])) {
             $usuario->porCPF($CPFUsuario);
 
             if ($usuario->getCPFUsuario()==$CPFUsuario){
-                $falha = "Não foi possivel cadastrar. o CPF já é utilizado em outro cadastro";
+                $falha = "Não foi possível cadastrar. o CPF já é utilizado em outro cadastro";
                 $CPFUsuario="";
             }
 
@@ -168,7 +168,7 @@ if (isset($_POST["nomeUsuario"])) {
                     $aluno->novoAluno($CPFUsuario, $raAluno, $TipoUsuario);
                     $aluno->porCPF($CPFUsuario);
                     if ($aluno->getRaAluno()==""){
-                        $falha = "Não foi possivel cadastrar. o R.A. já é utilizado em outro cadastro";
+                        $falha = "Não foi possível cadastrar. o R.A. já é utilizado em outro cadastro";
                         $usuario->excluirusuario($CPFUsuario);
                         $CPFUsuario2=$CPFUsuario;
                         $CPFUsuario="";
@@ -221,7 +221,7 @@ $formulario->inicioConjunto("badge","Dados básicos");
         $formulario->adcionarCampo("raAluno", "local_offer", "R.A.", $raAluno, 20, "requerido");
     }
     if ($CPFUsuario == "") {
-        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF (somente numeros)", $CPFUsuario.$CPFUsuario2, 11, "requerido");
+        $formulario->adcionarCampo("CPFUsuario", "badge", "CPF (somente números)", $CPFUsuario.$CPFUsuario2, 11, "requerido");
     }else{
         $formulario->adcionarCampo("CPFUsuario", "badge", "CPF", $CPFUsuario, 12, "desabilitado");
     }
