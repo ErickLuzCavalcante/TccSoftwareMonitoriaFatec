@@ -31,12 +31,12 @@ $link = "editorConteudo.php";
 
 /*FIM - Inicialização das variaveis e Objetos */
 
-if (isset($_GET["codigoDisciplina"])&&!isset($_GET["codigo"])) {
+if (isset($_GET["codigoDisciplina"]) && !isset($_GET["codigo"])) {
     $codigoDisciplina = $_GET["codigoDisciplina"];
     $link = "editorConteudo.php?codigoDisciplina=$codigoDisciplina";
 } else {
     $codigoDisciplina = false;
-    if (!isset($_GET["codigo"])){
+    if (!isset($_GET["codigo"])) {
         $falha = "<br><br> disciplina nao informada! <br> As alterações não serão salvas <br><br>";
     }
 }
@@ -50,7 +50,7 @@ if (isset($_GET["codigo"])) {
     $link = "editorConteudo.php?codigo=$codigo";
 
 }
-if ($codigoDisciplina&&isset($_GET["codigo"])){
+if ($codigoDisciplina && isset($_GET["codigo"])) {
     $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
 }
 
@@ -64,29 +64,46 @@ if (isset($_POST["delta"])) {
         $operacao = $_POST["radio-button"];
         if (isset($_GET["codigo"])) {
             if ($operacao == '1') {
-                $postagens->editar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
+                if ($postagens->editar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]) != false) {
+                    $sucesso = "Salvo com sucesso";
+                } else {
+                    $falha = "Não foi possível alterar o conteúdo do rascunho";
+                }
                 $link = "editorConteudo.php?codigo=$codigo";
-                $sucesso="Salvo com sucesso";
+
+
             }
             if ($operacao == '2') {
-                $postagens->publicar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"]);
+                if ($postagens->publicar($_GET["codigo"], $titulo, $conteudo, $_POST["Comentario"])) {
+                    $sucesso = "Salvo e publicado com sucesso";
+                } else {
+                    $falha = "Não foi possível publicar";
+                }
                 $link = "editorConteudo.php?codigo=$codigo";
-                $sucesso="Salvo e publicado com sucesso";
+
             }
             if ($operacao == '3') {
-                $postagens->tirarDoAr($codigo);
+                if ($postagens->tirarDoAr($codigo)) {
+                    $sucesso = "Removido o conteúdo para os alunos";
+                } else {
+                    $falha = "Não foi possível tirar do ar";
+                }
                 $link = "editorConteudo.php?codigo=$codigo";
-                $sucesso="Removido o conteúdo para os alunos";
+
             }
             if ($operacao == '4') {
-                $postagens->excluir($codigo);
-                $link = "index.php";
-                $sucesso="Conteudo excluído da base de dados";
+                if ($postagens->excluir($codigo)) {
+                    $link = "index.php";
+                    $sucesso = "Conteudo excluído da base de dados";
+                } else {
+                    $falha = "Não foi possível excluir";
+                    $link = "editorConteudo.php?codigo=$codigo";
+                }
             }
         } else {
             $codigo = $postagens->novo($titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
             $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
-            $sucesso="Publicado com sucesso";
+            $sucesso = "Publicado com sucesso";
         }
 
     }

@@ -143,8 +143,15 @@ class Rascunhos extends Banco
 
         $atualizacao = new atualizacoes();
         $atualizacao->inserirAtualizacao($codigoRascunho, "Documento modificado - " . $descricaoAlteracao, "auto_fix_high");
+        $validacao = new Rascunhos();
+        $validacao->rascunhoPorCodigo($codigoRascunho);
+        if ($validacao->getConteudoRascunho()==$conteudoRascunho&&$validacao->getTituloRascunho()==$tituloRascunho){
+            return $codigoRascunho;
+        }else{
+            return false;
+        }
 
-        return $codigoRascunho;
+
 
     }
 
@@ -156,6 +163,14 @@ class Rascunhos extends Banco
         $this->ExecultaSQL($sql);
         $sql = "DELETE FROM `softwaredemonitoria`.`materiais` WHERE  `codigoMaterial`=$codigoRascunho";
         $this->ExecultaSQL($sql);
+
+        $validacao = new Rascunhos();
+        $validacao->rascunhoPorCodigo($codigoRascunho);
+        if ($validacao->getTituloRascunho()==""){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function rascunhoPorCodigo($porCodigo)

@@ -87,17 +87,18 @@ class Publicacoes extends Rascunhos
         $this->atribuir();
     }
 
-    public function publicar($codigoRascunho, $tituloRascunho, $conteudoRascunho,$descricaoAlteracao)
+    public function publicar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $descricaoAlteracao)
     {
+        $retorno = $this->editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $descricaoAlteracao);
+        if ($retorno != false) {
 
-        $this->editar($codigoRascunho, $tituloRascunho, $conteudoRascunho, $descricaoAlteracao);
-        $this->tirarDoAr($codigoRascunho);
+            if ($this->tirarDoAr($codigoRascunho)) {
 
-        $dataCriacaoMaterial = date('Y-m-d');
+                $dataCriacaoMaterial = date('Y-m-d');
 
-        $sql =
+                $sql =
 
-            "INSERT INTO " . $this->tabelaPublicado . "
+                    "INSERT INTO " . $this->tabelaPublicado . "
                   (
                   `codigoMaterial`,
                   `tituloMaterial`,
@@ -106,18 +107,31 @@ class Publicacoes extends Rascunhos
                   )
             ";
 
-        $sql = $sql .
-            " VALUES ("
-            . $codigoRascunho . ", '"
-            . $tituloRascunho . "', '"
-            . $conteudoRascunho . "', '"
-            . $dataCriacaoMaterial . "');";
+                $sql = $sql .
+                    " VALUES ("
+                    . $codigoRascunho . ", '"
+                    . $tituloRascunho . "', '"
+                    . $conteudoRascunho . "', '"
+                    . $dataCriacaoMaterial . "');";
 
 
-        $this->ExecultaSQL($sql);
-        $atualizacao = new atualizacoes();
-        $atualizacao->publicar($codigoRascunho);
+                $this->ExecultaSQL($sql);
 
+                $validacao = new Publicacoes();
+                $validacao->publicadoPorCodigo($codigoRascunho);
+
+                if ($validacao->getTituloMaterial() == $tituloRascunho && $validacao->getConteudoMaterial() == $conteudoRascunho) {
+                    $atualizacao = new atualizacoes();
+                    $atualizacao->publicar($codigoRascunho);
+                    $retorno = true;
+                } else {
+                    $retorno = false;
+                }
+                return $retorno;
+            }
+        } else {
+            return false;
+        }
 
     }
 
@@ -129,6 +143,15 @@ class Publicacoes extends Rascunhos
 
         $sql = "DELETE FROM `materiais` WHERE  `codigoMaterial`=$codigo";
         $this->ExecultaSQL($sql);
+
+        $validacao = new Publicacoes();
+        $validacao->publicadoPorCodigo($codigo);
+
+        if ($validacao->getTituloMaterial() == "") {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function getPublicado($query)
