@@ -9,7 +9,13 @@ $falha = false;
 $textofalha = "Falha:";
 
 $usr = new usuario();
-$usr -> novoUsuario("ADM","Administrador","do Sistema","adm","adm",1);
+$usr->ListarUsuarioAdministradores("",1,1);
+if ($usr->getTamanho() == 0) {
+    $usr -> novoUsuario("admin","Administrador","do Sistema","noreplay@fatec.sp.gov.br","adm","Admin@123");
+}
+unset($usr);
+$usr = new usuario();
+
 
 // carrega dados do usuario atualmente logado
 if (isset($_POST["Login_CPF"])) {

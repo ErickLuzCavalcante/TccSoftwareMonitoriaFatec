@@ -137,7 +137,7 @@ if (isset($_POST["nomeUsuario"])) {
             case "excluir" :
                 if ($ehAluno) $aluno->excluirAluno($CPFUsuario);
                 $usuario->excluirusuario($CPFUsuario);
-                $falha = "Usuário excluidão";
+                $falha = "Usuário excluído";
                 $link = "index.php";
                 break;
         }
@@ -216,7 +216,7 @@ if (isset($sucesso)) {
 }
 $formulario->inicioConjunto("badge","Dados básicos");
     $formulario->adcionarCampo("nomeUsuario", "emoji_people", "Nome", $nomeUsuario, 50,"requerido");
-    $formulario->adcionarCampo("sobrenomeUsuario", "family_restroom", "Sobrenome", $sobrenomeUsuario, 10, "requerido");
+    $formulario->adcionarCampo("sobrenomeUsuario", "family_restroom", "Sobrenome", $sobrenomeUsuario, 50, "requerido");
     if ($ehAluno) {
         $formulario->adcionarCampo("raAluno", "local_offer", "R.A.", $raAluno, 20, "requerido");
     }

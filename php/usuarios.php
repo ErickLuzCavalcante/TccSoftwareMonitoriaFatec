@@ -131,7 +131,6 @@ class Usuario extends banco
     }
 
 
-
     public function editarUsuario(
         $CPFUsuario,
         $nomeUsuario,
@@ -401,25 +400,26 @@ class Usuario extends banco
     public function ListarUsuarioAdministradores($pesquisa, $pagina, $quantidade)
     {
 
-        $pagina = $pagina - 1;
-        $pagina = $pagina * $quantidade;
+        $validacao = new Usuario();
+        $validacao->ListarUsuarioAlunosEMonitores($pesquisa, 1, 1);
+        if ($validacao->getTamanho() > 0) {
+            $pagina = $pagina - 1;
+            $pagina = $pagina * $quantidade;
 
 
-        $query = "
+            $query = "
                     SELECT 
                     $this->camposSQL 
                     FROM `usuarios` 
                     JOIN alunos ON 
                         usuarios.CPFUsuario NOT IN (
-                            SELECT 
-                                usuarios.CPFUsuario
-                               FROM usuarios
-                             JOIN alunos 
-                             ON alunos.CPFUsuario = usuarios.CPFUsuario
-                             AND ( CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' OR usuarios.CPFUsuario = '$pesquisa' OR usuarios.telefoneUsuario = '$pesquisa' OR usuarios.emailUsuario LIKE '%$pesquisa%') 
+                            SELECT DISTINCT usuarios.CPFUsuario FROM `usuarios` JOIN alunos ON alunos.CPFUsuario = usuarios.CPFUsuario AND ( CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%%' OR usuarios.CPFUsuario = '' OR usuarios.telefoneUsuario = '' OR usuarios.emailUsuario LIKE '%%')
                         ) AND ( CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario) LIKE '%$pesquisa%' OR usuarios.CPFUsuario = '$pesquisa' OR usuarios.telefoneUsuario = '$pesquisa' OR usuarios.emailUsuario LIKE '%$pesquisa%')                 ORDER BY CONCAT (usuarios.nomeUsuario, ' ', usuarios.sobrenomeUsuario)
                 LIMIT $pagina,$quantidade";
-        return $this->Get($query);
+            return $this->Get($query);
+        } else {
+            return $this->Listar($pesquisa, $pagina, $quantidade);
+        }
     }
 }
 
