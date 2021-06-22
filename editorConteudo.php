@@ -103,7 +103,7 @@ if (isset($_POST["delta"])) {
         } else {
             $codigo = $postagens->novo($titulo, $conteudo, $codigoDisciplina, $usuario->getCPFUsuario());
             $link = "editorConteudo.php?codigo=$codigo&codigoDisciplina=$codigoDisciplina";
-            $sucesso = "Publicado com sucesso";
+            $sucesso = "Salvo com sucesso";
         }
 
     }
@@ -135,7 +135,7 @@ if (isset($sucesso)) {
     $editor->sucesso($sucesso);
 }
 
-$editor->adcionarCampo("titulo", "drive_file_rename_outline", "Titulo da disciplina", $titulo);
+$editor->adcionarCampo("titulo", "drive_file_rename_outline", "Titulo do conteúdo", $titulo);
 if (isset($codigo)) {
     $editor->adcionarCampo("Comentario", "assignment_ind", "Comentários de alteração", "");
 }

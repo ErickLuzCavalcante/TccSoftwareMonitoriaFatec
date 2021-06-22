@@ -110,7 +110,7 @@ class Interfaces
 
 
     public function padraoMenu(){
-        $this->addItemMenu("index.php", "Inicio", false);
+        $this->addItemMenu("index.php", "Início", false);
         // Se o usuario for administrador
         $this->addItemMenu("editorMateria.php' target='_blank'", "Criar Matéria", true);
         $this->addItemMenu('usuario.php', "Usuários", true);

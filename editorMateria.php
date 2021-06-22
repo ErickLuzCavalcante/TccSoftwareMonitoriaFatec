@@ -65,11 +65,11 @@ if (isset($_POST["nomeDisciplina"])) {
                 $disciplinas= new Disciplinas();
                 echo $disciplinas->getNomeDisciplina();
                 if ($disciplinas->getNomeDisciplina()==""){
-                    $sucesso="Disciplina excluida";
+                    $sucesso="Disciplina excluída";
                     $link = "index.php";
                     unset($codigo);
                 }else{
-                    $falha="Não foi possivel excluir a disciplina de ".$disciplinas->getNomeDisciplina().", pois há conteudo nela";
+                    $falha="Não foi possível excluir a disciplina de ".$disciplinas->getNomeDisciplina().", pois há conteudo nela";
                     $link = "editorMateria.php?codigoDisciplina=$codigo";
                 }
             }
@@ -115,7 +115,7 @@ if (isset($sucesso)){
 }
 
 $editor->adcionarCampo("nomeDisciplina", "drive_file_rename_outline", "Nome da disciplina", $nomeDisciplina);
-$editor->adcionarCampo("professorDisciplina", "assignment_ind", "Professor da materia", $professorDisciplina);
+$editor->adcionarCampo("professorDisciplina", "assignment_ind", "Professor da matéria", $professorDisciplina);
 
 $editor->Editor($sobreDisciplina);
 unset($uiux)

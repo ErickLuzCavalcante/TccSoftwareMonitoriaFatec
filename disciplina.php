@@ -116,7 +116,7 @@ if ($monitor) {
 
         <!-- Link para criar um novo material na disciplina -->
         <a href='editorConteudo.php?codigoDisciplina=$codigo'  target='_blank'>
-            <i class='material-icons'>post_add</i> Novo material
+            <i class='material-icons'>post_add</i> Novo conteúdo
         </a><br>
         <!-- Fim Link para criar um novo material na disciplina --> 
     ";

@@ -57,7 +57,7 @@ class quill
 
         echo "                
                
-                <h4>Açoes no servidor</h4>
+                <h4>Ações</h4>
                 <ul class='cd-form-list'>
                 <li>
                     <input type='radio' name='radio-button' id='cd-radio-1' value='1' checked>
@@ -98,7 +98,7 @@ class quill
         echo "</ul><input type='submit' value='Enviar'></p><br><br><br><br><br>";
         echo "                
                 <h4><i class='material-icons'>article</i>
-                Conteudo </h4><p class='btn-expandir'>
+                Conteúdo </h4><p class='btn-expandir'>
                 <i class='material-icons'>
                 photo_size_select_small</i></p><hr>            
                 <div id='editor-container'>$conteudo</div>";
